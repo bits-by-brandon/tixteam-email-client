@@ -1,0 +1,36 @@
+{
+  "name": "prpl-seo-tool",
+  "version": "1.0.0",
+  "description": "A tool used to pull in data from multiple sources and generate a sitemap for the prpl site",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/electron ."
+  },
+  "author": "brandon chang (chang@purplerockscissors.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-postcss": "^6.1.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass-ns": "^0.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^1.5.4",
+    "gulp-watch": "^4.3.8",
+    "webpack-stream": "^3.2.0"
+  },
+  "dependencies": {
+    "electron-prebuilt": "^1.2.2",
+    "electron-reload": "^1.0.0",
+    "moment": "^2.13.0",
+    "react": "^15.2.0",
+    "react-addons-css-transition-group": "^15.2.0",
+    "react-dom": "^15.2.0",
+    "react-hot-loader": "^1.3.0",
+    "react-kit": "^0.1.14"
+  }
+}
