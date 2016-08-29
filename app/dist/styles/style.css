@@ -16,7 +16,7 @@ html, body {
 .form {
   width: 420px;
   background-color: #FFFFFF;
-  padding: 30px; }
+  padding: 40px; }
   .form .field {
     display: block;
     width: 100%;
@@ -31,7 +31,7 @@ html, body {
     .form .field--text-input {
       display: inline-block;
       width: 100%;
-      border: none;
+      border: 1px solid #eeeeee;
       font-size: 20px;
       padding: 14px;
       box-shadow: 0 3px 10px 0 rgba(51, 51, 51, 0.1);

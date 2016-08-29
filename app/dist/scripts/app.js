@@ -35657,6 +35657,10 @@
 	
 	var _FullButton2 = _interopRequireDefault(_FullButton);
 	
+	var _TicketForm = __webpack_require__(282);
+	
+	var _TicketForm2 = _interopRequireDefault(_TicketForm);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
@@ -35680,18 +35684,54 @@
 			};
 		},
 		handleFieldChange: function handleFieldChange(e) {
+			//For the global fields, this changes the
+			//state of the wrapper, with the name corresponding
+			//to the key of the state changed.
 			this.setState(_defineProperty({}, e.target.name, e.target.value));
+		},
+		handleAddTicket: function handleAddTicket(e) {
+			this.setState({ tickets: this.state.tickets.concat({
+					type: null,
+					citation: null,
+					case: null,
+					outcome: null,
+					copy: null,
+					charges: [],
+					costs: []
+				}) });
+		},
+		componentDidUpdate: function componentDidUpdate() {
+			console.log(this.state);
 		},
 	
 	
 		render: function render() {
+			var _this = this;
+	
+			var tickets = this.state.tickets;
 			return _react2.default.createElement(
 				'div',
 				{ className: 'form' },
-				_react2.default.createElement(_TextField2.default, { label: 'First Name', name: 'first', fieldKey: 'firstName', value: this.state.firstName, handleFieldChange: this.handleFieldChange }),
-				_react2.default.createElement(_TextField2.default, { label: 'Last Name', name: 'last', fieldKey: 'lastName', value: this.state.lastName, handleFieldChange: this.handleFieldChange }),
-				_react2.default.createElement(_TextField2.default, { label: 'Client Email', name: 'email', fieldKey: 'email', value: this.state.email, handleFieldChange: this.handleFieldChange }),
-				_react2.default.createElement(_FullButton2.default, { label: 'Add Ticket', handleClick: '', handleFieldChange: this.handleFieldChange })
+				_react2.default.createElement(_TextField2.default, { label: 'First Name',
+					name: 'first',
+					fieldKey: 'firstName',
+					value: this.state.firstName,
+					handleFieldChange: this.handleFieldChange }),
+				_react2.default.createElement(_TextField2.default, { label: 'Last Name',
+					name: 'last',
+					fieldKey: 'lastName',
+					value: this.state.lastName,
+					handleFieldChange: this.handleFieldChange }),
+				_react2.default.createElement(_TextField2.default, { label: 'Client Email',
+					name: 'email',
+					fieldKey: 'email',
+					value: this.state.email,
+					handleFieldChange: this.handleFieldChange }),
+				tickets.map(function (item) {
+					return _react2.default.createElement(_FullButton2.default, { label: 'This a Ticket', handleClick: _this.handleAddTicket });
+				}),
+				_react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
+					handleClick: this.handleAddTicket })
 			);
 		}
 	});
@@ -35764,6 +35804,57 @@
 		}
 	}); /*
 	     * Full Button Component
+	     */
+
+/***/ },
+/* 282 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _TextField = __webpack_require__(280);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _FullButton = __webpack_require__(281);
+	
+	var _FullButton2 = _interopRequireDefault(_FullButton);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
+	exports.default = _react2.default.createClass({
+		displayName: 'TicketForm',
+		getInitialState: function getInitialState() {
+			return {
+				active: false
+			};
+		},
+		handleAddTicket: function handleAddTicket() {
+			this.props.handleAddTicket;
+		},
+	
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'ticket-Form' },
+				_react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
+					handleClick: this.handleAddTicket })
+			);
+		}
+	}); /*
+	     * Ticket Form Component
 	     */
 
 /***/ }

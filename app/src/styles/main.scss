@@ -17,7 +17,7 @@ html, body{
 .form{
 	width: 420px;
 	background-color: $white;
-	padding: 30px;
+	padding: 40px;
 	.field{
 		display: block;
 		width: 100%;
@@ -33,7 +33,7 @@ html, body{
 		&--text-input{
 			display: inline-block;
 			width: 100%;
-			border: none;
+			border: 1px solid #eeeeee;
 			font-size: 20px;
 			padding: 14px;
 			box-shadow: 0 3px 10px 0 rgba(#333, 0.1);
