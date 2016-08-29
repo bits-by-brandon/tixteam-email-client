@@ -6,6 +6,10 @@ const   electron = require( 'electron' ),
         generateId = require('./server/utilities.js').generateId,
         {ipcMain, app, shell, BrowserWindow} = electron;
 
+require('electron-reload')(__dirname, {
+	electron: require('electron-prebuilt')
+});
+
 // ========================================
 // ===== Initialize Variables =============
 // ========================================
