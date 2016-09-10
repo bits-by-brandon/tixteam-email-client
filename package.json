@@ -4,6 +4,7 @@
   "description": "A tool used to pull in data from multiple sources and generate a sitemap for the prpl site",
   "main": "index.js",
   "scripts": {
+    "start": "./node_modules/.bin/electron .",
     "build": "./node_modules/.bin/electron ."
   },
   "author": "brandon chang (chang@purplerockscissors.com)",
