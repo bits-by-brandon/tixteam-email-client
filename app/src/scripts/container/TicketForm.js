@@ -9,6 +9,7 @@ import React from 'react';
 import TextField from '../presentation/TextField.js';
 import FullButton from '../presentation/FullButton.js';
 import Radio from '../presentation/Radio.js';
+import Select from '../presentation/Select.js';
 
 export default React.createClass({
 	getInitialState() {
@@ -34,9 +35,11 @@ export default React.createClass({
 	//costs:[]
 
     render: function(){
+		let type = this.props.ticket.type;
 		return (
 			<div className = "ticket-form">
-				<FullButton label = {"Ticket " + (this.props.index + 1)} handleClick = {this.handleAddTicket} />
+				<FullButton label = {type ? type + ((type=='civil')?' Ticket':' Charge'): 'Disposition ' + (this.props.index + 1)} 
+							handleClick = {this.handleAddTicket} />
 
 				<Radio		label = "Type"
 							name = "type"
@@ -49,6 +52,17 @@ export default React.createClass({
 							value = {this.props.citationNumber}
 							handleFieldChange = {this.handleTicketFieldChange} />
 
+				<Select 	label = "Outcome"
+							name = "outcome"
+							options = {['dismissed', 'adjudicated', 'withold']}
+							value = {this.props.outcome}
+							handleFieldChange = {this.handleTicketFieldChange} />
+
+				<Select 	label = "Outcome"
+							name = "outcome"
+							options = {['dismissed', 'adjudicated guilty', 'withold of adjudication']}
+							value = {this.props.outcome}
+							handleFieldChange = {this.handleTicketFieldChange} />
 			</div>
 		);
 	}

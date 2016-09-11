@@ -21808,11 +21808,15 @@
 	
 	var _Radio2 = _interopRequireDefault(_Radio);
 	
+	var _Select = __webpack_require__(180);
+	
+	var _Select2 = _interopRequireDefault(_Select);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/*
-	 * Ticket Form Component
-	 */
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
 	exports.default = _react2.default.createClass({
 		displayName: 'TicketForm',
 		getInitialState: function getInitialState() {
@@ -21837,10 +21841,12 @@
 		//costs:[]
 	
 		render: function render() {
+			var type = this.props.ticket.type;
 			return _react2.default.createElement(
 				'div',
 				{ className: 'ticket-form' },
-				_react2.default.createElement(_FullButton2.default, { label: "Ticket " + (this.props.index + 1), handleClick: this.handleAddTicket }),
+				_react2.default.createElement(_FullButton2.default, { label: type ? type + (type == 'civil' ? ' Ticket' : ' Charge') : 'Disposition ' + (this.props.index + 1),
+					handleClick: this.handleAddTicket }),
 				_react2.default.createElement(_Radio2.default, { label: 'Type',
 					name: 'type',
 					options: ['civil', 'criminal'],
@@ -21849,14 +21855,22 @@
 				_react2.default.createElement(_TextField2.default, { label: 'Citation Number',
 					name: 'citationNumber',
 					value: this.props.citationNumber,
+					handleFieldChange: this.handleTicketFieldChange }),
+				_react2.default.createElement(_Select2.default, { label: 'Outcome',
+					name: 'outcome',
+					options: ['dismissed', 'adjudicated', 'withold'],
+					value: this.props.outcome,
+					handleFieldChange: this.handleTicketFieldChange }),
+				_react2.default.createElement(_Select2.default, { label: 'Outcome',
+					name: 'outcome',
+					options: ['dismissed', 'adjudicated guilty', 'withold of adjudication'],
+					value: this.props.outcome,
 					handleFieldChange: this.handleTicketFieldChange })
 			);
 		}
-	});
-	
-	//===================================================
-	//================ Dependancies =====================
-	//===================================================
+	}); /*
+	     * Ticket Form Component
+	     */
 
 /***/ },
 /* 179 */
@@ -21909,6 +21923,57 @@
 		}
 	}); /*
 	     * Field Component
+	     */
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+		displayName: "Select",
+	
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "field" },
+				_react2.default.createElement(
+					"label",
+					{ className: "field--label", htmlFor: this.props.name },
+					this.props.label
+				),
+				_react2.default.createElement(
+					"select",
+					{ className: "field--select",
+						type: "select",
+						name: this.props.name,
+						onChange: this.props.handleFieldChange,
+						value: this.props.value },
+					this.props.options.map(function (item, index) {
+						return _react2.default.createElement(
+							"option",
+							{
+								value: item,
+								key: index },
+							item
+						);
+					})
+				)
+			);
+		}
+	}); /*
+	     * Select Field Component
 	     */
 
 /***/ }
