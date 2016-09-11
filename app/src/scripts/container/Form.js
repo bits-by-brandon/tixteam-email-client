@@ -28,6 +28,7 @@ export default React.createClass({
 	},
 
 	handleTicketFieldChange(index, field, value){
+		value = (value=="null"?null:value);
 		let newTickets = this.state.tickets;
 		newTickets[index][field] = value;
 
@@ -40,12 +41,20 @@ export default React.createClass({
 		this.setState({tickets: this.state.tickets.concat({
 			type: null,
 			citationNumber: null,
-			case: null,
+			caseNumber: null,
 			outcome: null,
 			copy: null,
+			customCopy: null,
 			charges:[],
 			costs:[]
 		})})
+	},
+
+	handleTypeUpdate(){
+		this.setState({
+			citationNumber: null,
+			caseNumber: null
+		})
 	},
 
 	componentDidUpdate(){
@@ -76,7 +85,8 @@ export default React.createClass({
 								key = {i}
 								index = {i}
 								ticket = {ticket}
-								handleTicketFieldChange = {this.handleTicketFieldChange} />
+								handleTicketFieldChange = {this.handleTicketFieldChange}
+								handleTypeUpdate = {this.handleTypeUpdate} />
 				})}
 
 				<FullButton label = "New Ticket"

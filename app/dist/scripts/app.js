@@ -21658,6 +21658,7 @@
 			this.setState(_defineProperty({}, e.target.name, e.target.value));
 		},
 		handleTicketFieldChange: function handleTicketFieldChange(index, field, value) {
+			value = value == "null" ? null : value;
 			var newTickets = this.state.tickets;
 			newTickets[index][field] = value;
 	
@@ -21669,12 +21670,19 @@
 			this.setState({ tickets: this.state.tickets.concat({
 					type: null,
 					citationNumber: null,
-					case: null,
+					caseNumber: null,
 					outcome: null,
 					copy: null,
+					customCopy: null,
 					charges: [],
 					costs: []
 				}) });
+		},
+		handleTypeUpdate: function handleTypeUpdate() {
+			this.setState({
+				citationNumber: null,
+				caseNumber: null
+			});
 		},
 		componentDidUpdate: function componentDidUpdate() {
 			console.log(this.state);
@@ -21705,7 +21713,8 @@
 						key: i,
 						index: i,
 						ticket: ticket,
-						handleTicketFieldChange: _this.handleTicketFieldChange });
+						handleTicketFieldChange: _this.handleTicketFieldChange,
+						handleTypeUpdate: _this.handleTypeUpdate });
 				}),
 				_react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
 					handleClick: this.handleAddTicket })
@@ -21800,23 +21809,27 @@
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
+	var _TextArea = __webpack_require__(179);
+	
+	var _TextArea2 = _interopRequireDefault(_TextArea);
+	
 	var _FullButton = __webpack_require__(177);
 	
 	var _FullButton2 = _interopRequireDefault(_FullButton);
 	
-	var _Radio = __webpack_require__(179);
+	var _Radio = __webpack_require__(180);
 	
 	var _Radio2 = _interopRequireDefault(_Radio);
 	
-	var _Select = __webpack_require__(180);
+	var _Select = __webpack_require__(181);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	//===================================================
-	//================ Dependancies =====================
-	//===================================================
+	/*
+	 * Ticket Form Component
+	 */
 	exports.default = _react2.default.createClass({
 		displayName: 'TicketForm',
 		getInitialState: function getInitialState() {
@@ -21830,18 +21843,28 @@
 		handleRadioSelect: function handleRadioSelect(field, value) {
 			this.props.handleTicketFieldChange(this.props.index, field, value);
 		},
-	
+		handleTypeUpdate: function handleTypeUpdate() {
+			this.props.handleTypeUpdate();
+		},
 	
 		//type: null,
 		//citationNumber: null,
-		//case: null,
+		//caseNumber: null,
 		//outcome: null,
 		//copy: null,
+		//customCopy: null,
 		//charges:[],
 		//costs:[]
 	
 		render: function render() {
+			var _this = this;
+	
 			var type = this.props.ticket.type;
+			var ticket = this.props.ticket;
+			var number = ticket.citationNumber || ticket.caseNumber;
+			var outcome = ticket.outcome;
+			var copy = ticket.copy;
+			var customCopy = ticket.customCopy;
 			return _react2.default.createElement(
 				'div',
 				{ className: 'ticket-form' },
@@ -21852,25 +21875,53 @@
 					options: ['civil', 'criminal'],
 					value: this.props.ticket.type,
 					handleRadioSelect: this.handleRadioSelect }),
-				_react2.default.createElement(_TextField2.default, { label: 'Citation Number',
-					name: 'citationNumber',
-					value: this.props.citationNumber,
-					handleFieldChange: this.handleTicketFieldChange }),
-				_react2.default.createElement(_Select2.default, { label: 'Outcome',
-					name: 'outcome',
-					options: ['dismissed', 'adjudicated', 'withold'],
-					value: this.props.outcome,
-					handleFieldChange: this.handleTicketFieldChange }),
-				_react2.default.createElement(_Select2.default, { label: 'Outcome',
-					name: 'outcome',
-					options: ['dismissed', 'adjudicated guilty', 'withold of adjudication'],
-					value: this.props.outcome,
-					handleFieldChange: this.handleTicketFieldChange })
+				function () {
+					if (type) {
+						return _react2.default.createElement(_TextField2.default, {
+							label: type == "civil" ? 'Citation Number' : 'Case Number',
+							name: type == "civil" ? 'citationNumber' : 'caseNumber',
+							value: _this.props.citationNumber,
+							handleFieldChange: _this.handleTicketFieldChange });
+					}
+				}(),
+				function () {
+					if (type) {
+						return _react2.default.createElement(_Select2.default, {
+							label: 'Outcome',
+							name: 'outcome',
+							options: type == "civil" ? ['dismissed', 'adjudicated', 'withold'] : ['dismissed', 'adjudicated guilty', 'withold of adjudication'],
+							defaultValue: '-Select an outcome-',
+							value: _this.props.outcome,
+							handleFieldChange: _this.handleTicketFieldChange });
+					}
+				}(),
+				function () {
+					if (outcome) {
+						return _react2.default.createElement(_Select2.default, {
+							label: 'Copy',
+							name: 'copy',
+							options: ['standard', 'custom'],
+							defaultValue: '-Select a message-',
+							value: _this.props.outcome,
+							handleFieldChange: _this.handleTicketFieldChange });
+					}
+				}(),
+				function () {
+					if (outcome && copy == 'custom') {
+						return _react2.default.createElement(_TextArea2.default, {
+							label: 'Custom Message',
+							name: 'customCopy',
+							value: _this.props.outcome,
+							handleFieldChange: _this.handleTicketFieldChange });
+					}
+				}()
 			);
 		}
-	}); /*
-	     * Ticket Form Component
-	     */
+	});
+	
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
 
 /***/ },
 /* 179 */
@@ -21889,7 +21940,48 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
+		displayName: "TextArea",
+	
+		render: function render() {
+			return _react2.default.createElement(
+				"div",
+				{ className: "field" },
+				_react2.default.createElement(
+					"label",
+					{ className: "field--label", htmlFor: this.props.name },
+					this.props.label
+				),
+				_react2.default.createElement("textArea", {
+					className: "field--text-area",
+					name: this.props.name,
+					type: "text",
+					onChange: this.props.handleFieldChange,
+					value: this.props.value })
+			);
+		}
+	}); /*
+	     * Field Component
+	     */
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
 		displayName: "Radio",
+	
 	
 		render: function render() {
 			var _this = this;
@@ -21926,7 +22018,7 @@
 	     */
 
 /***/ },
-/* 180 */
+/* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21960,6 +22052,11 @@
 						name: this.props.name,
 						onChange: this.props.handleFieldChange,
 						value: this.props.value },
+					_react2.default.createElement(
+						"option",
+						{ value: "null" },
+						this.props.defaultValue
+					),
 					this.props.options.map(function (item, index) {
 						return _react2.default.createElement(
 							"option",

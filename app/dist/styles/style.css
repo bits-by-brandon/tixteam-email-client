@@ -37,6 +37,12 @@ html, body {
       padding: 14px;
       box-shadow: 0 3px 10px 0 rgba(51, 51, 51, 0.1);
       font-family: Avenir; }
+    .form .field--text-area {
+      display: block;
+      width: 100%;
+      border: 1px solid #eeeeee;
+      height: 300px;
+      padding: 14px; }
     .form .field--radio {
       display: flex;
       justify-content: space-between; }

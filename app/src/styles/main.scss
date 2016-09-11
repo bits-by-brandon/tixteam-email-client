@@ -40,6 +40,13 @@ html, body{
 			box-shadow: 0 3px 10px 0 rgba(#333, 0.1);
 			font-family: Avenir;
 		}
+		&--text-area{
+			display: block;
+			width: 100%;
+			border: 1px solid #eeeeee;
+			height: 300px;
+			padding: 14px;
+		}
 		&--radio{
 			display: flex;
 			justify-content: space-between;

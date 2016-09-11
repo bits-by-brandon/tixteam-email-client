@@ -16,6 +16,7 @@ export default React.createClass({
 							name={this.props.name}
 							onChange={this.props.handleFieldChange}
 							value={this.props.value} >
+					<option value="null">{this.props.defaultValue}</option>
 				{this.props.options.map((item, index) => {
 					return <option 
 									value={item}
