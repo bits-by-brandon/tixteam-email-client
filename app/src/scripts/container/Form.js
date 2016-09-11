@@ -27,10 +27,19 @@ export default React.createClass({
 		this.setState({[e.target.name]: e.target.value});
 	},
 
+	handleTicketFieldChange(index, field, value){
+		let newTickets = this.state.tickets;
+		newTickets[index][field] = value;
+
+		this.setState({
+			tickets: newTickets
+		})
+	},
+
 	handleAddTicket(e){
 		this.setState({tickets: this.state.tickets.concat({
 			type: null,
-			citation: null,
+			citationNumber: null,
 			case: null,
 			outcome: null,
 			copy: null,
@@ -46,30 +55,32 @@ export default React.createClass({
     render: function(){
 		var tickets = this.state.tickets;
 		return (
-			<div className="form">
-				<TextField 	label="First Name"
-							name="first"
-							fieldKey="firstName"
-							value={this.state.firstName}
-							handleFieldChange={this.handleFieldChange} />
+			<div className = "form">
+				<TextField 	label = "First Name"
+							name = "first"
+							value = {this.state.firstName}
+							handleFieldChange = {this.handleFieldChange} />
 
-				<TextField 	label="Last Name"
-							name="last"
-							fieldKey="lastName"
-							value={this.state.lastName}
-							handleFieldChange={this.handleFieldChange} />
+				<TextField 	label = "Last Name"
+							name = "last"
+							value = {this.state.lastName}
+							handleFieldChange = {this.handleFieldChange} />
 
-				<TextField	label="Client Email"
-							name="email"
-							fieldKey="email"
-							value={this.state.email}
-							handleFieldChange={this.handleFieldChange} />
+				<TextField	label = "Client Email"
+							name = "email"
+							value = {this.state.email}
+							handleFieldChange = {this.handleFieldChange} />
 
-							{tickets.map( (item) => {
-								return <FullButton label="This a Ticket" handleClick={this.handleAddTicket} />
-							})}
-				<FullButton label="New Ticket"
-							handleClick={this.handleAddTicket} />
+				{ this.state.tickets.map((ticket, i) => {
+					return <TicketForm 
+								key = {i}
+								index = {i}
+								ticket = {ticket}
+								handleTicketFieldChange = {this.handleTicketFieldChange} />
+				})}
+
+				<FullButton label = "New Ticket"
+							handleClick = {this.handleAddTicket} />
 			</div>
 		);
 	}

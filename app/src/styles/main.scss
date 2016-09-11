@@ -29,6 +29,7 @@ html, body{
 			font-size: 14px;
 			color: $gray;
 			margin-bottom: 5px;
+			-webkit-user-select: none;
 		}
 		&--text-input{
 			display: inline-block;
@@ -39,12 +40,34 @@ html, body{
 			box-shadow: 0 3px 10px 0 rgba(#333, 0.1);
 			font-family: Avenir;
 		}
+		&--radio{
+			display: flex;
+			justify-content: space-between;
+			&--option{
+				display: inline-block;
+				padding: 5px 0;
+				width: 150px;
+				text-align: center;
+				background-color: #fff;
+				border-radius: 50px;
+				font-size: 24px;
+				color: $medium-gray;
+				cursor: pointer;
+				border: 6px solid #fff;
+				box-shadow: 0 3px 10px 0 rgba(#333, 0.1);
+				transition: border-color 200ms ease-in-out;
+				-webkit-user-select: none;
+				&.active{
+					border-color: $yellow;
+				}
+			}
+		}
 	}
 	.full-button{
 		font-family: Avenir;
 		display: inline-block;
 		position: relative;
-		background-color: $yellow;
+		background-color: $dark-gray;
 		color: $white;
 		font-size: 24px;
 		border-radius: 30px;
@@ -65,5 +88,16 @@ html, body{
 			left: 13px;
 			top: 30px;
 		}
+	}
+}
+
+.ticket-form{
+	background-color: $light-gray;
+	margin: 90px -40px 30px;
+	padding: 0 40px 30px;
+	box-shadow: inset 0 0 10px 0 rgba(#333, 0.2);
+	&>.full-button{
+		margin: 0 0 -20px;
+		transform: translateY(-30px);
 	}
 }

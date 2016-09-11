@@ -12,7 +12,6 @@ const   electron = require('electron'),
 //===================================================
 import ReactDOM from 'react-dom';
 import React from 'react';
-import moment from 'moment';
 import menu from './menu.js';
 
 //===================================================

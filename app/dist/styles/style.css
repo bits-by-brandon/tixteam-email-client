@@ -27,7 +27,8 @@ html, body {
       width: 100%;
       font-size: 14px;
       color: #AAA;
-      margin-bottom: 5px; }
+      margin-bottom: 5px;
+      -webkit-user-select: none; }
     .form .field--text-input {
       display: inline-block;
       width: 100%;
@@ -36,11 +37,30 @@ html, body {
       padding: 14px;
       box-shadow: 0 3px 10px 0 rgba(51, 51, 51, 0.1);
       font-family: Avenir; }
+    .form .field--radio {
+      display: flex;
+      justify-content: space-between; }
+      .form .field--radio--option {
+        display: inline-block;
+        padding: 5px 0;
+        width: 150px;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 50px;
+        font-size: 24px;
+        color: #9B9B9B;
+        cursor: pointer;
+        border: 6px solid #fff;
+        box-shadow: 0 3px 10px 0 rgba(51, 51, 51, 0.1);
+        transition: border-color 200ms ease-in-out;
+        -webkit-user-select: none; }
+        .form .field--radio--option.active {
+          border-color: #FFE730; }
   .form .full-button {
     font-family: Avenir;
     display: inline-block;
     position: relative;
-    background-color: #FFE730;
+    background-color: #333;
     color: #FFFFFF;
     font-size: 24px;
     border-radius: 30px;
@@ -59,3 +79,12 @@ html, body {
       line-height: 0;
       left: 13px;
       top: 30px; }
+
+.ticket-form {
+  background-color: #F4F4F4;
+  margin: 90px -40px 30px;
+  padding: 0 40px 30px;
+  box-shadow: inset 0 0 10px 0 rgba(51, 51, 51, 0.2); }
+  .ticket-form > .full-button {
+    margin: 0 0 -20px;
+    transform: translateY(-30px); }
