@@ -50,6 +50,24 @@ export default React.createClass({
 		})})
 	},
 
+	handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue){
+		console.log(ticketIndex, costType, costIndex, costName, costValue);
+		let newTickets = this.state.tickets;
+		let newCost = newTickets[ticketIndex][costType][costIndex];
+		newCost[costName] = costValue;
+		newTickets[ticketIndex][costType][costIndex] = newCost;
+		this.setState({tickets: newTickets})
+	},
+
+	handleAddCost(ticketIndex, costType){
+		let newTickets = this.state.tickets;
+		newTickets[ticketIndex][costType].push({
+			costName: '',
+			costAmount: '0'
+		});
+		this.setState({tickets: newTickets});
+	},
+
 	handleTypeUpdate(){
 		this.setState({
 			citationNumber: null,
@@ -62,7 +80,7 @@ export default React.createClass({
 	},
 
     render: function(){
-		var tickets = this.state.tickets;
+		let tickets = this.state.tickets;
 		return (
 			<div className = "form">
 				<TextField 	label = "First Name"
@@ -81,12 +99,15 @@ export default React.createClass({
 							handleFieldChange = {this.handleFieldChange} />
 
 				{ this.state.tickets.map((ticket, i) => {
+					//Render a ticket form for each ticket in state
 					return <TicketForm 
 								key = {i}
 								index = {i}
 								ticket = {ticket}
 								handleTicketFieldChange = {this.handleTicketFieldChange}
-								handleTypeUpdate = {this.handleTypeUpdate} />
+								handleCostFieldChange = {this.handleCostFieldChange}
+								handleTypeUpdate = {this.handleTypeUpdate} 
+								handleAddCost = {this.handleAddCost} />
 				})}
 
 				<FullButton label = "New Ticket"

@@ -11,6 +11,7 @@ import TextArea from '../presentation/TextArea.js';
 import FullButton from '../presentation/FullButton.js';
 import Radio from '../presentation/Radio.js';
 import Select from '../presentation/Select.js';
+import CostForm from './CostForm.js';
 
 export default React.createClass({
 	getInitialState() {
@@ -23,12 +24,20 @@ export default React.createClass({
 		this.props.handleTicketFieldChange(this.props.index, e.target.name, e.target.value);
 	},
 
+	handleCostFieldChange(costType, costIndex, costName, costValue){
+		this.props.handleCostFieldChange(this.props.index, costType, costIndex, costName, costValue);
+	},
+
 	handleRadioSelect(field, value){
 		this.props.handleTicketFieldChange(this.props.index, field, value);
 	},
 
 	handleTypeUpdate(){
 		this.props.handleTypeUpdate();
+	},
+
+	handleAddCost(costType){
+		this.props.handleAddCost(this.props.index, costType);
 	},
 	//type: null,
 	//citationNumber: null,
@@ -46,6 +55,8 @@ export default React.createClass({
 		let outcome = ticket.outcome;
 		let copy = ticket.copy;
 		let customCopy = ticket.customCopy;
+		let charges = ticket.charges;
+		let costs = ticket.costs;
 		return (
 			<div className = "ticket-form">
 				<FullButton label = {type ? type + ((type=='civil')?' Ticket':' Charge'): 'Disposition ' + (this.props.index + 1)} 
@@ -96,6 +107,20 @@ export default React.createClass({
 								value = {this.props.outcome}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
+
+				<CostForm
+					label = "Charges"
+					type = "charges" 
+					costs = {charges}
+					handleAddCost = {this.handleAddCost} 
+					handleCostFieldChange = {this.handleCostFieldChange} />
+
+				<CostForm
+					label = "Fines / Court Costs"
+					type = "costs" 
+					costs = {costs}
+					handleAddCost = {this.handleAddCost}
+					handleCostFieldChange = {this.handleCostFieldChange} />
 			</div>
 		);
 	}

@@ -21678,6 +21678,22 @@
 					costs: []
 				}) });
 		},
+		handleCostFieldChange: function handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue) {
+			console.log(ticketIndex, costType, costIndex, costName, costValue);
+			var newTickets = this.state.tickets;
+			var newCost = newTickets[ticketIndex][costType][costIndex];
+			newCost[costName] = costValue;
+			newTickets[ticketIndex][costType][costIndex] = newCost;
+			this.setState({ tickets: newTickets });
+		},
+		handleAddCost: function handleAddCost(ticketIndex, costType) {
+			var newTickets = this.state.tickets;
+			newTickets[ticketIndex][costType].push({
+				costName: '',
+				costAmount: '0'
+			});
+			this.setState({ tickets: newTickets });
+		},
 		handleTypeUpdate: function handleTypeUpdate() {
 			this.setState({
 				citationNumber: null,
@@ -21709,12 +21725,15 @@
 					value: this.state.email,
 					handleFieldChange: this.handleFieldChange }),
 				this.state.tickets.map(function (ticket, i) {
+					//Render a ticket form for each ticket in state
 					return _react2.default.createElement(_TicketForm2.default, {
 						key: i,
 						index: i,
 						ticket: ticket,
 						handleTicketFieldChange: _this.handleTicketFieldChange,
-						handleTypeUpdate: _this.handleTypeUpdate });
+						handleCostFieldChange: _this.handleCostFieldChange,
+						handleTypeUpdate: _this.handleTypeUpdate,
+						handleAddCost: _this.handleAddCost });
 				}),
 				_react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
 					handleClick: this.handleAddTicket })
@@ -21825,11 +21844,15 @@
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
+	var _CostForm = __webpack_require__(182);
+	
+	var _CostForm2 = _interopRequireDefault(_CostForm);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/*
-	 * Ticket Form Component
-	 */
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
 	exports.default = _react2.default.createClass({
 		displayName: 'TicketForm',
 		getInitialState: function getInitialState() {
@@ -21840,11 +21863,17 @@
 		handleTicketFieldChange: function handleTicketFieldChange(e) {
 			this.props.handleTicketFieldChange(this.props.index, e.target.name, e.target.value);
 		},
+		handleCostFieldChange: function handleCostFieldChange(costType, costIndex, costName, costValue) {
+			this.props.handleCostFieldChange(this.props.index, costType, costIndex, costName, costValue);
+		},
 		handleRadioSelect: function handleRadioSelect(field, value) {
 			this.props.handleTicketFieldChange(this.props.index, field, value);
 		},
 		handleTypeUpdate: function handleTypeUpdate() {
 			this.props.handleTypeUpdate();
+		},
+		handleAddCost: function handleAddCost(costType) {
+			this.props.handleAddCost(this.props.index, costType);
 		},
 	
 		//type: null,
@@ -21865,6 +21894,8 @@
 			var outcome = ticket.outcome;
 			var copy = ticket.copy;
 			var customCopy = ticket.customCopy;
+			var charges = ticket.charges;
+			var costs = ticket.costs;
 			return _react2.default.createElement(
 				'div',
 				{ className: 'ticket-form' },
@@ -21914,14 +21945,24 @@
 							value: _this.props.outcome,
 							handleFieldChange: _this.handleTicketFieldChange });
 					}
-				}()
+				}(),
+				_react2.default.createElement(_CostForm2.default, {
+					label: 'Charges',
+					type: 'charges',
+					costs: charges,
+					handleAddCost: this.handleAddCost,
+					handleCostFieldChange: this.handleCostFieldChange }),
+				_react2.default.createElement(_CostForm2.default, {
+					label: 'Fines / Court Costs',
+					type: 'costs',
+					costs: costs,
+					handleAddCost: this.handleAddCost,
+					handleCostFieldChange: this.handleCostFieldChange })
 			);
 		}
-	});
-	
-	//===================================================
-	//================ Dependancies =====================
-	//===================================================
+	}); /*
+	     * Ticket Form Component
+	     */
 
 /***/ },
 /* 179 */
@@ -22072,6 +22113,178 @@
 	}); /*
 	     * Select Field Component
 	     */
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _TextField = __webpack_require__(176);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _AddButton = __webpack_require__(183);
+	
+	var _AddButton2 = _interopRequireDefault(_AddButton);
+	
+	var _CostCard = __webpack_require__(184);
+	
+	var _CostCard2 = _interopRequireDefault(_CostCard);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/*
+	 * Cost Form Component
+	 */
+	exports.default = _react2.default.createClass({
+	  displayName: 'CostForm',
+	  handleCostFieldChange: function handleCostFieldChange(costIndex, costName, costValue) {
+	    this.props.handleCostFieldChange(this.props.type, costIndex, costName, costValue);
+	  },
+	  handleClick: function handleClick() {
+	    this.props.handleAddCost(this.props.type);
+	  },
+	
+	
+	  render: function render() {
+	    var _this = this;
+	
+	    var type = this.props.type;
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'cost-form' },
+	      _react2.default.createElement(
+	        'h3',
+	        { className: 'cost-form--label' },
+	        type == "charges" ? "Charges" : "Fines / Court Costs"
+	      ),
+	      this.props.costs.map(function (cost, index) {
+	        return _react2.default.createElement(_CostCard2.default, { key: index,
+	          index: index,
+	          type: _this.props.type,
+	          cost: cost,
+	          handleCostFieldChange: _this.handleCostFieldChange });
+	        /*
+	         *                   return(
+	         *                        <div	key = {index}
+	         *                                className = "cost-form--card">
+	         *
+	         *                            <TextField	label = {type=="charges"?"Charge":"Fine / Cost"}
+	         *                                        name = {type}
+	         *                                        costIndex = {index}
+	         *                                        value = {this.props.citationNumber}
+	         *                                        handleFieldChange = {this.handleCostFieldChange} />
+	         *
+	         *                            <TextField	label = "Amount"
+	         *                                        name = {type}
+	         *                                        costIndex = {index}
+	         *                                        value = {this.props.citationNumber}
+	         *                                        handleFieldChange = {this.handleCostFieldChange} />
+	         *                        </div>
+	         *                    )
+	         */
+	      }),
+	      _react2.default.createElement(_AddButton2.default, { label: "Add " + (type == "charges" ? "Charge" : "Cost"),
+	        handleClick: this.handleClick })
+	    );
+	  }
+	});
+	
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'AddButton',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'button',
+				{ onClick: this.props.handleClick, className: 'add-button' },
+				this.props.label
+			);
+		}
+	}); /*
+	     * Full Button Component
+	     */
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _TextField = __webpack_require__(176);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/*
+	 * Cost Form Component
+	 */
+	exports.default = _react2.default.createClass({
+		displayName: 'CostCard',
+		handleCostFieldChange: function handleCostFieldChange(e) {
+			this.props.handleCostFieldChange(this.props.index, e.target.name, e.target.value);
+		},
+	
+	
+		render: function render() {
+			var type = this.props.type;
+			console.log('CostCard Props:', this.props);
+			return _react2.default.createElement(
+				'div',
+				{ key: this.props.index,
+					className: 'cost-form--card' },
+				_react2.default.createElement(_TextField2.default, { label: type == "charges" ? "Charge" : "Fine / Cost",
+					name: 'costName',
+					value: this.props.cost.charges,
+					handleFieldChange: this.handleCostFieldChange }),
+				_react2.default.createElement(_TextField2.default, { label: 'Amount',
+					name: 'costAmount',
+					value: this.props.cost.amount,
+					handleFieldChange: this.handleCostFieldChange })
+			);
+		}
+	});
+	
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
 
 /***/ }
 /******/ ]);
