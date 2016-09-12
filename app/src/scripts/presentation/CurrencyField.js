@@ -16,12 +16,15 @@ export default React.createClass({
 					{this.props.label}
 				</label>
 
-				<textArea 	
-						className = "field--text-area" 
+				<input 	className = "field--currency-input" 
 						name = {this.props.name}
-						type = "text"
+						min = "0.01"
+						step = "0.01"
+						type = "number"
 						onChange = {this.handleFieldChange}
 						value = {this.props.value} />
+
+				<span	className = "field--currency-input--suffix">$</span>
 			</div>
 		);
 	}

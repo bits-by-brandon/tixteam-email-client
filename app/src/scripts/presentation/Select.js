@@ -4,6 +4,11 @@
 import React from 'react';
 
 export default React.createClass({
+
+	handleFieldChange(e){
+		this.props.handleFieldChange(this.props.index, e)
+	},
+
     render: function() {
 		return (
 			<div className = "field">
@@ -14,16 +19,16 @@ export default React.createClass({
 				<select 	className="field--select" 
 							type="select"
 							name={this.props.name}
-							onChange={this.props.handleFieldChange}
+							onChange={this.handleFieldChange}
 							value={this.props.value} >
 					<option value="null">{this.props.defaultValue}</option>
-				{this.props.options.map((item, index) => {
-					return <option 
-									value={item}
-									key={index}>
-								{item}
-							</option>
-				 })}
+					{this.props.options.map((item, index) => {
+						return <option 
+										value={item}
+										key={index}>
+									{item}
+								</option>
+					 })}
 				</select>
 			</div>
 		);

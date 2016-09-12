@@ -21,7 +21,7 @@ html, body{
 	.field{
 		display: block;
 		width: 100%;
-		margin: 30px 0;
+		margin: 16px 0;
 		&--label{
 			padding: 0 14px;
 			display: inline-block;
@@ -31,21 +31,38 @@ html, body{
 			margin-bottom: 5px;
 			-webkit-user-select: none;
 		}
+		&--currency-input{
+			display: inline-block;
+			width: 100%;
+			border: 1px solid #eeeeee;
+			font-size: 20px;
+			padding: 12px;
+			padding-left: 25px;
+			box-shadow: 0 3px 10px 0 rgba(#333, 0.1);
+			font-family: Avenir;
+			&--suffix{
+				position: absolute;
+				left: 50px;
+				color: #aaa;
+				transform: translateY(18px);
+			}
+		}
 		&--text-input{
 			display: inline-block;
 			width: 100%;
 			border: 1px solid #eeeeee;
 			font-size: 20px;
-			padding: 14px;
+			padding: 12px;
 			box-shadow: 0 3px 10px 0 rgba(#333, 0.1);
 			font-family: Avenir;
 		}
 		&--text-area{
 			display: block;
 			width: 100%;
+			font-size: 14px;
 			border: 1px solid #eeeeee;
-			height: 300px;
-			padding: 14px;
+			height: 200px;
+			padding: 12px;
 		}
 		&--radio{
 			display: flex;
@@ -116,6 +133,7 @@ html, body{
 	font-family: Avenir;
 	background-color: transparent;
 	border: 0;
+	cursor: pointer;
 	&:before{
 		transform: translateY(3px);
 		content: '+';
@@ -143,7 +161,7 @@ html, body{
 	}
 }
 
-.cost-form{
+.cost-form, .sentence-form{
 	margin-bottom: 80px;
 	&--label{
 		font-size: 24px;
@@ -159,5 +177,8 @@ html, body{
 	}
 	.field{
 		margin: 8px 0;
+		&--text-area{
+			height: 100px;
+		}
 	}
 }

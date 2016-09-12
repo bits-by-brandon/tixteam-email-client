@@ -22,36 +22,18 @@ export default React.createClass({
 
     render: function(){
 		let type = this.props.type;
+		let label = this.props.label;
 		return (
 			<div className = "cost-form">
-				<h3 className = "cost-form--label">{type=="charges"?"Charges":"Fines / Court Costs"}</h3>
+				<h3 className = "cost-form--label">{label}</h3>
 				{this.props.costs.map((cost, index) => {
 					return <CostCard	key = {index}
 										index = {index}
 										type = {this.props.type} 
 										cost = {cost}
 										handleCostFieldChange = {this.handleCostFieldChange} />
-/*
- *                   return(
- *                        <div	key = {index}
- *                                className = "cost-form--card">
- *
- *                            <TextField	label = {type=="charges"?"Charge":"Fine / Cost"}
- *                                        name = {type}
- *                                        costIndex = {index}
- *                                        value = {this.props.citationNumber}
- *                                        handleFieldChange = {this.handleCostFieldChange} />
- *
- *                            <TextField	label = "Amount"
- *                                        name = {type}
- *                                        costIndex = {index}
- *                                        value = {this.props.citationNumber}
- *                                        handleFieldChange = {this.handleCostFieldChange} />
- *                        </div>
- *                    )
- */
 				})}
-				<AddButton	label = {"Add " + (type=="charges"?"Charge":"Cost")}
+				<AddButton	label = {"Add " + (label.substr(label.length - 1)=="s")?label.slice(0, -1):label}
 							handleClick = {this.handleClick} />
 			</div>
 		);

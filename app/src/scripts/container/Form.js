@@ -8,6 +8,7 @@ import React from 'react';
 //===================================================
 import TextField from '../presentation/TextField.js';
 import FullButton from '../presentation/FullButton.js';
+import Select from '../presentation/Select.js';
 import TicketForm from './TicketForm.js';
 
 export default React.createClass({
@@ -16,19 +17,27 @@ export default React.createClass({
 			first: "",
 			last: "",
 			email: "",
+			lawyer: "",
 			tickets:[]
 		};
 	},
 
-	handleFieldChange(e){
+	//================================
+	//======== Field Handlers ========
+	//================================
+	handleFieldChange(index, e){
 		//For the global fields, this changes the
 		//state of the wrapper, with the name corresponding
 		//to the key of the state changed.
 		this.setState({[e.target.name]: e.target.value});
 	},
 
+	//=================================
+	//======== Ticket Handlers ========
+	//=================================
 	handleTicketFieldChange(index, field, value){
-		value = (value=="null"?null:value);
+		if(field=="citationNumber"||field=="caseNumber"){value = value.toUpperCase()};
+		value = ((value=="null"||value=="")?null:value);
 		let newTickets = this.state.tickets;
 		newTickets[index][field] = value;
 
@@ -37,21 +46,42 @@ export default React.createClass({
 		})
 	},
 
-	handleAddTicket(e){
+	handleAddTicket(){
 		this.setState({tickets: this.state.tickets.concat({
 			type: null,
 			citationNumber: null,
+			chargeName: null,
 			caseNumber: null,
 			outcome: null,
 			copy: null,
 			customCopy: null,
-			charges:[],
-			costs:[]
+			costs: [],
+			fines: [],
+			sentences: [],
 		})})
 	},
 
+	//===================================
+	//======== Sentence Handlers ========
+	//===================================
+	handleAddSentence(ticketIndex){
+		let newTickets = this.state.tickets;
+		newTickets[ticketIndex].sentences.push({
+			sentence: ""
+		});
+		this.setState({tickets: newTickets});
+	},
+
+	handleSentenceFieldChange(ticketIndex, sentenceIndex, value){
+		let newTickets = this.state.tickets;
+		newTickets[ticketIndex].sentences[sentenceIndex] = value;
+		this.setState({tickets: newTickets});
+	},
+
+	//====================================
+	//======== Cost/Fine Handlers ========
+	//====================================
 	handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue){
-		console.log(ticketIndex, costType, costIndex, costName, costValue);
 		let newTickets = this.state.tickets;
 		let newCost = newTickets[ticketIndex][costType][costIndex];
 		newCost[costName] = costValue;
@@ -63,7 +93,7 @@ export default React.createClass({
 		let newTickets = this.state.tickets;
 		newTickets[ticketIndex][costType].push({
 			costName: '',
-			costAmount: '0'
+			costAmount: '0.00'
 		});
 		this.setState({tickets: newTickets});
 	},
@@ -98,6 +128,13 @@ export default React.createClass({
 							value = {this.state.email}
 							handleFieldChange = {this.handleFieldChange} />
 
+				<Select 	label = "Lawyer"
+							name = "lawyer"
+							options = {['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff']}
+							defaultValue = "-Select a lawyer-"
+							value = {this.state.lawyer}
+							handleFieldChange = {this.handleFieldChange} />
+
 				{ this.state.tickets.map((ticket, i) => {
 					//Render a ticket form for each ticket in state
 					return <TicketForm 
@@ -107,7 +144,9 @@ export default React.createClass({
 								handleTicketFieldChange = {this.handleTicketFieldChange}
 								handleCostFieldChange = {this.handleCostFieldChange}
 								handleTypeUpdate = {this.handleTypeUpdate} 
-								handleAddCost = {this.handleAddCost} />
+								handleAddCost = {this.handleAddCost}
+								handleAddSentence = {this.handleAddSentence}
+								handleSentenceFieldChange = {this.handleSentenceFieldChange} />
 				})}
 
 				<FullButton label = "New Ticket"

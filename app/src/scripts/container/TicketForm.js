@@ -12,6 +12,7 @@ import FullButton from '../presentation/FullButton.js';
 import Radio from '../presentation/Radio.js';
 import Select from '../presentation/Select.js';
 import CostForm from './CostForm.js';
+import SentenceForm from './SentenceForm.js';
 
 export default React.createClass({
 	getInitialState() {
@@ -20,7 +21,7 @@ export default React.createClass({
 		};
 	},
 
-	handleTicketFieldChange(e){
+	handleTicketFieldChange(index, e){
 		this.props.handleTicketFieldChange(this.props.index, e.target.name, e.target.value);
 	},
 
@@ -38,6 +39,14 @@ export default React.createClass({
 
 	handleAddCost(costType){
 		this.props.handleAddCost(this.props.index, costType);
+	},
+
+	handleAddSentence(){
+		this.props.handleAddSentence(this.props.index);
+	},
+
+	handleSentenceFieldChange(sentenceIndex, value){
+		this.props.handleSentenceFieldChange(this.props.index, sentenceIndex, value);
 	},
 	//type: null,
 	//citationNumber: null,
@@ -57,9 +66,11 @@ export default React.createClass({
 		let customCopy = ticket.customCopy;
 		let charges = ticket.charges;
 		let costs = ticket.costs;
+		let chargeName = ticket.chargeName;
+		//TODO: Remove ticket functionality
 		return (
 			<div className = "ticket-form">
-				<FullButton label = {type ? type + ((type=='civil')?' Ticket':' Charge'): 'Disposition ' + (this.props.index + 1)} 
+				<FullButton label = {chargeName ? chargeName: 'Disposition ' + (this.props.index + 1)} 
 							handleClick = {this.handleAddTicket} />
 
 				<Radio		label = "Type"
@@ -73,6 +84,14 @@ export default React.createClass({
 								label = {type=="civil"?'Citation Number':'Case Number'}
 								name = {type=="civil"?'citationNumber':'caseNumber'}
 								value = {this.props.citationNumber}
+								handleFieldChange = {this.handleTicketFieldChange} />
+			   	}})()}
+
+				{(() => {if(type){
+					return <TextField 	
+								label = "Charge"
+								name = "chargeName"
+								value = {this.chargeName}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
@@ -108,19 +127,34 @@ export default React.createClass({
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
-				<CostForm
-					label = "Charges"
-					type = "charges" 
-					costs = {charges}
-					handleAddCost = {this.handleAddCost} 
-					handleCostFieldChange = {this.handleCostFieldChange} />
+				{(() => {if(type){
+					return <CostForm
+								label = "Court Costs"
+								type = "costs" 
+								costs = {costs}
+								handleAddCost = {this.handleAddCost}
+								handleCostFieldChange = {this.handleCostFieldChange} />
+			   	}})()}
 
-				<CostForm
-					label = "Fines / Court Costs"
-					type = "costs" 
-					costs = {costs}
-					handleAddCost = {this.handleAddCost}
-					handleCostFieldChange = {this.handleCostFieldChange} />
+				{(() => {if(type){
+					return <CostForm
+								label = "Fines"
+								type = "fines" 
+								costs = {this.props.ticket.fines}
+								handleAddCost = {this.handleAddCost}
+								handleCostFieldChange = {this.handleCostFieldChange} />
+			   	}})()}
+
+				{(() => {if(type){
+					 //TODO: Create new Sentences Field
+					return <SentenceForm
+								label = "Sentences"
+								type = "sentences" 
+								sentences = {this.props.ticket.sentences}
+								handleAddSentence = {this.handleAddSentence}
+								handleCostFieldChange = {this.handleCostFieldChange}
+								handleSentenceFieldChange = {this.handleSentenceFieldChange} />
+			   	}})()}
 			</div>
 		);
 	}

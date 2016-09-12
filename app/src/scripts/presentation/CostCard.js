@@ -7,10 +7,11 @@ import React from 'react';
 //================ Dependancies =====================
 //===================================================
 import TextField from './TextField.js';
+import CurrencyField from './CurrencyField.js';
 
 export default React.createClass({
 
-	handleCostFieldChange(e){
+	handleCostFieldChange(index, e){
 		this.props.handleCostFieldChange(this.props.index, e.target.name, e.target.value);
 	},
 
@@ -26,7 +27,8 @@ export default React.createClass({
 							value = {this.props.cost.charges}
 							handleFieldChange = {this.handleCostFieldChange} />
 
-				<TextField	label = "Amount"
+				<CurrencyField	
+							label = "Amount"
 							name = "costAmount"
 							value = {this.props.cost.amount}
 							handleFieldChange = {this.handleCostFieldChange} />
