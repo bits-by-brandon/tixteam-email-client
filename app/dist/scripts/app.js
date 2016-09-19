@@ -21571,8 +21571,10 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+		value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _react = __webpack_require__(166);
 	
@@ -21582,61 +21584,14 @@
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _Email = __webpack_require__(187);
 	
-	/*
-	 * RouteSection Component
-	 */
-	exports.default = _react2.default.createClass({
-	  displayName: 'Layout',
-	
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'main-layout' },
-	      _react2.default.createElement(_Form2.default, null)
-	    );
-	  }
-	});
-	
-	//===================================================
-	//================ Dependancies =====================
-	//===================================================
-
-/***/ },
-/* 175 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _TextField = __webpack_require__(176);
-	
-	var _TextField2 = _interopRequireDefault(_TextField);
-	
-	var _FullButton = __webpack_require__(177);
-	
-	var _FullButton2 = _interopRequireDefault(_FullButton);
-	
-	var _Select = __webpack_require__(178);
-	
-	var _Select2 = _interopRequireDefault(_Select);
-	
-	var _TicketForm = __webpack_require__(179);
-	
-	var _TicketForm2 = _interopRequireDefault(_TicketForm);
+	var _Email2 = _interopRequireDefault(_Email);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
-	                                                                                                                                                                                                                   * Form Component
+	                                                                                                                                                                                                                   * RouteSection Component
 	                                                                                                                                                                                                                   */
 	
 	
@@ -21646,14 +21601,30 @@
 	
 	
 	exports.default = _react2.default.createClass({
-		displayName: 'Form',
+		displayName: 'Layout',
 		getInitialState: function getInitialState() {
 			return {
-				first: "",
-				last: "",
-				email: "",
-				lawyer: "",
-				tickets: []
+				//first: "",
+				//last: "",
+				//email: "",
+				//lawyer: "",
+				//tickets:[]
+				first: "Brandon",
+				last: "Chang",
+				email: "brandondc741@gmail.com",
+				lawyer: "Luis Herrera",
+				tickets: [{
+					type: "civil",
+					citationNumber: "A69MQ0E",
+					chargeName: "Speeding",
+					caseNumber: null,
+					outcome: "dismissed",
+					copy: "standard",
+					customCopy: null,
+					costs: [],
+					fines: [],
+					sentences: []
+				}]
 			};
 		},
 	
@@ -21745,33 +21716,129 @@
 			console.log(this.state);
 		},
 	
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{ className: 'main-layout' },
+				_react2.default.createElement(_Form2.default, _extends({
+					handleFieldChange: this.handleFieldChange,
+					handleAddTicket: this.handleAddTicket,
+					handleTicketFieldChange: this.handleTicketFieldChange,
+					handleAddCost: this.handleAddCost,
+					handleCostFieldChange: this.handleCostFieldChange,
+					handleAddSentence: this.handleAddSentence,
+					handleSentenceFieldChange: this.handleSentenceFieldChange,
+					handleTypeUpdate: this.handleTypeUpdate
+				}, this.state)),
+				_react2.default.createElement(_Email2.default, this.state)
+			);
+		}
+	});
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _TextField = __webpack_require__(176);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _FullButton = __webpack_require__(177);
+	
+	var _FullButton2 = _interopRequireDefault(_FullButton);
+	
+	var _Select = __webpack_require__(178);
+	
+	var _Select2 = _interopRequireDefault(_Select);
+	
+	var _TicketForm = __webpack_require__(179);
+	
+	var _TicketForm2 = _interopRequireDefault(_TicketForm);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
+	exports.default = _react2.default.createClass({
+		displayName: 'Form',
+	
+	
+		//================================
+		//======== Field Handlers ========
+		//================================
+		handleFieldChange: function handleFieldChange(index, e) {
+			this.props.handleFieldChange(index, e);
+		},
+	
+	
+		//=================================
+		//======== Ticket Handlers ========
+		//=================================
+		handleTicketFieldChange: function handleTicketFieldChange(index, field, value) {
+			this.props.handleTicketFieldChange(index, field, value);
+		},
+		handleAddTicket: function handleAddTicket() {
+			this.props.handleAddTicket();
+		},
+	
+	
+		//===================================
+		//======== Sentence Handlers ========
+		//===================================
+		handleAddSentence: function handleAddSentence(ticketIndex) {
+			this.props.handleAddSentence(ticketIndex);
+		},
+		handleSentenceFieldChange: function handleSentenceFieldChange(ticketIndex, sentenceIndex, value) {
+			this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
+		},
+		handleCostFieldChange: function handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue) {
+			this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
+		},
+		handleAddCost: function handleAddCost(ticketIndex, costType) {
+			this.props.handleAddCost(ticketIndex, costType);
+		},
+		handleTypeUpdate: function handleTypeUpdate() {
+			this.props.handleTypeUpdate();
+		},
+	
 	
 		render: function render() {
 			var _this = this;
 	
-			var tickets = this.state.tickets;
+			var tickets = this.props.tickets;
 			return _react2.default.createElement(
 				'div',
 				{ className: 'form' },
 				_react2.default.createElement(_TextField2.default, { label: 'First Name',
 					name: 'first',
-					value: this.state.firstName,
+					value: this.props.firstName,
 					handleFieldChange: this.handleFieldChange }),
 				_react2.default.createElement(_TextField2.default, { label: 'Last Name',
 					name: 'last',
-					value: this.state.lastName,
+					value: this.props.lastName,
 					handleFieldChange: this.handleFieldChange }),
 				_react2.default.createElement(_TextField2.default, { label: 'Client Email',
 					name: 'email',
-					value: this.state.email,
+					value: this.props.email,
 					handleFieldChange: this.handleFieldChange }),
 				_react2.default.createElement(_Select2.default, { label: 'Lawyer',
 					name: 'lawyer',
 					options: ['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff'],
 					defaultValue: '-Select a lawyer-',
-					value: this.state.lawyer,
+					value: this.props.lawyer,
 					handleFieldChange: this.handleFieldChange }),
-				this.state.tickets.map(function (ticket, i) {
+				this.props.tickets.map(function (ticket, i) {
 					//Render a ticket form for each ticket in state
 					return _react2.default.createElement(_TicketForm2.default, {
 						key: i,
@@ -21788,7 +21855,9 @@
 					handleClick: this.handleAddTicket })
 			);
 		}
-	});
+	}); /*
+	     * Form Component
+	     */
 
 /***/ },
 /* 176 */
@@ -22492,6 +22561,2115 @@
 	}); /*
 	     * Cost Form Component
 	     */
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*
+	                                                                                                                                                                                                                                                                   * Mail Component
+	                                                                                                                                                                                                                                                                   */
+	
+	//===================================================
+	//================ Dependancies =====================
+	//===================================================
+	
+	
+	//===========================================
+	//================ Styles ===================
+	//===========================================
+	
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _Line = __webpack_require__(205);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _Header = __webpack_require__(207);
+	
+	var _Header2 = _interopRequireDefault(_Header);
+	
+	var _Charge = __webpack_require__(208);
+	
+	var _Charge2 = _interopRequireDefault(_Charge);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients<Paste>
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'Email',
+	
+	
+		render: function render() {
+			//Rendering Email Tempalte
+			var emailHTML = { __html: (0, _reactHtmlEmail.renderEmail)(_react2.default.createElement(
+					_reactHtmlEmail.Email,
+					{ style: { backgroundColor: '#2D2D2D' }, title: 'Hello World!' },
+					_react2.default.createElement(
+						_reactHtmlEmail.Item,
+						{ width: '100%' },
+						_react2.default.createElement(_Header2.default, null),
+						_react2.default.createElement(
+							_reactHtmlEmail.Box,
+							{ width: '540', style: _EmailStyles2.default.mainContent, align: 'center' },
+							_react2.default.createElement(
+								_reactHtmlEmail.Item,
+								null,
+								_react2.default.createElement(
+									_reactHtmlEmail.Box,
+									{ width: '100%', align: 'center', cellPadding: 40 },
+									_react2.default.createElement(
+										_reactHtmlEmail.Item,
+										{ align: 'center' },
+										_react2.default.createElement(
+											'p',
+											{ style: _EmailStyles2.default.h1 },
+											'Mr.  ',
+											_react2.default.createElement(
+												'span',
+												{ style: _EmailStyles2.default.h1Strong },
+												this.props.first,
+												' ',
+												this.props.last,
+												','
+											),
+											_react2.default.createElement('br', null),
+											'Here are the results of your case'
+										)
+									)
+								)
+							),
+							_react2.default.createElement(
+								_reactHtmlEmail.Item,
+								null,
+								_react2.default.createElement(
+									_reactHtmlEmail.Box,
+									{ width: '100%' },
+									this.props.tickets.map(function (item, index) {
+										return _react2.default.createElement(_Charge2.default, _extends({}, item, { key: index }));
+									})
+								)
+							)
+						)
+					)
+				)) };
+	
+			return _react2.default.createElement('div', { className: 'email--wrapper', dangerouslySetInnerHTML: emailHTML });
+		}
+	});
+
+/***/ },
+/* 188 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.renderEmail = exports.configStyleValidator = exports.injectReactEmailAttributes = exports.A = exports.Span = exports.Item = exports.Image = exports.Email = exports.Box = exports.PropTypes = undefined;
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	var _Box = __webpack_require__(192);
+	
+	var _Box2 = _interopRequireDefault(_Box);
+	
+	var _Email = __webpack_require__(193);
+	
+	var _Email2 = _interopRequireDefault(_Email);
+	
+	var _Image = __webpack_require__(196);
+	
+	var _Image2 = _interopRequireDefault(_Image);
+	
+	var _Item = __webpack_require__(194);
+	
+	var _Item2 = _interopRequireDefault(_Item);
+	
+	var _Span = __webpack_require__(197);
+	
+	var _Span2 = _interopRequireDefault(_Span);
+	
+	var _A = __webpack_require__(198);
+	
+	var _A2 = _interopRequireDefault(_A);
+	
+	var _injectReactEmailAttributes = __webpack_require__(199);
+	
+	var _injectReactEmailAttributes2 = _interopRequireDefault(_injectReactEmailAttributes);
+	
+	var _renderEmail = __webpack_require__(200);
+	
+	var _renderEmail2 = _interopRequireDefault(_renderEmail);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var __DEV__ = typeof process !== 'undefined' && process.env && process.env.NODE_ENV !== 'production';
+	
+	(0, _PropTypes.configStyleValidator)({
+	  warn: __DEV__
+	});
+	
+	exports.PropTypes = _PropTypes2.default;
+	exports.Box = _Box2.default;
+	exports.Email = _Email2.default;
+	exports.Image = _Image2.default;
+	exports.Item = _Item2.default;
+	exports.Span = _Span2.default;
+	exports.A = _A2.default;
+	exports.injectReactEmailAttributes = _injectReactEmailAttributes2.default;
+	exports.configStyleValidator = _PropTypes.configStyleValidator;
+	exports.renderEmail = _renderEmail2.default;
+	exports.default = {
+	  PropTypes: _PropTypes2.default,
+	  injectReactEmailAttributes: _injectReactEmailAttributes2.default,
+	  configStyleValidator: _PropTypes.configStyleValidator,
+	  renderEmail: _renderEmail2.default,
+	  __styleValidator: _PropTypes.__styleValidator
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.__styleValidator = undefined;
+	exports.configStyleValidator = configStyleValidator;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _StyleValidator = __webpack_require__(190);
+	
+	var _StyleValidator2 = _interopRequireDefault(_StyleValidator);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var __styleValidator = exports.__styleValidator = new _StyleValidator2.default();
+	
+	function configStyleValidator(config) {
+	  __styleValidator.setConfig(config);
+	}
+	
+	exports.default = {
+	  style: function style(props, propName, componentName) {
+	    var _React$PropTypes;
+	
+	    for (var _len = arguments.length, rest = Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+	      rest[_key - 3] = arguments[_key];
+	    }
+	
+	    var objErr = (_React$PropTypes = _react2.default.PropTypes).object.apply(_React$PropTypes, [props, propName, componentName].concat(rest));
+	    if (objErr) {
+	      return objErr;
+	    }
+	    return __styleValidator.validate(props[propName], componentName);
+	  }
+	};
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _supportMatrix = __webpack_require__(191);
+	
+	var _supportMatrix2 = _interopRequireDefault(_supportMatrix);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var capsRe = /[A-Z]/g;
+	
+	var StyleValidator = (function () {
+	  function StyleValidator(config) {
+	    _classCallCheck(this, StyleValidator);
+	
+	    this.setConfig(config);
+	  }
+	
+	  _createClass(StyleValidator, [{
+	    key: 'setConfig',
+	    value: function setConfig(config) {
+	      this.config = _extends({
+	        strict: true,
+	        warn: true,
+	        platforms: ['gmail', 'gmail-android', 'apple-mail', 'apple-ios', 'yahoo-mail', 'outlook', 'outlook-legacy', 'outlook-web']
+	      }, config);
+	    }
+	  }, {
+	    key: 'validate',
+	    value: function validate(style, componentName) {
+	      var _this = this;
+	
+	      var _loop = function _loop(propNameCamelCase) {
+	        // eslint-disable-line guard-for-in
+	        var propName = propNameCamelCase.replace(capsRe, function (match) {
+	          return '-' + match[0].toLowerCase();
+	        });
+	
+	        var supportInfo = _supportMatrix2.default[propName];
+	
+	        if (!supportInfo) {
+	          if (_this.config.strict) {
+	            return {
+	              v: new Error('Unknown style property `' + propName + '` supplied to `' + componentName + '`.')
+	            };
+	          }
+	          return {
+	            v: undefined
+	          };
+	        }
+	
+	        var unsupported = [];
+	        var messages = new Map();
+	        _this.config.platforms.forEach(function (platform) {
+	          if (typeof supportInfo[platform] === 'string') {
+	            var msg = supportInfo[platform];
+	            if (!messages.has(msg)) {
+	              messages.set(msg, []);
+	            }
+	            messages.get(msg).push(platform);
+	          } else if (supportInfo[platform] === false) {
+	            unsupported.push(platform);
+	          }
+	        });
+	
+	        if (_this.config.warn) {
+	          var _iteratorNormalCompletion = true;
+	          var _didIteratorError = false;
+	          var _iteratorError = undefined;
+	
+	          try {
+	            for (var _iterator = messages[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	              var _step$value = _slicedToArray(_step.value, 2);
+	
+	              var msg = _step$value[0];
+	              var platforms = _step$value[1];
+	
+	              console.warn('Warning: Style property `' + propName + '` supplied to `' + componentName + '`, in ' + platforms.join(', ') + ': ' + msg.toLowerCase()); // eslint-disable-line no-console
+	            }
+	          } catch (err) {
+	            _didIteratorError = true;
+	            _iteratorError = err;
+	          } finally {
+	            try {
+	              if (!_iteratorNormalCompletion && _iterator.return) {
+	                _iterator.return();
+	              }
+	            } finally {
+	              if (_didIteratorError) {
+	                throw _iteratorError;
+	              }
+	            }
+	          }
+	        }
+	
+	        if (unsupported.length && _this.config.strict) {
+	          return {
+	            v: new Error('Style property `' + propName + '` supplied to `' + componentName + '` unsupported in: ' + unsupported.join(', ') + '.')
+	          };
+	        }
+	      };
+	
+	      for (var propNameCamelCase in style) {
+	        var _ret = _loop(propNameCamelCase);
+	
+	        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+	      }
+	    }
+	  }]);
+	
+	  return StyleValidator;
+	})();
+	
+	exports.default = StyleValidator;
+
+/***/ },
+/* 191 */
+/***/ function(module, exports) {
+
+	module.exports = {
+		"direction": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"font": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"font-family": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"font-style": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"font-variant": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"font-size": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"font-weight": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"letter-spacing": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"line-height": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": "line-height on td is ignored, use on p instead.",
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"text-align": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"text-decoration": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"text-indent": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"text-overflow": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": "text-overflow: ellipsis; does not work",
+			"apple-mail": true,
+			"yahoo-mail": "text-overflow: ellipsis; does not work",
+			"gmail": "text-overflow: ellipsis; does not work in Firefox",
+			"gmail-android": true
+		},
+		"text-shadow": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"text-transform": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"white-space": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"word-spacing": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"word-wrap": {
+			"outlook": false,
+			"outlook-legacy": "word-wrap: normal; not supported",
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": false
+		},
+		"vertical-align": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"text-fill-color": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"text-fill-stroke": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"color": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"background": {
+			"outlook": "Background images not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": "Background images not supported",
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"background-color": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"background-image": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"background-position": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"background-repeat": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"background-size": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": "Image not stretched",
+			"gmail": false,
+			"gmail-android": "Image not stretched"
+		},
+		"border-left": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border-right": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border-top": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border-bottom": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border-color": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": false
+		},
+		"border-image": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": false
+		},
+		"border-radius": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": true,
+			"gmail-android": false
+		},
+		"box-shadow": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": false
+		},
+		"height": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"margin-left": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"margin-right": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"margin-top": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"margin-bottom": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"margin": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"padding-left": {
+			"outlook": "Padding for p, div and a tags is not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"padding-right": {
+			"outlook": "Padding for p, div and a tags is not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"padding-top": {
+			"outlook": "Padding for p, div and a tags is not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"padding-bottom": {
+			"outlook": "Padding for p, div and a tags is not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"padding": {
+			"outlook": "Padding for p, div and a tags is not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"width": {
+			"outlook": "Width for p and div tags is not supported",
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"max-width": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"min-width": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"bottom": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"clear": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"clip": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"cursor": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": false
+		},
+		"display": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"float": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"left": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"opacity": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"outline": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": "Inner and outer border are collapsed",
+			"apple-mail": true,
+			"yahoo-mail": "Inner and outer border are collapsed",
+			"gmail": "Inner and outer border are collapsed",
+			"gmail-android": true
+		},
+		"overflow": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": "overflow: hidden; does not work",
+			"apple-mail": true,
+			"yahoo-mail": "overflow: hidden; does not work",
+			"gmail": "overflow: hidden; does not work",
+			"gmail-android": "overflow: scroll; does not work"
+		},
+		"position": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": "position: fixed; does not result in elements being positioned relative to the reading pane",
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"resize": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": "IE: Yes. Otherwise, inline text field with scrollbar displays, but no resize tab",
+			"apple-mail": true,
+			"yahoo-mail": "IE: Yes. Otherwise, inline text field with scrollbar displays, but no resize tab",
+			"gmail": false,
+			"gmail-android": false
+		},
+		"right": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"top": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": false,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"visibility": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"z-index": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"list-style-image": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": false,
+			"gmail-android": true
+		},
+		"list-style-position": {
+			"outlook": false,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": false,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"list-style-type": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border-collapse": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"border-spacing": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"caption-side": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"empty-cells": {
+			"outlook": false,
+			"outlook-legacy": false,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		},
+		"table-layout": {
+			"outlook": true,
+			"outlook-legacy": true,
+			"apple-ios": true,
+			"outlook-web": true,
+			"apple-mail": true,
+			"yahoo-mail": true,
+			"gmail": true,
+			"gmail-android": true
+		}
+	};
+
+/***/ },
+/* 192 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Box;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+	
+	function Box(_ref) {
+	  var children = _ref.children;
+	
+	  var props = _objectWithoutProperties(_ref, ['children']);
+	
+	  return _react2.default.createElement(
+	    'table',
+	    props,
+	    _react2.default.createElement(
+	      'tbody',
+	      null,
+	      children
+	    )
+	  );
+	}
+	
+	Box.propTypes = {
+	  cellPadding: _react.PropTypes.number,
+	  cellSpacing: _react.PropTypes.number,
+	  border: _react.PropTypes.string,
+	  bgcolor: _react.PropTypes.string,
+	  width: _react.PropTypes.string,
+	  height: _react.PropTypes.string,
+	  align: _react.PropTypes.oneOf(['left', 'center', 'right']),
+	  valign: _react.PropTypes.oneOf(['top', 'middle', 'bottom']),
+	  style: _PropTypes2.default.style,
+	  children: _react.PropTypes.node
+	};
+	
+	Box.defaultProps = {
+	  cellPadding: 0,
+	  cellSpacing: 0,
+	  border: '0',
+	  align: 'left',
+	  valign: 'top'
+	};
+
+/***/ },
+/* 193 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Email;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	var _Box = __webpack_require__(192);
+	
+	var _Box2 = _interopRequireDefault(_Box);
+	
+	var _Item = __webpack_require__(194);
+	
+	var _Item2 = _interopRequireDefault(_Item);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// inspired by http://htmlemailboilerplate.com
+	function Email(props) {
+	  // default nested 600px wide outer table container (see http://templates.mailchimp.com/development/html/)
+	  return _react2.default.createElement(
+	    'html',
+	    { xmlns: 'http://www.w3.org/1999/xhtml' },
+	    _react2.default.createElement(
+	      'head',
+	      null,
+	      _react2.default.createElement('meta', { httpEquiv: 'Content-Type', content: 'text/html; charset=utf-8' }),
+	      _react2.default.createElement('meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }),
+	      _react2.default.createElement(
+	        'title',
+	        null,
+	        props.title
+	      ),
+	      props.headCSS && _react2.default.createElement(
+	        'style',
+	        { type: 'text/css' },
+	        props.headCSS
+	      )
+	    ),
+	    _react2.default.createElement(
+	      'body',
+	      { style: {
+	          width: '100%',
+	          margin: 0,
+	          padding: 0,
+	          WebkitTextSizeAdjust: '100%',
+	          MsTextSizeAdjust: '100%'
+	        } },
+	      _react2.default.createElement(
+	        _Box2.default,
+	        { width: '100%', height: '100%', bgcolor: props.bgcolor },
+	        _react2.default.createElement(
+	          _Item2.default,
+	          { align: props.align, valign: props.valign },
+	          _react2.default.createElement(
+	            _Box2.default,
+	            { width: props.width, align: 'center', cellPadding: props.cellPadding, cellSpacing: props.cellSpacing, style: props.style },
+	            props.children
+	          )
+	        )
+	      )
+	    )
+	  );
+	}
+	
+	Email.propTypes = {
+	  title: _react.PropTypes.string.isRequired,
+	  bgcolor: _react.PropTypes.string,
+	  cellPadding: _react.PropTypes.number,
+	  cellSpacing: _react.PropTypes.number,
+	  style: _PropTypes2.default.style,
+	  headCSS: _react.PropTypes.string,
+	  children: _react.PropTypes.node,
+	  width: _react.PropTypes.string,
+	  align: _react.PropTypes.oneOf(['left', 'center', 'right']),
+	  valign: _react.PropTypes.oneOf(['top', 'middle', 'bottom'])
+	};
+	
+	Email.defaultProps = {
+	  width: '600',
+	  align: 'center',
+	  valign: 'top'
+	};
+
+/***/ },
+/* 194 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Item;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	var _includeDataProps = __webpack_require__(195);
+	
+	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Item(props) {
+	  return _react2.default.createElement(
+	    'tr',
+	    null,
+	    _react2.default.createElement(
+	      'td',
+	      _extends({}, (0, _includeDataProps2.default)(props), { align: props.align, valign: props.valign, bgcolor: props.bgcolor, style: props.style }),
+	      props.children
+	    )
+	  );
+	}
+	
+	Item.propTypes = {
+	  bgcolor: _react.PropTypes.string,
+	  align: _react.PropTypes.oneOf(['left', 'center', 'right']),
+	  valign: _react.PropTypes.oneOf(['top', 'middle', 'bottom']),
+	  style: _PropTypes2.default.style,
+	  children: _react.PropTypes.node
+	};
+
+/***/ },
+/* 195 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function (props) {
+	  var dataProps = {};
+	
+	  Object.keys(props).forEach(function (key) {
+	    if (/^data-/.test(key)) {
+	      dataProps[key] = props[key];
+	    }
+	  });
+	
+	  return dataProps;
+	};
+
+/***/ },
+/* 196 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Image;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	var _includeDataProps = __webpack_require__(195);
+	
+	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Image(props) {
+	  return _react2.default.createElement('img', _extends({}, (0, _includeDataProps2.default)(props), { alt: props.alt, src: props.src, width: props.width, height: props.height, style: _extends({
+	      display: 'block',
+	      outline: 'none',
+	      border: 'none',
+	      textDecoration: 'none'
+	    }, props.style) }));
+	}
+	
+	Image.propTypes = {
+	  alt: _react.PropTypes.string.isRequired,
+	  src: _react.PropTypes.string.isRequired,
+	  width: _react.PropTypes.number.isRequired,
+	  height: _react.PropTypes.number.isRequired,
+	  style: _PropTypes2.default.style
+	};
+
+/***/ },
+/* 197 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = Span;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	var _includeDataProps = __webpack_require__(195);
+	
+	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Span(props) {
+	  return _react2.default.createElement(
+	    'span',
+	    _extends({}, (0, _includeDataProps2.default)(props), { style: _extends({
+	        fontFamily: props.fontFamily,
+	        fontSize: props.fontSize,
+	        fontWeight: props.fontWeight,
+	        lineHeight: (props.lineHeight !== undefined ? props.lineHeight : props.fontSize) + 'px',
+	        color: props.color
+	      }, props.style) }),
+	    props.children
+	  );
+	}
+	
+	Span.propTypes = {
+	  fontFamily: _react.PropTypes.string,
+	  fontSize: _react.PropTypes.number,
+	  fontWeight: _react.PropTypes.string,
+	  lineHeight: _react.PropTypes.number,
+	  color: _react.PropTypes.string,
+	  style: _PropTypes2.default.style,
+	  children: _react.PropTypes.node
+	};
+	
+	Span.defaultProps = {
+	  fontFamily: 'sans-serif',
+	  fontSize: 14,
+	  color: '#000'
+	};
+
+/***/ },
+/* 198 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = A;
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropTypes = __webpack_require__(189);
+	
+	var _PropTypes2 = _interopRequireDefault(_PropTypes);
+	
+	var _includeDataProps = __webpack_require__(195);
+	
+	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function A(props) {
+	  return _react2.default.createElement(
+	    'a',
+	    _extends({}, (0, _includeDataProps2.default)(props), { href: props.href, target: '_blank', style: _extends({
+	        color: props.color,
+	        textDecoration: props.textDecoration
+	      }, props.style) }),
+	    props.children
+	  );
+	}
+	
+	A.propTypes = {
+	  href: _react.PropTypes.string.isRequired,
+	  color: _react.PropTypes.string,
+	  textDecoration: _react.PropTypes.string,
+	  style: _PropTypes2.default.style,
+	  children: _react.PropTypes.node
+	};
+	
+	A.defaultProps = {
+	  textDecoration: 'underline'
+	};
+
+/***/ },
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.emailAttributes = undefined;
+	exports.default = injectReactEmailAttributes;
+	
+	__webpack_require__(1);
+	
+	var _DOMProperty = __webpack_require__(6);
+	
+	var _DOMProperty2 = _interopRequireDefault(_DOMProperty);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// ensure base DOM properties are already injected
+	var emailAttributes = exports.emailAttributes = {
+	  Properties: {
+	    'xmlns': 0,
+	    'align': 0,
+	    'valign': 0,
+	    'bgcolor': 0,
+	    'border': 0
+	  }
+	};
+	
+	var injected = false;
+	
+	function injectReactEmailAttributes() {
+	  if (injected) {
+	    return;
+	  }
+	
+	  if (_DOMProperty2.default.properties.hasOwnProperty('xmlns')) {
+	    // already exists in React 15.3.0
+	    delete emailAttributes.Properties.xmlns;
+	  }
+	
+	  // make React accept some HTML attributes useful to emails
+	  _DOMProperty2.default.injection.injectDOMPropertyConfig(emailAttributes);
+	
+	  injected = true;
+	}
+
+/***/ },
+/* 200 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = renderEmail;
+	
+	var _server = __webpack_require__(201);
+	
+	var _server2 = _interopRequireDefault(_server);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function renderEmail(emailComponent) {
+	  var doctype = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
+	  return doctype + _server2.default.renderToStaticMarkup(emailComponent);
+	}
+
+/***/ },
+/* 201 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(202);
+
+
+/***/ },
+/* 202 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactDOMServer
+	 */
+	
+	'use strict';
+	
+	var ReactDefaultInjection = __webpack_require__(9);
+	var ReactServerRendering = __webpack_require__(203);
+	var ReactVersion = __webpack_require__(160);
+	
+	ReactDefaultInjection.inject();
+	
+	var ReactDOMServer = {
+	  renderToString: ReactServerRendering.renderToString,
+	  renderToStaticMarkup: ReactServerRendering.renderToStaticMarkup,
+	  version: ReactVersion
+	};
+	
+	module.exports = ReactDOMServer;
+
+/***/ },
+/* 203 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/**
+	 * Copyright 2013-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactServerRendering
+	 */
+	'use strict';
+	
+	var _prodInvariant = __webpack_require__(5);
+	
+	var ReactDOMContainerInfo = __webpack_require__(156);
+	var ReactDefaultBatchingStrategy = __webpack_require__(126);
+	var ReactElement = __webpack_require__(93);
+	var ReactInstrumentation = __webpack_require__(38);
+	var ReactMarkupChecksum = __webpack_require__(158);
+	var ReactReconciler = __webpack_require__(35);
+	var ReactServerBatchingStrategy = __webpack_require__(204);
+	var ReactServerRenderingTransaction = __webpack_require__(119);
+	var ReactUpdates = __webpack_require__(32);
+	
+	var emptyObject = __webpack_require__(113);
+	var instantiateReactComponent = __webpack_require__(109);
+	var invariant = __webpack_require__(7);
+	
+	var pendingTransactions = 0;
+	
+	/**
+	 * @param {ReactElement} element
+	 * @return {string} the HTML markup
+	 */
+	function renderToStringImpl(element, makeStaticMarkup) {
+	  var transaction;
+	  try {
+	    ReactUpdates.injection.injectBatchingStrategy(ReactServerBatchingStrategy);
+	
+	    transaction = ReactServerRenderingTransaction.getPooled(makeStaticMarkup);
+	
+	    pendingTransactions++;
+	
+	    return transaction.perform(function () {
+	      var componentInstance = instantiateReactComponent(element, true);
+	      var markup = ReactReconciler.mountComponent(componentInstance, transaction, null, ReactDOMContainerInfo(), emptyObject, 0 /* parentDebugID */
+	      );
+	      if (process.env.NODE_ENV !== 'production') {
+	        ReactInstrumentation.debugTool.onUnmountComponent(componentInstance._debugID);
+	      }
+	      if (!makeStaticMarkup) {
+	        markup = ReactMarkupChecksum.addChecksumToMarkup(markup);
+	      }
+	      return markup;
+	    }, null);
+	  } finally {
+	    pendingTransactions--;
+	    ReactServerRenderingTransaction.release(transaction);
+	    // Revert to the DOM batching strategy since these two renderers
+	    // currently share these stateful modules.
+	    if (!pendingTransactions) {
+	      ReactUpdates.injection.injectBatchingStrategy(ReactDefaultBatchingStrategy);
+	    }
+	  }
+	}
+	
+	/**
+	 * Render a ReactElement to its initial HTML. This should only be used on the
+	 * server.
+	 * See https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostring
+	 */
+	function renderToString(element) {
+	  !ReactElement.isValidElement(element) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'renderToString(): You must pass a valid ReactElement.') : _prodInvariant('46') : void 0;
+	  return renderToStringImpl(element, false);
+	}
+	
+	/**
+	 * Similar to renderToString, except this doesn't create extra DOM attributes
+	 * such as data-react-id that React uses internally.
+	 * See https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostaticmarkup
+	 */
+	function renderToStaticMarkup(element) {
+	  !ReactElement.isValidElement(element) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'renderToStaticMarkup(): You must pass a valid ReactElement.') : _prodInvariant('47') : void 0;
+	  return renderToStringImpl(element, true);
+	}
+	
+	module.exports = {
+	  renderToString: renderToString,
+	  renderToStaticMarkup: renderToStaticMarkup
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 204 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copyright 2014-present, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule ReactServerBatchingStrategy
+	 */
+	
+	'use strict';
+	
+	var ReactServerBatchingStrategy = {
+	  isBatchingUpdates: false,
+	  batchedUpdates: function (callback) {
+	    // Don't do anything here. During the server rendering we don't want to
+	    // schedule any updates. We will simply ignore them.
+	  }
+	};
+	
+	module.exports = ReactServerBatchingStrategy;
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients
+	/*
+	 * Mail Line Component
+	 */
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	//===========================================
+	//================ Styles ===================
+	//===========================================
+	exports.default = _react2.default.createClass({
+		displayName: 'Line',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				_reactHtmlEmail.Item,
+				null,
+				_react2.default.createElement(
+					_reactHtmlEmail.Box,
+					{ width: '300', align: 'center' },
+					_react2.default.createElement(
+						_reactHtmlEmail.Item,
+						null,
+						_react2.default.createElement('hr', { style: _EmailStyles2.default.yellowLine })
+					)
+				)
+			);
+		}
+	});
+
+/***/ },
+/* 206 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _h1Strong;
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	var yellow = '#FFE730',
+	    darkGray = '#2D2D2D',
+	    mediumGray = '#565656',
+	    lightGray = '#9B9B9B',
+	    green = '#7ED321';
+	
+	exports.default = {
+		mainContent: {
+			backgroundColor: '#fff'
+		},
+		h1: {
+			fontSize: 24,
+			fontWeight: '400',
+			fontStyle: 'italic',
+			color: mediumGray,
+			lineHeight: 1.5,
+			margin: 0
+		},
+		h1Strong: (_h1Strong = {
+			fontSize: 24,
+			fontWeight: '400',
+			fontStyle: 'italic',
+			color: mediumGray
+		}, _defineProperty(_h1Strong, 'fontWeight', 'bold'), _defineProperty(_h1Strong, 'lineHeight', 1.5), _defineProperty(_h1Strong, 'margin', 0), _h1Strong),
+		citationHeader: {
+			fontSize: 24,
+			fontWeight: '400',
+			color: darkGray,
+			lineHeight: 1.5,
+			margin: 0
+		},
+		h2: {
+			fontSize: 24,
+			fontWeight: '400',
+			color: mediumGray,
+			lineHeight: 1.5,
+			margin: 0,
+			padding: 0
+		},
+		p: {
+			margin: 0,
+			fontSize: 14,
+			color: mediumGray,
+			lineHeight: 1.3
+		},
+		yellowLine: {
+			backgroundColor: yellow,
+			borderColor: yellow,
+			borderTop: 'none',
+			display: 'block',
+			height: 1,
+			margin: 0
+		}
+	};
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients
+	/*
+	 * Mail Header Component
+	 */
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	//===========================================
+	//================ Styles ===================
+	//===========================================
+	exports.default = _react2.default.createClass({
+		displayName: 'Header',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				_reactHtmlEmail.Box,
+				{ cellPadding: 10, align: 'center' },
+				_react2.default.createElement(
+					_reactHtmlEmail.Item,
+					null,
+					_react2.default.createElement(_reactHtmlEmail.Image, { alt: 'The Tix Team Traffic Attorneys',
+						width: 225,
+						height: 135,
+						src: 'http://i.imgur.com/Ebx1sf0.png' })
+				)
+			);
+		}
+	});
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _Line = __webpack_require__(205);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _Outcome = __webpack_require__(209);
+	
+	var _Outcome2 = _interopRequireDefault(_Outcome);
+	
+	var _Spacer = __webpack_require__(210);
+	
+	var _Spacer2 = _interopRequireDefault(_Spacer);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	//===========================================
+	//================ Styles ===================
+	//===========================================
+	/*
+	 * Mail Charge Component
+	 */
+	exports.default = _react2.default.createClass({
+		displayName: 'Charge',
+	
+		render: function render() {
+			var _this = this;
+	
+			return _react2.default.createElement(
+				_reactHtmlEmail.Item,
+				null,
+				_react2.default.createElement(
+					_reactHtmlEmail.Box,
+					{ width: '460', align: 'center' },
+					_react2.default.createElement(_Line2.default, null),
+					_react2.default.createElement(_Spacer2.default, { height: 20 }),
+					_react2.default.createElement(
+						_reactHtmlEmail.Item,
+						{ width: '200' },
+						_react2.default.createElement(
+							'h1',
+							{ style: _EmailStyles2.default.citationHeader },
+							this.props.chargeName
+						)
+					),
+					function () {
+						if (_this.props.outcome) {
+							return _react2.default.createElement(_Outcome2.default, { outcome: _this.props.outcome });
+						}
+					}(),
+					_react2.default.createElement(_Spacer2.default, { height: 20 })
+				)
+			);
+		}
+	});
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _Line = __webpack_require__(205);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _Spacer = __webpack_require__(210);
+	
+	var _Spacer2 = _interopRequireDefault(_Spacer);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients
+	/*
+	 * Mail Charge Component
+	 */
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	//===========================================
+	//================ Styles ===================
+	//===========================================
+	exports.default = _react2.default.createClass({
+		displayName: 'Outcome',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				_reactHtmlEmail.Item,
+				null,
+				_react2.default.createElement(
+					_reactHtmlEmail.Box,
+					{ width: '100%', align: 'center' },
+					_react2.default.createElement(_Spacer2.default, { height: 20 }),
+					_react2.default.createElement(
+						_reactHtmlEmail.Item,
+						{ align: 'center' },
+						_react2.default.createElement(
+							'h1',
+							{ style: _EmailStyles2.default.h1 },
+							this.props.outcome
+						)
+					)
+				)
+			);
+		}
+	});
+
+/***/ },
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients
+	/*
+	 * Mail Line Component
+	 */
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	//===========================================
+	//================ Styles ===================
+	//===========================================
+	exports.default = _react2.default.createClass({
+		displayName: 'Spacer',
+	
+		render: function render() {
+			var height = this.props.height ? this.props.height.toString() : "20";
+			return _react2.default.createElement(
+				_reactHtmlEmail.Item,
+				null,
+				_react2.default.createElement(
+					_reactHtmlEmail.Box,
+					{ width: '100%', height: height },
+					_react2.default.createElement(
+						_reactHtmlEmail.Item,
+						null,
+						_react2.default.createElement(
+							'p',
+							{ style: { lineHeight: 0, margin: 0, height: 0, fontSize: 0 } },
+							' '
+						)
+					)
+				)
+			);
+		}
+	});
 
 /***/ }
 /******/ ]);

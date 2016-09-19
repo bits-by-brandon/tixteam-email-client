@@ -12,130 +12,75 @@ import Select from '../presentation/Select.js';
 import TicketForm from './TicketForm.js';
 
 export default React.createClass({
-	getInitialState() {
-		return {
-			first: "",
-			last: "",
-			email: "",
-			lawyer: "",
-			tickets:[]
-		};
-	},
 
 	//================================
 	//======== Field Handlers ========
 	//================================
 	handleFieldChange(index, e){
-		//For the global fields, this changes the
-		//state of the wrapper, with the name corresponding
-		//to the key of the state changed.
-		this.setState({[e.target.name]: e.target.value});
+		this.props.handleFieldChange(index, e);
 	},
 
 	//=================================
 	//======== Ticket Handlers ========
 	//=================================
 	handleTicketFieldChange(index, field, value){
-		if(field=="citationNumber"||field=="caseNumber"){value = value.toUpperCase()};
-		value = ((value=="null"||value=="")?null:value);
-		let newTickets = this.state.tickets;
-		newTickets[index][field] = value;
-
-		this.setState({
-			tickets: newTickets
-		})
+		this.props.handleTicketFieldChange(index, field, value);
 	},
 
 	handleAddTicket(){
-		this.setState({tickets: this.state.tickets.concat({
-			type: null,
-			citationNumber: null,
-			chargeName: null,
-			caseNumber: null,
-			outcome: null,
-			copy: null,
-			customCopy: null,
-			costs: [],
-			fines: [],
-			sentences: [],
-		})})
+		this.props.handleAddTicket();
 	},
 
 	//===================================
 	//======== Sentence Handlers ========
 	//===================================
 	handleAddSentence(ticketIndex){
-		let newTickets = this.state.tickets;
-		newTickets[ticketIndex].sentences.push({
-			sentence: ""
-		});
-		this.setState({tickets: newTickets});
+		this.props.handleAddSentence(ticketIndex);
 	},
 
 	handleSentenceFieldChange(ticketIndex, sentenceIndex, value){
-		let newTickets = this.state.tickets;
-		newTickets[ticketIndex].sentences[sentenceIndex] = value;
-		this.setState({tickets: newTickets});
+		this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
 	},
 
-	//====================================
-	//======== Cost/Fine Handlers ========
-	//====================================
 	handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue){
-		let newTickets = this.state.tickets;
-		let newCost = newTickets[ticketIndex][costType][costIndex];
-		newCost[costName] = costValue;
-		newTickets[ticketIndex][costType][costIndex] = newCost;
-		this.setState({tickets: newTickets})
+		this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
 	},
 
 	handleAddCost(ticketIndex, costType){
-		let newTickets = this.state.tickets;
-		newTickets[ticketIndex][costType].push({
-			costName: '',
-			costAmount: '0.00'
-		});
-		this.setState({tickets: newTickets});
+		this.props.handleAddCost(ticketIndex, costType);
 	},
 
 	handleTypeUpdate(){
-		this.setState({
-			citationNumber: null,
-			caseNumber: null
-		})
-	},
-
-	componentDidUpdate(){
-		console.log(this.state);
+		this.props.handleTypeUpdate();
 	},
 
     render: function(){
-		let tickets = this.state.tickets;
+		let tickets = this.props.tickets;
 		return (
 			<div className = "form">
 				<TextField 	label = "First Name"
 							name = "first"
-							value = {this.state.firstName}
+							value = {this.props.firstName}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<TextField 	label = "Last Name"
 							name = "last"
-							value = {this.state.lastName}
+							value = {this.props.lastName}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<TextField	label = "Client Email"
 							name = "email"
-							value = {this.state.email}
+							value = {this.props.email}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<Select 	label = "Lawyer"
 							name = "lawyer"
 							options = {['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff']}
 							defaultValue = "-Select a lawyer-"
-							value = {this.state.lawyer}
+							value = {this.props.lawyer}
 							handleFieldChange = {this.handleFieldChange} />
 
-				{ this.state.tickets.map((ticket, i) => {
+				{ this.props.tickets.map((ticket, i) => {
 					//Render a ticket form for each ticket in state
 					return <TicketForm 
 								key = {i}

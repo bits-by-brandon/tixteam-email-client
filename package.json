@@ -22,6 +22,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-uglify": "^1.5.4",
     "gulp-watch": "^4.3.8",
+    "json-loader": "^0.5.4",
     "webpack-stream": "^3.2.0"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "electron-reload": "^1.0.0",
     "react": "^15.2.0",
     "react-addons-css-transition-group": "^15.2.0",
-    "react-dom": "^15.2.0"
+    "react-dom": "^15.2.0",
+    "react-html-email": "^1.1.2"
   }
 }
