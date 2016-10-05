@@ -2,6 +2,7 @@ const	yellow = '#FFE730',
 		darkGray = '#2D2D2D',
 		mediumGray = '#565656',
 		lightGray = '#9B9B9B',
+        white = '#FFFFFF',
 		green = '#7ED321';
 
 
@@ -11,8 +12,7 @@ export default {
 	},
 	h1:{
 		fontSize: 24,
-		fontWeight: '400',
-		fontStyle: 'italic',
+		fontWeight: '600',
 		color: mediumGray,
 		lineHeight: 1.5,
 		margin: 0,
@@ -53,6 +53,24 @@ export default {
 		borderTop: 'none',
 		display: 'block',
 		height: 1,
+		margin: 0,
+	},
+	outcomeHeading:{
+	    letterSpacing: 8,
+        fontSize: 20,
+		color: white,
+        margin: 0,
+    },
+	outcomeMessage:{
+        fontSize: 20,
+		color: darkGray,
+		lineHeight: 1.35,
+        margin: 0,
+	},
+	outcomeCopy:{
+		fontSize: 14,
+        color: mediumGray,
+		lineHeight: 1.35,
 		margin: 0,
 	}
 }

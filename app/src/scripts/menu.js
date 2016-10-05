@@ -2,6 +2,7 @@ const   {remote} = require('electron'),
         {openExternal} = require('electron').shell,
         {Menu, MenuItem} = remote;
 
+//noinspection JSUnusedLocalSymbols
 const template = [
   {
     label: 'Sitemap',
@@ -86,4 +87,4 @@ module.exports = {
     init: function(){
         Menu.setApplicationMenu(menu);
     }
-}
+};

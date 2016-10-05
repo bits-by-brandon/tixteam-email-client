@@ -60,12 +60,12 @@ export default React.createClass({
 			<div className = "form">
 				<TextField 	label = "First Name"
 							name = "first"
-							value = {this.props.firstName}
+							value = {this.props.first}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<TextField 	label = "Last Name"
 							name = "last"
-							value = {this.props.lastName}
+							value = {this.props.last}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<TextField	label = "Client Email"
@@ -80,7 +80,7 @@ export default React.createClass({
 							value = {this.props.lawyer}
 							handleFieldChange = {this.handleFieldChange} />
 
-				{ this.props.tickets.map((ticket, i) => {
+				{ tickets.map((ticket, i) => {
 					//Render a ticket form for each ticket in state
 					return <TicketForm 
 								key = {i}

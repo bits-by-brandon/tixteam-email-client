@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import TextField from './TextField.js';
 import CurrencyField from './CurrencyField.js';
@@ -17,7 +17,7 @@ export default React.createClass({
 
     render: function(){
 		let type = this.props.type;
-		console.log('CostCard Props:',this.props)
+		console.log('CostCard Props:',this.props);
 		return (
 			<div	key = {this.props.index}
 					className = "cost-form--card">

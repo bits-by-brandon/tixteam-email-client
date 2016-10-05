@@ -1,14 +1,14 @@
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
-// Electron dependancies ( note: not bundled with webpack, 
+// Electron dependencies ( note: not bundled with webpack,
 // but resolved during electron build )
 
 const   electron = require('electron'),
         {ipcRenderer} = electron;
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import ReactDOM from 'react-dom';
 import React from 'react';

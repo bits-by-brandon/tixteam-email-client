@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import TextField from '../presentation/TextField.js';
 import FullButton from '../presentation/FullButton.js';

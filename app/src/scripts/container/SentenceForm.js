@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import TextArea from '../presentation/TextArea.js';
 import AddButton from '../presentation/AddButton.js';

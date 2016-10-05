@@ -11,7 +11,7 @@ import { Item, Box } from 'react-html-email';
 import style from '../EmailStyles';
  
 // set up React to support a few HTML attributes useful for legacy clients
-ReactHTMLEmail.injectReactEmailAttributes()
+ReactHTMLEmail.injectReactEmailAttributes();
 
 export default React.createClass({
     render: function(){

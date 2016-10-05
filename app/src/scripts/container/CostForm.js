@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import TextField from '../presentation/TextField.js';
 import AddButton from '../presentation/AddButton.js';
@@ -29,7 +29,7 @@ export default React.createClass({
 				{this.props.costs.map((cost, index) => {
 					return <CostCard	key = {index}
 										index = {index}
-										type = {this.props.type} 
+										type = {type}
 										cost = {cost}
 										handleCostFieldChange = {this.handleCostFieldChange} />
 				})}

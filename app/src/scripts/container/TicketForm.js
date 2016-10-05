@@ -83,7 +83,7 @@ export default React.createClass({
 					return <TextField 	
 								label = {type=="civil"?'Citation Number':'Case Number'}
 								name = {type=="civil"?'citationNumber':'caseNumber'}
-								value = {this.props.citationNumber}
+								value = {this.props.ticket.citationNumber}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
@@ -91,7 +91,7 @@ export default React.createClass({
 					return <TextField 	
 								label = "Charge"
 								name = "chargeName"
-								value = {this.chargeName}
+								value = {chargeName}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
@@ -105,7 +105,7 @@ export default React.createClass({
 										['dismissed', 'adjudicated guilty', 'withold of adjudication']
 								}
 								defaultValue = "-Select an outcome-"
-								value = {this.props.outcome}
+								value = {outcome}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
@@ -115,7 +115,7 @@ export default React.createClass({
 								name = "copy"
 								options = { ['standard', 'custom'] }
 								defaultValue = "-Select a message-"
-								value = {this.props.outcome}
+								value = {copy}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
@@ -123,7 +123,7 @@ export default React.createClass({
 					return	<TextArea 	
 								label = "Custom Message"
 								name = "customCopy"
-								value = {this.props.outcome}
+								value = {customCopy}
 								handleFieldChange = {this.handleTicketFieldChange} />
 			   	}})()}
 
