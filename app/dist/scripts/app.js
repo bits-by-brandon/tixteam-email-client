@@ -21593,7 +21593,7 @@
 	
 	
 	//===================================================
-	//================ Dependancies =====================
+	//================ Dependencies =====================
 	//===================================================
 	
 	
@@ -21696,9 +21696,7 @@
 	    //===================================
 	    handleAddSentence: function handleAddSentence(ticketIndex) {
 	        var newTickets = this.state.tickets;
-	        newTickets[ticketIndex].sentences.push({
-	            sentence: ""
-	        });
+	        newTickets[ticketIndex].sentences.push('');
 	        this.setState({ tickets: newTickets });
 	    },
 	    handleSentenceFieldChange: function handleSentenceFieldChange(ticketIndex, sentenceIndex, value) {
@@ -22088,25 +22086,15 @@
 			this.props.handleSentenceFieldChange(this.props.index, sentenceIndex, value);
 		},
 	
-		//type: null,
-		//citationNumber: null,
-		//caseNumber: null,
-		//outcome: null,
-		//copy: null,
-		//customCopy: null,
-		//charges:[],
-		//costs:[]
 	
 		render: function render() {
 			var _this = this;
 	
 			var type = this.props.ticket.type;
 			var ticket = this.props.ticket;
-			var number = ticket.citationNumber || ticket.caseNumber;
 			var outcome = ticket.outcome;
 			var copy = ticket.copy;
 			var customCopy = ticket.customCopy;
-			var charges = ticket.charges;
 			var costs = ticket.costs;
 			var chargeName = ticket.chargeName;
 			//TODO: Remove ticket functionality
@@ -22181,16 +22169,6 @@
 				}(),
 				function () {
 					if (type) {
-						return _react2.default.createElement(_CostForm2.default, {
-							label: 'Fines',
-							type: 'fines',
-							costs: _this.props.ticket.fines,
-							handleAddCost: _this.handleAddCost,
-							handleCostFieldChange: _this.handleCostFieldChange });
-					}
-				}(),
-				function () {
-					if (type) {
 						//TODO: Create new Sentences Field
 						return _react2.default.createElement(_SentenceForm2.default, {
 							label: 'Sentences',
@@ -22206,7 +22184,7 @@
 	});
 	
 	//===================================================
-	//================ Dependancies =====================
+	//================ Dependencies =====================
 	//===================================================
 
 /***/ },
@@ -24460,6 +24438,20 @@
 			color: mediumGray,
 			lineHeight: 1.35,
 			margin: 0
+		},
+		sentenceHeading: {
+			letterSpacing: 8,
+			fontSize: 20,
+			color: darkGray,
+			margin: 0
+		},
+		sentenceList: {
+			margin: 0
+		},
+		sentenceText: {
+			fontSize: 20,
+			lineHeight: 1.35,
+			marginBottom: 10
 		}
 	};
 
@@ -24545,6 +24537,10 @@
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
+	var _Sentences = __webpack_require__(211);
+	
+	var _Sentences2 = _interopRequireDefault(_Sentences);
+	
 	var _EmailStyles = __webpack_require__(206);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
@@ -24552,14 +24548,14 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	// set up React to support a few HTML attributes useful for legacy clients
+	/*
+	 * Mail Charge Component
+	 */
 	_reactHtmlEmail2.default.injectReactEmailAttributes();
 	
 	//===========================================
 	//================ Styles ===================
 	//===========================================
-	/*
-	 * Mail Charge Component
-	 */
 	exports.default = _react2.default.createClass({
 	    displayName: 'Charge',
 	
@@ -24591,7 +24587,12 @@
 	                            outcomeCopy: _this.props.outcomeCopy });
 	                    }
 	                }(),
-	                _react2.default.createElement(_Spacer2.default, { height: 20 })
+	                _react2.default.createElement(_Spacer2.default, { height: 20 }),
+	                function () {
+	                    if (_this.props.sentences.length > 0) {
+	                        return _react2.default.createElement(_Sentences2.default, { sentences: _this.props.sentences });
+	                    }
+	                }()
 	            )
 	        );
 	    }
@@ -24767,6 +24768,101 @@
 				)
 			);
 		}
+	});
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHtmlEmail = __webpack_require__(188);
+	
+	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
+	
+	var _Line = __webpack_require__(205);
+	
+	var _Line2 = _interopRequireDefault(_Line);
+	
+	var _Spacer = __webpack_require__(210);
+	
+	var _Spacer2 = _interopRequireDefault(_Spacer);
+	
+	var _EmailStyles = __webpack_require__(206);
+	
+	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// set up React to support a few HTML attributes useful for legacy clients
+	// React Component: Sentences
+	// ==========================
+	
+	// Dependencies
+	// ==========================
+	_reactHtmlEmail2.default.injectReactEmailAttributes();
+	
+	// Component declaration
+	// ==========================
+	exports.default = _react2.default.createClass({
+	    displayName: 'Sentences',
+	    getInitialState: function getInitialState() {
+	        return {};
+	    },
+	
+	    propTypes: {
+	        sentences: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.string).isRequired
+	    },
+	    componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+	        console.log(newProps);
+	    },
+	
+	
+	    render: function render() {
+	        console.log(this.props.sentences);
+	        return _react2.default.createElement(
+	            _reactHtmlEmail.Item,
+	            { width: '100%' },
+	            _react2.default.createElement(
+	                _reactHtmlEmail.Box,
+	                { width: '100%' },
+	                _react2.default.createElement(
+	                    _reactHtmlEmail.Item,
+	                    { align: 'center' },
+	                    _react2.default.createElement(
+	                        'h2',
+	                        { style: _EmailStyles2.default.sentenceHeading },
+	                        'SENTENCE'
+	                    )
+	                ),
+	                _react2.default.createElement(_Spacer2.default, { height: 20 }),
+	                _react2.default.createElement(
+	                    _reactHtmlEmail.Item,
+	                    null,
+	                    _react2.default.createElement(
+	                        'ol',
+	                        { style: _EmailStyles2.default.sentenceList },
+	                        this.props.sentences.map(function (sentence, index) {
+	                            return _react2.default.createElement(
+	                                'li',
+	                                { style: _EmailStyles2.default.sentenceText, key: index },
+	                                sentence
+	                            );
+	                        })
+	                    )
+	                ),
+	                _react2.default.createElement(_Spacer2.default, { height: 20 })
+	            )
+	        );
+	    }
 	});
 
 /***/ }

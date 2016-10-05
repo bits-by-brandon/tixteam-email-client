@@ -72,5 +72,19 @@ export default {
         color: mediumGray,
 		lineHeight: 1.35,
 		margin: 0,
-	}
+	},
+	sentenceHeading:{
+		letterSpacing: 8,
+		fontSize: 20,
+		color: darkGray,
+		margin: 0,
+	},
+	sentenceList:{
+	    margin: 0
+	},
+	sentenceText:{
+		fontSize: 20,
+		lineHeight: 1.35,
+		marginBottom: 10,
+	},
 }

@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import Form from './Form';
 import Email from './Email';
@@ -108,9 +108,7 @@ export default React.createClass({
     //===================================
     handleAddSentence(ticketIndex){
         let newTickets = this.state.tickets;
-        newTickets[ticketIndex].sentences.push({
-            sentence: ""
-        });
+        newTickets[ticketIndex].sentences.push('');
         this.setState({tickets: newTickets});
     },
 

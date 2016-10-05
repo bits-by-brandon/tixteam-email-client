@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import TextField from '../presentation/TextField.js';
 import TextArea from '../presentation/TextArea.js';
@@ -48,23 +48,13 @@ export default React.createClass({
 	handleSentenceFieldChange(sentenceIndex, value){
 		this.props.handleSentenceFieldChange(this.props.index, sentenceIndex, value);
 	},
-	//type: null,
-	//citationNumber: null,
-	//caseNumber: null,
-	//outcome: null,
-	//copy: null,
-	//customCopy: null,
-	//charges:[],
-	//costs:[]
 
     render: function(){
 		let type = this.props.ticket.type;
 		let ticket = this.props.ticket;
-		let number = ticket.citationNumber || ticket.caseNumber;
 		let outcome = ticket.outcome;
 		let copy = ticket.copy;
 		let customCopy = ticket.customCopy;
-		let charges = ticket.charges;
 		let costs = ticket.costs;
 		let chargeName = ticket.chargeName;
 		//TODO: Remove ticket functionality
@@ -132,15 +122,6 @@ export default React.createClass({
 								label = "Court Costs"
 								type = "costs" 
 								costs = {costs}
-								handleAddCost = {this.handleAddCost}
-								handleCostFieldChange = {this.handleCostFieldChange} />
-			   	}})()}
-
-				{(() => {if(type){
-					return <CostForm
-								label = "Fines"
-								type = "fines" 
-								costs = {this.props.ticket.fines}
 								handleAddCost = {this.handleAddCost}
 								handleCostFieldChange = {this.handleCostFieldChange} />
 			   	}})()}

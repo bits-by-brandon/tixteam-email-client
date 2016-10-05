@@ -7,6 +7,7 @@ import {Item, Box, Image, Span} from 'react-html-email';
 import Line from './Line';
 import Outcome from './Outcome';
 import Spacer from './Spacer';
+import Sentences from './Sentences';
 
 //===========================================
 //================ Styles ===================
@@ -35,6 +36,11 @@ export default React.createClass({
                         }
                     })()}
                     <Spacer height={20}/>
+                    {(() => {
+                        if (this.props.sentences.length > 0) {
+                            return <Sentences sentences={this.props.sentences}/>;
+                        }
+                    })()}
                 </Box>
             </Item>
         );
