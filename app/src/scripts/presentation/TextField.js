@@ -1,5 +1,5 @@
  /*
-  * Field Component
+  * TextField Component
   */
 import React from 'react';
 

@@ -4,7 +4,7 @@
 import React from 'react';
 
 //===================================================
-//================ Dependancies =====================
+//================ Dependencies =====================
 //===================================================
 import TextField from '../presentation/TextField.js';
 import FullButton from '../presentation/FullButton.js';
@@ -59,13 +59,13 @@ export default React.createClass({
 		return (
 			<div className = "form">
 				<TextField 	label = "First Name"
-							name = "first"
-							value = {this.props.first}
+							name = "firstName"
+							value = {this.props.firstName}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<TextField 	label = "Last Name"
-							name = "last"
-							value = {this.props.last}
+							name = "lastName"
+							value = {this.props.lastName}
 							handleFieldChange = {this.handleFieldChange} />
 
 				<TextField	label = "Client Email"

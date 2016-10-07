@@ -17,7 +17,7 @@ import menu from './menu.js';
 //===================================================
 //================ React Components =================
 //===================================================
-import Layout from './container/Layout';
+import Layout from './container/App';
 
 ipcRenderer.on('EVENT', (event, message) => {
 })

@@ -1,5 +1,5 @@
  /*
-  * Field Component
+  * TextArea Component
   */
 import React from 'react';
 
@@ -16,7 +16,7 @@ export default React.createClass({
 					{this.props.label}
 				</label>
 
-				<textArea 	
+				<textArea
 						className = "field--text-area" 
 						name = {this.props.name}
 						type = "text"

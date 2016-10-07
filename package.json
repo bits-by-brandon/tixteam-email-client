@@ -28,9 +28,13 @@
   "dependencies": {
     "electron-prebuilt": "^1.2.2",
     "electron-reload": "^1.0.0",
+    "moment": "^2.15.1",
     "react": "^15.2.0",
     "react-addons-css-transition-group": "^15.2.0",
+    "react-datepicker": "^0.29.0",
     "react-dom": "^15.2.0",
-    "react-html-email": "^1.1.2"
+    "react-html-email": "^1.1.2",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0"
   }
 }

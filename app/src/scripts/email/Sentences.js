@@ -22,9 +22,6 @@ export default React.createClass({
     propTypes: {
         sentences: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
     },
-    componentWillReceiveProps(newProps) {
-        console.log(newProps);
-    },
 
     render: function () {
         console.log(this.props.sentences);

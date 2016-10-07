@@ -49,6 +49,10 @@ export default React.createClass({
 		this.props.handleSentenceFieldChange(this.props.index, sentenceIndex, value);
 	},
 
+	handleDeleteSentence(sentenceIndex){
+		this.props.handleSentenceFieldChange(this.props.index, sentenceIndex);
+	},
+
     render: function(){
 		let type = this.props.ticket.type;
 		let ticket = this.props.ticket;

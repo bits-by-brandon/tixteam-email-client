@@ -1,5 +1,5 @@
 /*
- * RouteSection Component
+ * Main App Component
  */
 import React from 'react';
 
@@ -8,17 +8,22 @@ import React from 'react';
 //===================================================
 import Form from './Form';
 import Email from './Email';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import emailClient from '../reducers';
+
+let store = createStore(emailClient);
 
 export default React.createClass({
     getInitialState() {
         return {
-            //first: "",
-            //last: "",
+            //firstName: "",
+            //lastName: "",
             //email: "",
             //lawyer: "",
             //tickets:[]
-            first: "Brandon",
-            last: "Chang",
+            firstName: "Brandon",
+            lastName: "Chang",
             email: "brandondc741@gmail.com",
             lawyer: "Luis Herrera",
             tickets: [
@@ -33,6 +38,7 @@ export default React.createClass({
                     costs: [],
                     fines: [],
                     sentences: [],
+                    date: null,
                 },
                 {
                     type: "civil",
@@ -45,6 +51,7 @@ export default React.createClass({
                     costs: [],
                     fines: [],
                     sentences: [],
+                    date: null,
                 }
             ],
             outcomeMessage: {
@@ -63,7 +70,7 @@ export default React.createClass({
     //================================
     //======== Field Handlers ========
     //================================
-    handleFieldChange(e){
+    handleFieldChange(index, e){
         //For the global fields, this changes the
         //state of the wrapper, with the name corresponding
         //to the key of the state changed.

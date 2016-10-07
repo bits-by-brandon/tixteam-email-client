@@ -37,7 +37,7 @@ export default React.createClass({
                                     <Item align="center">
                                         <p style={style.h1}>
                                             Mr. <span
-                                            style={style.h1Strong}>{this.props.first} {this.props.last},</span>
+                                            style={style.h1Strong}>{this.props.firstName} {this.props.lastName},</span>
                                             <br/>Here are the results of your case
                                         </p>
                                     </Item>
