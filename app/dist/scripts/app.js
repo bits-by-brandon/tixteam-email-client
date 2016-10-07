@@ -21798,7 +21798,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	//===================================================
-	//================ Dependancies =====================
+	//================ Dependencies =====================
 	//===================================================
 	exports.default = _react2.default.createClass({
 		displayName: 'Form',
