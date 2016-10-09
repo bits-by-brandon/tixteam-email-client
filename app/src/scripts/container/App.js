@@ -8,20 +8,11 @@ import React from 'react';
 //===================================================
 import Form from './Form';
 import Email from './Email';
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import emailClient from '../reducers';
-
-let store = createStore(emailClient);
+import store from '../Store';
 
 export default React.createClass({
     getInitialState() {
         return {
-            //firstName: "",
-            //lastName: "",
-            //email: "",
-            //lawyer: "",
-            //tickets:[]
             firstName: "Brandon",
             lastName: "Chang",
             email: "brandondc741@gmail.com",
@@ -152,9 +143,6 @@ export default React.createClass({
         })
     },
 
-    componentDidUpdate(){
-        console.log(this.state);
-    },
     render: function () {
         return (
             <div className='main-layout'>

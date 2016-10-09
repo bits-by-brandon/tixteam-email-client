@@ -6,7 +6,7 @@ import React from 'react';
 export default React.createClass({
 
 	handleFieldChange(e){
-		this.props.handleFieldChange(this.props.index, e)
+		this.props.handleFieldChange(e.target.value)
 	},
 
     render: function() {

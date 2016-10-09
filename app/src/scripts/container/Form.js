@@ -1,7 +1,8 @@
- /*
-  * Form Component
-  */
+/*
+ * Form Component
+ */
 import React from 'react';
+import store from '../Store';
 
 //===================================================
 //================ Dependencies =====================
@@ -12,91 +13,103 @@ import Select from '../presentation/Select.js';
 import TicketForm from './TicketForm.js';
 
 export default React.createClass({
+    getInitialState(){
+        return store.getState()
+    },
 
-	//================================
-	//======== Field Handlers ========
-	//================================
-	handleFieldChange(index, e){
-		this.props.handleFieldChange(index, e);
-	},
+    //=================================
+    //======== Ticket Handlers ========
+    //=================================
+    handleTicketFieldChange(index, field, value){
+        this.props.handleTicketFieldChange(index, field, value);
+    },
 
-	//=================================
-	//======== Ticket Handlers ========
-	//=================================
-	handleTicketFieldChange(index, field, value){
-		this.props.handleTicketFieldChange(index, field, value);
-	},
+    //===================================
+    //======== Sentence Handlers ========
+    //===================================
+    handleAddSentence(ticketIndex){
+        this.props.handleAddSentence(ticketIndex);
+    },
 
-	handleAddTicket(){
-		this.props.handleAddTicket();
-	},
+    handleSentenceFieldChange(ticketIndex, sentenceIndex, value){
+        this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
+    },
 
-	//===================================
-	//======== Sentence Handlers ========
-	//===================================
-	handleAddSentence(ticketIndex){
-		this.props.handleAddSentence(ticketIndex);
-	},
+    handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue){
+        this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
+    },
 
-	handleSentenceFieldChange(ticketIndex, sentenceIndex, value){
-		this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
-	},
+    handleAddCost(ticketIndex, costType){
+        this.props.handleAddCost(ticketIndex, costType);
+    },
 
-	handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue){
-		this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
-	},
+    handleTypeUpdate(){
+        this.props.handleTypeUpdate();
+    },
 
-	handleAddCost(ticketIndex, costType){
-		this.props.handleAddCost(ticketIndex, costType);
-	},
+    componentDidMount(){
+        console.log(store.getState());
+        store.subscribe(() => {
+            console.log(store.getState())
+            this.setState(store.getState());
+        })
+    },
 
-	handleTypeUpdate(){
-		this.props.handleTypeUpdate();
-	},
+    render: function () {
+        let tickets = this.state.tickets;
+        return (
+            <div className="form">
+                <TextField label="First Name"
+                           name="firstName"
+                           value={this.state.firstName}
+                           handleFieldChange={(newValue) => {
+                               store.dispatch({
+                                   type: 'CHANGE_FIRST_NAME',
+                                   firstName: newValue
+                               })
+                           }}/>
 
-    render: function(){
-		let tickets = this.props.tickets;
-		return (
-			<div className = "form">
-				<TextField 	label = "First Name"
-							name = "firstName"
-							value = {this.props.firstName}
-							handleFieldChange = {this.handleFieldChange} />
+                <TextField label="Last Name"
+                           name="lastName"
+                           value={this.state.lastName}
+                           handleFieldChange={(newValue) => {
+                               store.dispatch({
+                                   type: 'CHANGE_LAST_NAME',
+                                   lastName: newValue
+                               })
+                           }}/>
 
-				<TextField 	label = "Last Name"
-							name = "lastName"
-							value = {this.props.lastName}
-							handleFieldChange = {this.handleFieldChange} />
+                <TextField label="Client Email"
+                           name="email"
+                           value={this.state.email}
+                           handleFieldChange={(newValue) => {
+                               store.dispatch({
+                                   type: 'CHANGE_EMAIL',
+                                   lastName: newValue
+                               })
+                           }}/>
 
-				<TextField	label = "Client Email"
-							name = "email"
-							value = {this.props.email}
-							handleFieldChange = {this.handleFieldChange} />
+                <Select label="Lawyer"
+                        name="lawyer"
+                        options={['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff']}
+                        defaultValue="-Select a lawyer-"
+                        value={this.state.lawyer}
+                        handleFieldChange={(newValue) => {
+                            store.dispatch({
+                                type: 'CHANGE_LAWYER',
+                                lawyer: newValue
+                            })
+                        }}/>
 
-				<Select 	label = "Lawyer"
-							name = "lawyer"
-							options = {['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff']}
-							defaultValue = "-Select a lawyer-"
-							value = {this.props.lawyer}
-							handleFieldChange = {this.handleFieldChange} />
+                { tickets.map((ticket, i) => <TicketForm key={i} index={i} {...ticket} /> )}
 
-				{ tickets.map((ticket, i) => {
-					//Render a ticket form for each ticket in state
-					return <TicketForm 
-								key = {i}
-								index = {i}
-								ticket = {ticket}
-								handleTicketFieldChange = {this.handleTicketFieldChange}
-								handleCostFieldChange = {this.handleCostFieldChange}
-								handleTypeUpdate = {this.handleTypeUpdate} 
-								handleAddCost = {this.handleAddCost}
-								handleAddSentence = {this.handleAddSentence}
-								handleSentenceFieldChange = {this.handleSentenceFieldChange} />
-				})}
-
-				<FullButton label = "New Ticket"
-							handleClick = {this.handleAddTicket} />
-			</div>
-		);
-	}
+                <FullButton label="New Ticket"
+                            handleClick={() => {
+                                store.dispatch({
+                                    type: 'ADD_TICKET'
+                                })
+                            }}/>
+            </div>
+        );
+    }
 });

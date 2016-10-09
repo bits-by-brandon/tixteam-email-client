@@ -38,8 +38,7 @@ export const changeLawyer = (lawyer) => {
 
 export const addTicket = () => {
     return {
-        type: 'ADD_TICKET',
-        id: generateRandomId()
+        type: 'ADD_TICKET'
     }
 }
 
@@ -50,53 +49,63 @@ export const deleteTicket = (ticketId) => {
     }
 }
 
-export const changeCitationNumber = (citationNumber) => {
+export const changeCitationNumber = (ticketIndex, citationNumber) => {
     return {
         type: 'CHANGE_CITATION_NUMBER',
-        citationNumber,
+        payload: {
+            ticketIndex,
+            citationNumber
+        }
     }
 }
 
-export const changeCharge = (charge) => {
+export const changeChargeName = (ticketIndex, chargeName) => {
     return {
-        type: 'CHANGE_CHARGE',
-        charge
+        type: 'CHANGE_CHARGE_NAME',
+        payload: {
+            ticketIndex,
+            chargeName
+        }
     }
 }
 
-export const changeOutcome = (outcome) => {
+export const changeOutcome = (ticketIndex, outcome) => {
     return {
         type: 'CHANGE_OUTCOME',
-        outcome
+        payload: {
+            ticketIndex,
+            outcome
+        }
     }
 }
 
-export const changeMessageType = (messageType) => {
+export const changeMessageType = (ticketIndex, messageType) => {
     return {
         type: 'CHANGE_MESSAGE_TYPE',
-        messageType
+        payload: {
+            ticketIndex,
+            messageType
+        }
     }
 }
 
-export const addCourtCost = (ticketId) => {
+export const changeCustomMessage = (ticketIndex, customMessage) => {
     return {
-        type: 'ADD_COURT_COST',
-        courtCostId: generateRandomId(),
-        ticketId
+        type: 'CHANGE_CUSTOM_MESSAGE',
+        payload: {
+            ticketIndex,
+            customMessage
+        }
     }
 }
 
-export const changeCourtCost = (courtCostId) => {
+export const changeCourtCost = (ticketIndex, courtCost) => {
     return {
         type: 'CHANGE_COURT_COST',
-        courtCostId
-    }
-}
-
-export const deleteCourtCost = (courtCostId) => {
-    return {
-        type: 'DELETE_COURT_COST',
-        courtCostId
+        payload: {
+            ticketIndex,
+            courtCost
+        }
     }
 }
 

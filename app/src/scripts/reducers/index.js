@@ -68,8 +68,8 @@ const initialState = {
  ====== Root Reducer ======
  ==========================*/
 
-const reducers = Object.assign(topLevelReducers, sentences, tickets);
+const reducers = {...topLevelReducers, sentences, tickets}
 
-const emailClientApp = combineReducers(reducers);
+const rootReducer = combineReducers(reducers);
 
-export default emailClientApp;
+export default rootReducer;

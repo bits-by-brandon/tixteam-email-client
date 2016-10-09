@@ -6,18 +6,17 @@ import React from 'react';
 export default React.createClass({
 
 	handleFieldChange(e){
-		this.props.handleFieldChange(this.props.index, e)
+		this.props.handleFieldChange(e.target.value)
 	},
 
     render: function() {
 		return (
 			<div className = "field">
-				<label className = "field--label" htmlFor = {this.props.name}>
+				<label className = "field--label">
 					{this.props.label}
 				</label>
 
 				<input 	className = "field--text-input" 
-						name = {this.props.name}
 						type = "text"
 						onChange = {this.handleFieldChange}
 						value = {this.props.value} />

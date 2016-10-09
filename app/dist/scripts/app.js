@@ -21581,17 +21581,13 @@
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
-	var _Email = __webpack_require__(188);
+	var _Email = __webpack_require__(203);
 	
 	var _Email2 = _interopRequireDefault(_Email);
 	
-	var _reactRedux = __webpack_require__(213);
+	var _Store = __webpack_require__(176);
 	
-	var _redux = __webpack_require__(220);
-	
-	var _reducers = __webpack_require__(236);
-	
-	var _reducers2 = _interopRequireDefault(_reducers);
+	var _Store2 = _interopRequireDefault(_Store);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -21605,17 +21601,10 @@
 	//===================================================
 	
 	
-	var store = (0, _redux.createStore)(_reducers2.default);
-	
 	exports.default = _react2.default.createClass({
 	    displayName: 'App',
 	    getInitialState: function getInitialState() {
 	        return {
-	            //firstName: "",
-	            //lastName: "",
-	            //email: "",
-	            //lawyer: "",
-	            //tickets:[]
 	            firstName: "Brandon",
 	            lastName: "Chang",
 	            email: "brandondc741@gmail.com",
@@ -21742,9 +21731,7 @@
 	            caseNumber: null
 	        });
 	    },
-	    componentDidUpdate: function componentDidUpdate() {
-	        console.log(this.state);
-	    },
+	
 	
 	    render: function render() {
 	        return _react2.default.createElement(
@@ -21772,125 +21759,1329 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*
+	                                                                                                                                                                                                                                                                   * Form Component
+	                                                                                                                                                                                                                                                                   */
+	
+	
+	//===================================================
+	//================ Dependencies =====================
+	//===================================================
+	
 	
 	var _react = __webpack_require__(166);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TextField = __webpack_require__(176);
+	var _Store = __webpack_require__(176);
+	
+	var _Store2 = _interopRequireDefault(_Store);
+	
+	var _TextField = __webpack_require__(195);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _FullButton = __webpack_require__(177);
+	var _FullButton = __webpack_require__(196);
 	
 	var _FullButton2 = _interopRequireDefault(_FullButton);
 	
-	var _Select = __webpack_require__(178);
+	var _Select = __webpack_require__(197);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _TicketForm = __webpack_require__(179);
+	var _TicketForm = __webpack_require__(198);
 	
 	var _TicketForm2 = _interopRequireDefault(_TicketForm);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	//===================================================
-	//================ Dependencies =====================
-	//===================================================
 	exports.default = _react2.default.createClass({
-		displayName: 'Form',
+	    displayName: 'Form',
+	    getInitialState: function getInitialState() {
+	        return _Store2.default.getState();
+	    },
 	
 	
-		//================================
-		//======== Field Handlers ========
-		//================================
-		handleFieldChange: function handleFieldChange(index, e) {
-			this.props.handleFieldChange(index, e);
-		},
+	    //=================================
+	    //======== Ticket Handlers ========
+	    //=================================
+	    handleTicketFieldChange: function handleTicketFieldChange(index, field, value) {
+	        this.props.handleTicketFieldChange(index, field, value);
+	    },
 	
 	
-		//=================================
-		//======== Ticket Handlers ========
-		//=================================
-		handleTicketFieldChange: function handleTicketFieldChange(index, field, value) {
-			this.props.handleTicketFieldChange(index, field, value);
-		},
-		handleAddTicket: function handleAddTicket() {
-			this.props.handleAddTicket();
-		},
+	    //===================================
+	    //======== Sentence Handlers ========
+	    //===================================
+	    handleAddSentence: function handleAddSentence(ticketIndex) {
+	        this.props.handleAddSentence(ticketIndex);
+	    },
+	    handleSentenceFieldChange: function handleSentenceFieldChange(ticketIndex, sentenceIndex, value) {
+	        this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
+	    },
+	    handleCostFieldChange: function handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue) {
+	        this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
+	    },
+	    handleAddCost: function handleAddCost(ticketIndex, costType) {
+	        this.props.handleAddCost(ticketIndex, costType);
+	    },
+	    handleTypeUpdate: function handleTypeUpdate() {
+	        this.props.handleTypeUpdate();
+	    },
+	    componentDidMount: function componentDidMount() {
+	        var _this = this;
+	
+	        console.log(_Store2.default.getState());
+	        _Store2.default.subscribe(function () {
+	            console.log(_Store2.default.getState());
+	            _this.setState(_Store2.default.getState());
+	        });
+	    },
 	
 	
-		//===================================
-		//======== Sentence Handlers ========
-		//===================================
-		handleAddSentence: function handleAddSentence(ticketIndex) {
-			this.props.handleAddSentence(ticketIndex);
-		},
-		handleSentenceFieldChange: function handleSentenceFieldChange(ticketIndex, sentenceIndex, value) {
-			this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
-		},
-		handleCostFieldChange: function handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue) {
-			this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
-		},
-		handleAddCost: function handleAddCost(ticketIndex, costType) {
-			this.props.handleAddCost(ticketIndex, costType);
-		},
-		handleTypeUpdate: function handleTypeUpdate() {
-			this.props.handleTypeUpdate();
-		},
-	
-	
-		render: function render() {
-			var _this = this;
-	
-			var tickets = this.props.tickets;
-			return _react2.default.createElement(
-				'div',
-				{ className: 'form' },
-				_react2.default.createElement(_TextField2.default, { label: 'First Name',
-					name: 'firstName',
-					value: this.props.firstName,
-					handleFieldChange: this.handleFieldChange }),
-				_react2.default.createElement(_TextField2.default, { label: 'Last Name',
-					name: 'lastName',
-					value: this.props.lastName,
-					handleFieldChange: this.handleFieldChange }),
-				_react2.default.createElement(_TextField2.default, { label: 'Client Email',
-					name: 'email',
-					value: this.props.email,
-					handleFieldChange: this.handleFieldChange }),
-				_react2.default.createElement(_Select2.default, { label: 'Lawyer',
-					name: 'lawyer',
-					options: ['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff'],
-					defaultValue: '-Select a lawyer-',
-					value: this.props.lawyer,
-					handleFieldChange: this.handleFieldChange }),
-				tickets.map(function (ticket, i) {
-					//Render a ticket form for each ticket in state
-					return _react2.default.createElement(_TicketForm2.default, {
-						key: i,
-						index: i,
-						ticket: ticket,
-						handleTicketFieldChange: _this.handleTicketFieldChange,
-						handleCostFieldChange: _this.handleCostFieldChange,
-						handleTypeUpdate: _this.handleTypeUpdate,
-						handleAddCost: _this.handleAddCost,
-						handleAddSentence: _this.handleAddSentence,
-						handleSentenceFieldChange: _this.handleSentenceFieldChange });
-				}),
-				_react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
-					handleClick: this.handleAddTicket })
-			);
-		}
-	}); /*
-	     * Form Component
-	     */
+	    render: function render() {
+	        var tickets = this.state.tickets;
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'form' },
+	            _react2.default.createElement(_TextField2.default, { label: 'First Name',
+	                name: 'firstName',
+	                value: this.state.firstName,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch({
+	                        type: 'CHANGE_FIRST_NAME',
+	                        firstName: newValue
+	                    });
+	                } }),
+	            _react2.default.createElement(_TextField2.default, { label: 'Last Name',
+	                name: 'lastName',
+	                value: this.state.lastName,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch({
+	                        type: 'CHANGE_LAST_NAME',
+	                        lastName: newValue
+	                    });
+	                } }),
+	            _react2.default.createElement(_TextField2.default, { label: 'Client Email',
+	                name: 'email',
+	                value: this.state.email,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch({
+	                        type: 'CHANGE_EMAIL',
+	                        lastName: newValue
+	                    });
+	                } }),
+	            _react2.default.createElement(_Select2.default, { label: 'Lawyer',
+	                name: 'lawyer',
+	                options: ['Luis Herrera', 'Jordan Ostroff', 'Heather Ostroff'],
+	                defaultValue: '-Select a lawyer-',
+	                value: this.state.lawyer,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch({
+	                        type: 'CHANGE_LAWYER',
+	                        lawyer: newValue
+	                    });
+	                } }),
+	            tickets.map(function (ticket, i) {
+	                return _react2.default.createElement(_TicketForm2.default, _extends({ key: i, index: i }, ticket));
+	            }),
+	            _react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
+	                handleClick: function handleClick() {
+	                    _Store2.default.dispatch({
+	                        type: 'ADD_TICKET'
+	                    });
+	                } })
+	        );
+	    }
+	});
 
 /***/ },
 /* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _redux = __webpack_require__(177);
+	
+	var _reducers = __webpack_require__(191);
+	
+	var _reducers2 = _interopRequireDefault(_reducers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var store = (0, _redux.createStore)(_reducers2.default);
+	
+	exports.default = store;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	
+	exports.__esModule = true;
+	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
+	
+	var _createStore = __webpack_require__(178);
+	
+	var _createStore2 = _interopRequireDefault(_createStore);
+	
+	var _combineReducers = __webpack_require__(186);
+	
+	var _combineReducers2 = _interopRequireDefault(_combineReducers);
+	
+	var _bindActionCreators = __webpack_require__(188);
+	
+	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
+	
+	var _applyMiddleware = __webpack_require__(189);
+	
+	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
+	
+	var _compose = __webpack_require__(190);
+	
+	var _compose2 = _interopRequireDefault(_compose);
+	
+	var _warning = __webpack_require__(187);
+	
+	var _warning2 = _interopRequireDefault(_warning);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	/*
+	* This is a dummy function to check if the function name has been altered by minification.
+	* If the function has been minified and NODE_ENV !== 'production', warn the user.
+	*/
+	function isCrushed() {}
+	
+	if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
+	  (0, _warning2['default'])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
+	}
+	
+	exports.createStore = _createStore2['default'];
+	exports.combineReducers = _combineReducers2['default'];
+	exports.bindActionCreators = _bindActionCreators2['default'];
+	exports.applyMiddleware = _applyMiddleware2['default'];
+	exports.compose = _compose2['default'];
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports.ActionTypes = undefined;
+	exports['default'] = createStore;
+	
+	var _isPlainObject = __webpack_require__(179);
+	
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+	
+	var _symbolObservable = __webpack_require__(183);
+	
+	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	/**
+	 * These are private action types reserved by Redux.
+	 * For any unknown actions, you must return the current state.
+	 * If the current state is undefined, you must return the initial state.
+	 * Do not reference these action types directly in your code.
+	 */
+	var ActionTypes = exports.ActionTypes = {
+	  INIT: '@@redux/INIT'
+	};
+	
+	/**
+	 * Creates a Redux store that holds the state tree.
+	 * The only way to change the data in the store is to call `dispatch()` on it.
+	 *
+	 * There should only be a single store in your app. To specify how different
+	 * parts of the state tree respond to actions, you may combine several reducers
+	 * into a single reducer function by using `combineReducers`.
+	 *
+	 * @param {Function} reducer A function that returns the next state tree, given
+	 * the current state tree and the action to handle.
+	 *
+	 * @param {any} [preloadedState] The initial state. You may optionally specify it
+	 * to hydrate the state from the server in universal apps, or to restore a
+	 * previously serialized user session.
+	 * If you use `combineReducers` to produce the root reducer function, this must be
+	 * an object with the same shape as `combineReducers` keys.
+	 *
+	 * @param {Function} enhancer The store enhancer. You may optionally specify it
+	 * to enhance the store with third-party capabilities such as middleware,
+	 * time travel, persistence, etc. The only store enhancer that ships with Redux
+	 * is `applyMiddleware()`.
+	 *
+	 * @returns {Store} A Redux store that lets you read the state, dispatch actions
+	 * and subscribe to changes.
+	 */
+	function createStore(reducer, preloadedState, enhancer) {
+	  var _ref2;
+	
+	  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
+	    enhancer = preloadedState;
+	    preloadedState = undefined;
+	  }
+	
+	  if (typeof enhancer !== 'undefined') {
+	    if (typeof enhancer !== 'function') {
+	      throw new Error('Expected the enhancer to be a function.');
+	    }
+	
+	    return enhancer(createStore)(reducer, preloadedState);
+	  }
+	
+	  if (typeof reducer !== 'function') {
+	    throw new Error('Expected the reducer to be a function.');
+	  }
+	
+	  var currentReducer = reducer;
+	  var currentState = preloadedState;
+	  var currentListeners = [];
+	  var nextListeners = currentListeners;
+	  var isDispatching = false;
+	
+	  function ensureCanMutateNextListeners() {
+	    if (nextListeners === currentListeners) {
+	      nextListeners = currentListeners.slice();
+	    }
+	  }
+	
+	  /**
+	   * Reads the state tree managed by the store.
+	   *
+	   * @returns {any} The current state tree of your application.
+	   */
+	  function getState() {
+	    return currentState;
+	  }
+	
+	  /**
+	   * Adds a change listener. It will be called any time an action is dispatched,
+	   * and some part of the state tree may potentially have changed. You may then
+	   * call `getState()` to read the current state tree inside the callback.
+	   *
+	   * You may call `dispatch()` from a change listener, with the following
+	   * caveats:
+	   *
+	   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
+	   * If you subscribe or unsubscribe while the listeners are being invoked, this
+	   * will not have any effect on the `dispatch()` that is currently in progress.
+	   * However, the next `dispatch()` call, whether nested or not, will use a more
+	   * recent snapshot of the subscription list.
+	   *
+	   * 2. The listener should not expect to see all state changes, as the state
+	   * might have been updated multiple times during a nested `dispatch()` before
+	   * the listener is called. It is, however, guaranteed that all subscribers
+	   * registered before the `dispatch()` started will be called with the latest
+	   * state by the time it exits.
+	   *
+	   * @param {Function} listener A callback to be invoked on every dispatch.
+	   * @returns {Function} A function to remove this change listener.
+	   */
+	  function subscribe(listener) {
+	    if (typeof listener !== 'function') {
+	      throw new Error('Expected listener to be a function.');
+	    }
+	
+	    var isSubscribed = true;
+	
+	    ensureCanMutateNextListeners();
+	    nextListeners.push(listener);
+	
+	    return function unsubscribe() {
+	      if (!isSubscribed) {
+	        return;
+	      }
+	
+	      isSubscribed = false;
+	
+	      ensureCanMutateNextListeners();
+	      var index = nextListeners.indexOf(listener);
+	      nextListeners.splice(index, 1);
+	    };
+	  }
+	
+	  /**
+	   * Dispatches an action. It is the only way to trigger a state change.
+	   *
+	   * The `reducer` function, used to create the store, will be called with the
+	   * current state tree and the given `action`. Its return value will
+	   * be considered the **next** state of the tree, and the change listeners
+	   * will be notified.
+	   *
+	   * The base implementation only supports plain object actions. If you want to
+	   * dispatch a Promise, an Observable, a thunk, or something else, you need to
+	   * wrap your store creating function into the corresponding middleware. For
+	   * example, see the documentation for the `redux-thunk` package. Even the
+	   * middleware will eventually dispatch plain object actions using this method.
+	   *
+	   * @param {Object} action A plain object representing “what changed”. It is
+	   * a good idea to keep actions serializable so you can record and replay user
+	   * sessions, or use the time travelling `redux-devtools`. An action must have
+	   * a `type` property which may not be `undefined`. It is a good idea to use
+	   * string constants for action types.
+	   *
+	   * @returns {Object} For convenience, the same action object you dispatched.
+	   *
+	   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
+	   * return something else (for example, a Promise you can await).
+	   */
+	  function dispatch(action) {
+	    if (!(0, _isPlainObject2['default'])(action)) {
+	      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
+	    }
+	
+	    if (typeof action.type === 'undefined') {
+	      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
+	    }
+	
+	    if (isDispatching) {
+	      throw new Error('Reducers may not dispatch actions.');
+	    }
+	
+	    try {
+	      isDispatching = true;
+	      currentState = currentReducer(currentState, action);
+	    } finally {
+	      isDispatching = false;
+	    }
+	
+	    var listeners = currentListeners = nextListeners;
+	    for (var i = 0; i < listeners.length; i++) {
+	      listeners[i]();
+	    }
+	
+	    return action;
+	  }
+	
+	  /**
+	   * Replaces the reducer currently used by the store to calculate the state.
+	   *
+	   * You might need this if your app implements code splitting and you want to
+	   * load some of the reducers dynamically. You might also need this if you
+	   * implement a hot reloading mechanism for Redux.
+	   *
+	   * @param {Function} nextReducer The reducer for the store to use instead.
+	   * @returns {void}
+	   */
+	  function replaceReducer(nextReducer) {
+	    if (typeof nextReducer !== 'function') {
+	      throw new Error('Expected the nextReducer to be a function.');
+	    }
+	
+	    currentReducer = nextReducer;
+	    dispatch({ type: ActionTypes.INIT });
+	  }
+	
+	  /**
+	   * Interoperability point for observable/reactive libraries.
+	   * @returns {observable} A minimal observable of state changes.
+	   * For more information, see the observable proposal:
+	   * https://github.com/zenparsing/es-observable
+	   */
+	  function observable() {
+	    var _ref;
+	
+	    var outerSubscribe = subscribe;
+	    return _ref = {
+	      /**
+	       * The minimal observable subscription method.
+	       * @param {Object} observer Any object that can be used as an observer.
+	       * The observer object should have a `next` method.
+	       * @returns {subscription} An object with an `unsubscribe` method that can
+	       * be used to unsubscribe the observable from the store, and prevent further
+	       * emission of values from the observable.
+	       */
+	      subscribe: function subscribe(observer) {
+	        if (typeof observer !== 'object') {
+	          throw new TypeError('Expected the observer to be an object.');
+	        }
+	
+	        function observeState() {
+	          if (observer.next) {
+	            observer.next(getState());
+	          }
+	        }
+	
+	        observeState();
+	        var unsubscribe = outerSubscribe(observeState);
+	        return { unsubscribe: unsubscribe };
+	      }
+	    }, _ref[_symbolObservable2['default']] = function () {
+	      return this;
+	    }, _ref;
+	  }
+	
+	  // When a store is created, an "INIT" action is dispatched so that every
+	  // reducer returns their initial state. This effectively populates
+	  // the initial state tree.
+	  dispatch({ type: ActionTypes.INIT });
+	
+	  return _ref2 = {
+	    dispatch: dispatch,
+	    subscribe: subscribe,
+	    getState: getState,
+	    replaceReducer: replaceReducer
+	  }, _ref2[_symbolObservable2['default']] = observable, _ref2;
+	}
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getPrototype = __webpack_require__(180),
+	    isObjectLike = __webpack_require__(182);
+	
+	/** `Object#toString` result references. */
+	var objectTag = '[object Object]';
+	
+	/** Used for built-in method references. */
+	var funcProto = Function.prototype,
+	    objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = funcProto.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Used to infer the `Object` constructor. */
+	var objectCtorString = funcToString.call(Object);
+	
+	/**
+	 * Used to resolve the
+	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is a plain object, that is, an object created by the
+	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 0.8.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * _.isPlainObject(new Foo);
+	 * // => false
+	 *
+	 * _.isPlainObject([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isPlainObject({ 'x': 0, 'y': 0 });
+	 * // => true
+	 *
+	 * _.isPlainObject(Object.create(null));
+	 * // => true
+	 */
+	function isPlainObject(value) {
+	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
+	    return false;
+	  }
+	  var proto = getPrototype(value);
+	  if (proto === null) {
+	    return true;
+	  }
+	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+	  return (typeof Ctor == 'function' &&
+	    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
+	}
+	
+	module.exports = isPlainObject;
+
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var overArg = __webpack_require__(181);
+	
+	/** Built-in value references. */
+	var getPrototype = overArg(Object.getPrototypeOf, Object);
+	
+	module.exports = getPrototype;
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a unary function that invokes `func` with its argument transformed.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {Function} transform The argument transform.
+	 * @returns {Function} Returns the new function.
+	 */
+	function overArg(func, transform) {
+	  return function(arg) {
+	    return func(transform(arg));
+	  };
+	}
+	
+	module.exports = overArg;
+
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 4.0.0
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return value != null && typeof value == 'object';
+	}
+	
+	module.exports = isObjectLike;
+
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(184);
+
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _ponyfill = __webpack_require__(185);
+	
+	var _ponyfill2 = _interopRequireDefault(_ponyfill);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var root = undefined; /* global window */
+	
+	if (typeof global !== 'undefined') {
+		root = global;
+	} else if (typeof window !== 'undefined') {
+		root = window;
+	}
+	
+	var result = (0, _ponyfill2['default'])(root);
+	exports['default'] = result;
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 185 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports['default'] = symbolObservablePonyfill;
+	function symbolObservablePonyfill(root) {
+		var result;
+		var _Symbol = root.Symbol;
+	
+		if (typeof _Symbol === 'function') {
+			if (_Symbol.observable) {
+				result = _Symbol.observable;
+			} else {
+				result = _Symbol('observable');
+				_Symbol.observable = result;
+			}
+		} else {
+			result = '@@observable';
+		}
+	
+		return result;
+	};
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+	
+	exports.__esModule = true;
+	exports['default'] = combineReducers;
+	
+	var _createStore = __webpack_require__(178);
+	
+	var _isPlainObject = __webpack_require__(179);
+	
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
+	
+	var _warning = __webpack_require__(187);
+	
+	var _warning2 = _interopRequireDefault(_warning);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	function getUndefinedStateErrorMessage(key, action) {
+	  var actionType = action && action.type;
+	  var actionName = actionType && '"' + actionType.toString() + '"' || 'an action';
+	
+	  return 'Given action ' + actionName + ', reducer "' + key + '" returned undefined. ' + 'To ignore an action, you must explicitly return the previous state.';
+	}
+	
+	function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
+	  var reducerKeys = Object.keys(reducers);
+	  var argumentName = action && action.type === _createStore.ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
+	
+	  if (reducerKeys.length === 0) {
+	    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
+	  }
+	
+	  if (!(0, _isPlainObject2['default'])(inputState)) {
+	    return 'The ' + argumentName + ' has unexpected type of "' + {}.toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
+	  }
+	
+	  var unexpectedKeys = Object.keys(inputState).filter(function (key) {
+	    return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
+	  });
+	
+	  unexpectedKeys.forEach(function (key) {
+	    unexpectedKeyCache[key] = true;
+	  });
+	
+	  if (unexpectedKeys.length > 0) {
+	    return 'Unexpected ' + (unexpectedKeys.length > 1 ? 'keys' : 'key') + ' ' + ('"' + unexpectedKeys.join('", "') + '" found in ' + argumentName + '. ') + 'Expected to find one of the known reducer keys instead: ' + ('"' + reducerKeys.join('", "') + '". Unexpected keys will be ignored.');
+	  }
+	}
+	
+	function assertReducerSanity(reducers) {
+	  Object.keys(reducers).forEach(function (key) {
+	    var reducer = reducers[key];
+	    var initialState = reducer(undefined, { type: _createStore.ActionTypes.INIT });
+	
+	    if (typeof initialState === 'undefined') {
+	      throw new Error('Reducer "' + key + '" returned undefined during initialization. ' + 'If the state passed to the reducer is undefined, you must ' + 'explicitly return the initial state. The initial state may ' + 'not be undefined.');
+	    }
+	
+	    var type = '@@redux/PROBE_UNKNOWN_ACTION_' + Math.random().toString(36).substring(7).split('').join('.');
+	    if (typeof reducer(undefined, { type: type }) === 'undefined') {
+	      throw new Error('Reducer "' + key + '" returned undefined when probed with a random type. ' + ('Don\'t try to handle ' + _createStore.ActionTypes.INIT + ' or other actions in "redux/*" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined.');
+	    }
+	  });
+	}
+	
+	/**
+	 * Turns an object whose values are different reducer functions, into a single
+	 * reducer function. It will call every child reducer, and gather their results
+	 * into a single state object, whose keys correspond to the keys of the passed
+	 * reducer functions.
+	 *
+	 * @param {Object} reducers An object whose values correspond to different
+	 * reducer functions that need to be combined into one. One handy way to obtain
+	 * it is to use ES6 `import * as reducers` syntax. The reducers may never return
+	 * undefined for any action. Instead, they should return their initial state
+	 * if the state passed to them was undefined, and the current state for any
+	 * unrecognized action.
+	 *
+	 * @returns {Function} A reducer function that invokes every reducer inside the
+	 * passed object, and builds a state object with the same shape.
+	 */
+	function combineReducers(reducers) {
+	  var reducerKeys = Object.keys(reducers);
+	  var finalReducers = {};
+	  for (var i = 0; i < reducerKeys.length; i++) {
+	    var key = reducerKeys[i];
+	
+	    if (process.env.NODE_ENV !== 'production') {
+	      if (typeof reducers[key] === 'undefined') {
+	        (0, _warning2['default'])('No reducer provided for key "' + key + '"');
+	      }
+	    }
+	
+	    if (typeof reducers[key] === 'function') {
+	      finalReducers[key] = reducers[key];
+	    }
+	  }
+	  var finalReducerKeys = Object.keys(finalReducers);
+	
+	  if (process.env.NODE_ENV !== 'production') {
+	    var unexpectedKeyCache = {};
+	  }
+	
+	  var sanityError;
+	  try {
+	    assertReducerSanity(finalReducers);
+	  } catch (e) {
+	    sanityError = e;
+	  }
+	
+	  return function combination() {
+	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	    var action = arguments[1];
+	
+	    if (sanityError) {
+	      throw sanityError;
+	    }
+	
+	    if (process.env.NODE_ENV !== 'production') {
+	      var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
+	      if (warningMessage) {
+	        (0, _warning2['default'])(warningMessage);
+	      }
+	    }
+	
+	    var hasChanged = false;
+	    var nextState = {};
+	    for (var i = 0; i < finalReducerKeys.length; i++) {
+	      var key = finalReducerKeys[i];
+	      var reducer = finalReducers[key];
+	      var previousStateForKey = state[key];
+	      var nextStateForKey = reducer(previousStateForKey, action);
+	      if (typeof nextStateForKey === 'undefined') {
+	        var errorMessage = getUndefinedStateErrorMessage(key, action);
+	        throw new Error(errorMessage);
+	      }
+	      nextState[key] = nextStateForKey;
+	      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
+	    }
+	    return hasChanged ? nextState : state;
+	  };
+	}
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 187 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports['default'] = warning;
+	/**
+	 * Prints a warning in the console if it exists.
+	 *
+	 * @param {String} message The warning message.
+	 * @returns {void}
+	 */
+	function warning(message) {
+	  /* eslint-disable no-console */
+	  if (typeof console !== 'undefined' && typeof console.error === 'function') {
+	    console.error(message);
+	  }
+	  /* eslint-enable no-console */
+	  try {
+	    // This error was thrown as a convenience so that if you enable
+	    // "break on all exceptions" in your console,
+	    // it would pause the execution at this line.
+	    throw new Error(message);
+	    /* eslint-disable no-empty */
+	  } catch (e) {}
+	  /* eslint-enable no-empty */
+	}
+
+/***/ },
+/* 188 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports['default'] = bindActionCreators;
+	function bindActionCreator(actionCreator, dispatch) {
+	  return function () {
+	    return dispatch(actionCreator.apply(undefined, arguments));
+	  };
+	}
+	
+	/**
+	 * Turns an object whose values are action creators, into an object with the
+	 * same keys, but with every function wrapped into a `dispatch` call so they
+	 * may be invoked directly. This is just a convenience method, as you can call
+	 * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
+	 *
+	 * For convenience, you can also pass a single function as the first argument,
+	 * and get a function in return.
+	 *
+	 * @param {Function|Object} actionCreators An object whose values are action
+	 * creator functions. One handy way to obtain it is to use ES6 `import * as`
+	 * syntax. You may also pass a single function.
+	 *
+	 * @param {Function} dispatch The `dispatch` function available on your Redux
+	 * store.
+	 *
+	 * @returns {Function|Object} The object mimicking the original object, but with
+	 * every action creator wrapped into the `dispatch` call. If you passed a
+	 * function as `actionCreators`, the return value will also be a single
+	 * function.
+	 */
+	function bindActionCreators(actionCreators, dispatch) {
+	  if (typeof actionCreators === 'function') {
+	    return bindActionCreator(actionCreators, dispatch);
+	  }
+	
+	  if (typeof actionCreators !== 'object' || actionCreators === null) {
+	    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators) + '. ' + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
+	  }
+	
+	  var keys = Object.keys(actionCreators);
+	  var boundActionCreators = {};
+	  for (var i = 0; i < keys.length; i++) {
+	    var key = keys[i];
+	    var actionCreator = actionCreators[key];
+	    if (typeof actionCreator === 'function') {
+	      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
+	    }
+	  }
+	  return boundActionCreators;
+	}
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports['default'] = applyMiddleware;
+	
+	var _compose = __webpack_require__(190);
+	
+	var _compose2 = _interopRequireDefault(_compose);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	/**
+	 * Creates a store enhancer that applies middleware to the dispatch method
+	 * of the Redux store. This is handy for a variety of tasks, such as expressing
+	 * asynchronous actions in a concise manner, or logging every action payload.
+	 *
+	 * See `redux-thunk` package as an example of the Redux middleware.
+	 *
+	 * Because middleware is potentially asynchronous, this should be the first
+	 * store enhancer in the composition chain.
+	 *
+	 * Note that each middleware will be given the `dispatch` and `getState` functions
+	 * as named arguments.
+	 *
+	 * @param {...Function} middlewares The middleware chain to be applied.
+	 * @returns {Function} A store enhancer applying the middleware.
+	 */
+	function applyMiddleware() {
+	  for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
+	    middlewares[_key] = arguments[_key];
+	  }
+	
+	  return function (createStore) {
+	    return function (reducer, preloadedState, enhancer) {
+	      var store = createStore(reducer, preloadedState, enhancer);
+	      var _dispatch = store.dispatch;
+	      var chain = [];
+	
+	      var middlewareAPI = {
+	        getState: store.getState,
+	        dispatch: function dispatch(action) {
+	          return _dispatch(action);
+	        }
+	      };
+	      chain = middlewares.map(function (middleware) {
+	        return middleware(middlewareAPI);
+	      });
+	      _dispatch = _compose2['default'].apply(undefined, chain)(store.dispatch);
+	
+	      return _extends({}, store, {
+	        dispatch: _dispatch
+	      });
+	    };
+	  };
+	}
+
+/***/ },
+/* 190 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	exports["default"] = compose;
+	/**
+	 * Composes single-argument functions from right to left. The rightmost
+	 * function can take multiple arguments as it provides the signature for
+	 * the resulting composite function.
+	 *
+	 * @param {...Function} funcs The functions to compose.
+	 * @returns {Function} A function obtained by composing the argument functions
+	 * from right to left. For example, compose(f, g, h) is identical to doing
+	 * (...args) => f(g(h(...args))).
+	 */
+	
+	function compose() {
+	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
+	    funcs[_key] = arguments[_key];
+	  }
+	
+	  if (funcs.length === 0) {
+	    return function (arg) {
+	      return arg;
+	    };
+	  }
+	
+	  if (funcs.length === 1) {
+	    return funcs[0];
+	  }
+	
+	  var last = funcs[funcs.length - 1];
+	  var rest = funcs.slice(0, -1);
+	  return function () {
+	    return rest.reduceRight(function (composed, f) {
+	      return f(composed);
+	    }, last.apply(undefined, arguments));
+	  };
+	}
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _redux = __webpack_require__(177);
+	
+	var _form = __webpack_require__(192);
+	
+	var topLevelReducers = _interopRequireWildcard(_form);
+	
+	var _sentences = __webpack_require__(193);
+	
+	var _sentences2 = _interopRequireDefault(_sentences);
+	
+	var _tickets = __webpack_require__(194);
+	
+	var _tickets2 = _interopRequireDefault(_tickets);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	/*===========================
+	 ====== Default State ======
+	 ===========================*/
+	
+	var initialState = {
+	    firstName: "Brandon",
+	    lastName: "Chang",
+	    email: "brandondc741@gmail.com",
+	    lawyer: "Luis Herrera",
+	    dispoType: 'civil',
+	    tickets: {
+	        '9462BS2': {
+	            citationNumber: "A69MQ0E",
+	            chargeName: "Speeding",
+	            chargeDate: new Date(),
+	            outcome: "dismissed",
+	            copy: "standard",
+	            customCopy: null,
+	            courtCost: false,
+	            sentences: false,
+	            date: null
+	        },
+	        '3MO2F93': {
+	            citationNumber: "A52DAXJ",
+	            chargeName: "Reckless Driving",
+	            chargeDate: new Date(),
+	            outcome: "withold",
+	            copy: "standard",
+	            customCopy: null,
+	            courtCost: 30,
+	            sentences: {
+	                '23TTPZ9': true,
+	                'I3NOE35': true
+	            }
+	        }
+	    },
+	    sentences: {
+	        '23TTPZ9': {
+	            isFine: true,
+	            fineAmount: 200,
+	            message: false
+	        },
+	        'I3NOE35': {
+	            isFine: false,
+	            fineAmount: false,
+	            message: 'Client will have to attend 20 hours of driver school'
+	        }
+	    },
+	    outcomeMessage: {
+	        dismissed: "Congratulations! Your charges were dropped. That means no fines, no school, and no points on your record.",
+	        withold: "We were able to keep a conviction and points off of your record. Below are the conditions imposed by the court.",
+	        adjudicated: "We are sorry, you were found guilty by the state. You will have to serve the sentence as stated below."
+	    },
+	    outcomeCopy: {
+	        dismissed: "Thank you for trusting us to handle your case. Luis Herrera and the Tix Team were able to get your case dismissed! No Fines, No Points, No Traffic Class – Totally dismissed!",
+	        withold: "These sentences must be completed by the date specified. Failure complete the sentences may result in a larger legal penalty.",
+	        adjudicated: "These sentences must be completed by the date specified. Failure complete the sentences may result in a larger legal penalty."
+	    }
+	};
+	
+	/*==========================
+	 ====== Root Reducer ======
+	 ==========================*/
+	
+	var reducers = _extends({}, topLevelReducers, { sentences: _sentences2.default, tickets: _tickets2.default });
+	
+	var rootReducer = (0, _redux.combineReducers)(reducers);
+	
+	exports.default = rootReducer;
+
+/***/ },
+/* 192 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.firstName = firstName;
+	exports.lastName = lastName;
+	exports.email = email;
+	exports.lawyer = lawyer;
+	// From Reducer
+	// =========================
+	
+	function firstName() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Brandon";
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case 'CHANGE_FIRST_NAME':
+	            return action.firstName;
+	        default:
+	            return state;
+	    }
+	}
+	
+	function lastName() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Chang";
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case 'CHANGE_LAST_NAME':
+	            return action.lastName;
+	        default:
+	            return state;
+	    }
+	}
+	
+	function email() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "brandondc741@gmail.com";
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case 'CHANGE_EMAIL':
+	            return action.email;
+	        default:
+	            return state;
+	    }
+	}
+	
+	function lawyer() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Luis Herrera";
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case 'CHANGE_LAWYER':
+	            return action.lawyer;
+	        default:
+	            return state;
+	    }
+	}
+
+/***/ },
+/* 193 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = sentences;
+	// Sentence Reducer
+	// =========================
+	
+	function sentences() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+	        '23TTPZ9': {
+	            isFine: true,
+	            fineAmount: 200,
+	            message: false
+	        },
+	        'I3NOE35': {
+	            isFine: false,
+	            fineAmount: false,
+	            message: 'Client will have to attend 20 hours of driver school'
+	        }
+	    };
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case 'ADD_SENTENCE':
+	            return state;
+	        // TODO: build proper reducer
+	        default:
+	            return state;
+	    }
+	}
+
+/***/ },
+/* 194 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = tickets;
+	// Ticket Reducer
+	// =========================
+	var emptyTicket = {
+	    citationNumber: '',
+	    chargeName: '',
+	    chargeDate: new Date(),
+	    outcome: '',
+	    messageType: '',
+	    customMessage: '',
+	    courtCost: 0.00,
+	    sentences: {},
+	    sentenceDueDate: ''
+	};
+	
+	function tickets() {
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [{
+	        citationNumber: "A69MQ0E",
+	        chargeName: "Speeding",
+	        chargeDate: new Date(),
+	        outcome: "dismissed",
+	        messageType: "standard",
+	        customMessage: '',
+	        courtCost: 0.00,
+	        sentences: {}
+	    }, {
+	        citationNumber: "A52DAXJ",
+	        chargeName: "Reckless Driving",
+	        chargeDate: new Date(),
+	        outcome: "withold",
+	        messageType: "standard",
+	        customMessage: '',
+	        courtCost: 30,
+	        sentences: {
+	            '23TTPZ9': true,
+	            'I3NOE35': true
+	        }
+	    }];
+	    var action = arguments[1];
+	
+	    switch (action.type) {
+	        case 'ADD_TICKET':
+	            return state.concat(emptyTicket);
+	        case 'CHANGE_CITATION_NUMBER':
+	            var newTickets = state;
+	            newTickets[action.payload.ticketIndex] = _extends({}, state[action.payload.ticketIndex], {
+	                citationNumber: action.payload.citationNumber.toUpperCase()
+	            });
+	            return newTickets;
+	        case 'CHANGE_CHARGE_NAME':
+	            var newTickets = state;
+	            newTickets[action.payload.ticketIndex] = _extends({}, state[action.payload.ticketIndex], {
+	                chargeName: action.payload.chargeName
+	            });
+	            return newTickets;
+	        case 'CHANGE_OUTCOME':
+	            var newTickets = state;
+	            newTickets[action.payload.ticketIndex] = _extends({}, state[action.payload.ticketIndex], {
+	                outcome: action.payload.outcome
+	            });
+	            return newTickets;
+	        case 'CHANGE_MESSAGE_TYPE':
+	            var newTickets = state;
+	            newTickets[action.payload.ticketIndex] = _extends({}, state[action.payload.ticketIndex], {
+	                messageType: action.payload.messageType
+	            });
+	            return newTickets;
+	        case 'CHANGE_CUSTOM_MESSAGE':
+	            var newTickets = state;
+	            newTickets[action.payload.ticketIndex] = _extends({}, state[action.payload.ticketIndex], {
+	                customMessage: action.payload.customMessage
+	            });
+	            return newTickets;
+	        case 'CHANGE_COURT_COST':
+	            var newTickets = state;
+	            newTickets[action.payload.ticketIndex] = _extends({}, state[action.payload.ticketIndex], {
+	                courtCost: action.payload.courtCost
+	            });
+	            return newTickets;
+	        default:
+	            return state;
+	    }
+	}
+
+/***/ },
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -21908,7 +23099,7 @@
 	exports.default = _react2.default.createClass({
 		displayName: "TextField",
 		handleFieldChange: function handleFieldChange(e) {
-			this.props.handleFieldChange(this.props.index, e);
+			this.props.handleFieldChange(e.target.value);
 		},
 	
 	
@@ -21918,11 +23109,10 @@
 				{ className: "field" },
 				_react2.default.createElement(
 					"label",
-					{ className: "field--label", htmlFor: this.props.name },
+					{ className: "field--label" },
 					this.props.label
 				),
 				_react2.default.createElement("input", { className: "field--text-input",
-					name: this.props.name,
 					type: "text",
 					onChange: this.handleFieldChange,
 					value: this.props.value })
@@ -21933,7 +23123,7 @@
 	     */
 
 /***/ },
-/* 177 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -21963,13 +23153,13 @@
 	     */
 
 /***/ },
-/* 178 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 	
 	var _react = __webpack_require__(166);
@@ -21979,90 +23169,89 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
-		displayName: "Select",
-		handleFieldChange: function handleFieldChange(e) {
-			this.props.handleFieldChange(this.props.index, e);
-		},
+	    displayName: "Select",
+	    handleFieldChange: function handleFieldChange(e) {
+	        this.props.handleFieldChange(e.target.value);
+	    },
 	
 	
-		render: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "field" },
-				_react2.default.createElement(
-					"label",
-					{ className: "field--label", htmlFor: this.props.name },
-					this.props.label
-				),
-				_react2.default.createElement(
-					"select",
-					{ className: "field--select",
-						type: "select",
-						name: this.props.name,
-						onChange: this.handleFieldChange,
-						value: this.props.value },
-					_react2.default.createElement(
-						"option",
-						{ value: "null" },
-						this.props.defaultValue
-					),
-					this.props.options.map(function (item, index) {
-						return _react2.default.createElement(
-							"option",
-							{
-								value: item,
-								key: index },
-							item
-						);
-					})
-				)
-			);
-		}
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "div",
+	            { className: "field" },
+	            _react2.default.createElement(
+	                "label",
+	                { className: "field--label", htmlFor: this.props.name },
+	                this.props.label
+	            ),
+	            _react2.default.createElement(
+	                "select",
+	                {
+	                    className: "field--select",
+	                    type: "select",
+	                    name: this.props.name,
+	                    onChange: this.handleFieldChange,
+	                    value: this.props.value },
+	                _react2.default.createElement(
+	                    "option",
+	                    { value: "null" },
+	                    this.props.defaultValue
+	                ),
+	                this.props.options.map(function (item, index) {
+	                    return _react2.default.createElement(
+	                        "option",
+	                        {
+	                            value: item,
+	                            key: index },
+	                        item
+	                    );
+	                })
+	            )
+	        );
+	    }
 	}); /*
 	     * Select Field Component
 	     */
 
 /***/ },
-/* 179 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	    value: true
 	});
 	
 	var _react = __webpack_require__(166);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _TextField = __webpack_require__(176);
+	var _Store = __webpack_require__(176);
+	
+	var _Store2 = _interopRequireDefault(_Store);
+	
+	var _actions = __webpack_require__(199);
+	
+	var _TextField = __webpack_require__(195);
 	
 	var _TextField2 = _interopRequireDefault(_TextField);
 	
-	var _TextArea = __webpack_require__(180);
+	var _TextArea = __webpack_require__(201);
 	
 	var _TextArea2 = _interopRequireDefault(_TextArea);
 	
-	var _FullButton = __webpack_require__(177);
+	var _FullButton = __webpack_require__(196);
 	
 	var _FullButton2 = _interopRequireDefault(_FullButton);
 	
-	var _Radio = __webpack_require__(181);
-	
-	var _Radio2 = _interopRequireDefault(_Radio);
-	
-	var _Select = __webpack_require__(178);
+	var _Select = __webpack_require__(197);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _CostForm = __webpack_require__(182);
+	var _CurrencyField = __webpack_require__(202);
 	
-	var _CostForm2 = _interopRequireDefault(_CostForm);
-	
-	var _SentenceForm = __webpack_require__(186);
-	
-	var _SentenceForm2 = _interopRequireDefault(_SentenceForm);
+	var _CurrencyField2 = _interopRequireDefault(_CurrencyField);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22070,132 +23259,72 @@
 	 * Ticket Form Component
 	 */
 	exports.default = _react2.default.createClass({
-		displayName: 'TicketForm',
-		getInitialState: function getInitialState() {
-			return {
-				active: false
-			};
-		},
-		handleTicketFieldChange: function handleTicketFieldChange(index, e) {
-			this.props.handleTicketFieldChange(this.props.index, e.target.name, e.target.value);
-		},
-		handleCostFieldChange: function handleCostFieldChange(costType, costIndex, costName, costValue) {
-			this.props.handleCostFieldChange(this.props.index, costType, costIndex, costName, costValue);
-		},
-		handleRadioSelect: function handleRadioSelect(field, value) {
-			this.props.handleTicketFieldChange(this.props.index, field, value);
-		},
-		handleTypeUpdate: function handleTypeUpdate() {
-			this.props.handleTypeUpdate();
-		},
-		handleAddCost: function handleAddCost(costType) {
-			this.props.handleAddCost(this.props.index, costType);
-		},
-		handleAddSentence: function handleAddSentence() {
-			this.props.handleAddSentence(this.props.index);
-		},
-		handleSentenceFieldChange: function handleSentenceFieldChange(sentenceIndex, value) {
-			this.props.handleSentenceFieldChange(this.props.index, sentenceIndex, value);
-		},
-		handleDeleteSentence: function handleDeleteSentence(sentenceIndex) {
-			this.props.handleSentenceFieldChange(this.props.index, sentenceIndex);
-		},
+	    displayName: 'TicketForm',
+	    getInitialState: function getInitialState() {
+	        return {
+	            active: false
+	        };
+	    },
 	
 	
-		render: function render() {
-			var _this = this;
+	    render: function render() {
+	        var _this = this;
 	
-			var type = this.props.ticket.type;
-			var ticket = this.props.ticket;
-			var outcome = ticket.outcome;
-			var copy = ticket.copy;
-			var customCopy = ticket.customCopy;
-			var costs = ticket.costs;
-			var chargeName = ticket.chargeName;
-			//TODO: Remove ticket functionality
-			return _react2.default.createElement(
-				'div',
-				{ className: 'ticket-form' },
-				_react2.default.createElement(_FullButton2.default, { label: chargeName ? chargeName : 'Disposition ' + (this.props.index + 1),
-					handleClick: this.handleAddTicket }),
-				_react2.default.createElement(_Radio2.default, { label: 'Type',
-					name: 'type',
-					options: ['civil', 'criminal'],
-					value: this.props.ticket.type,
-					handleRadioSelect: this.handleRadioSelect }),
-				function () {
-					if (type) {
-						return _react2.default.createElement(_TextField2.default, {
-							label: type == "civil" ? 'Citation Number' : 'Case Number',
-							name: type == "civil" ? 'citationNumber' : 'caseNumber',
-							value: _this.props.ticket.citationNumber,
-							handleFieldChange: _this.handleTicketFieldChange });
-					}
-				}(),
-				function () {
-					if (type) {
-						return _react2.default.createElement(_TextField2.default, {
-							label: 'Charge',
-							name: 'chargeName',
-							value: chargeName,
-							handleFieldChange: _this.handleTicketFieldChange });
-					}
-				}(),
-				function () {
-					if (type) {
-						return _react2.default.createElement(_Select2.default, {
-							label: 'Outcome',
-							name: 'outcome',
-							options: type == "civil" ? ['dismissed', 'adjudicated', 'withold'] : ['dismissed', 'adjudicated guilty', 'withold of adjudication'],
-							defaultValue: '-Select an outcome-',
-							value: outcome,
-							handleFieldChange: _this.handleTicketFieldChange });
-					}
-				}(),
-				function () {
-					if (outcome) {
-						return _react2.default.createElement(_Select2.default, {
-							label: 'Copy',
-							name: 'copy',
-							options: ['standard', 'custom'],
-							defaultValue: '-Select a message-',
-							value: copy,
-							handleFieldChange: _this.handleTicketFieldChange });
-					}
-				}(),
-				function () {
-					if (outcome && copy == 'custom') {
-						return _react2.default.createElement(_TextArea2.default, {
-							label: 'Custom Message',
-							name: 'customCopy',
-							value: customCopy,
-							handleFieldChange: _this.handleTicketFieldChange });
-					}
-				}(),
-				function () {
-					if (type) {
-						return _react2.default.createElement(_CostForm2.default, {
-							label: 'Court Costs',
-							type: 'costs',
-							costs: costs,
-							handleAddCost: _this.handleAddCost,
-							handleCostFieldChange: _this.handleCostFieldChange });
-					}
-				}(),
-				function () {
-					if (type) {
-						//TODO: Create new Sentences Field
-						return _react2.default.createElement(_SentenceForm2.default, {
-							label: 'Sentences',
-							type: 'sentences',
-							sentences: _this.props.ticket.sentences,
-							handleAddSentence: _this.handleAddSentence,
-							handleCostFieldChange: _this.handleCostFieldChange,
-							handleSentenceFieldChange: _this.handleSentenceFieldChange });
-					}
-				}()
-			);
-		}
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'ticket-form' },
+	            _react2.default.createElement(_FullButton2.default, {
+	                label: this.props.chargeName ? this.props.chargeName : 'Disposition ' + (this.props.index + 1) }),
+	            _react2.default.createElement(_TextField2.default, {
+	                label: 'Citation Number',
+	                value: this.props.citationNumber,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch((0, _actions.changeCitationNumber)(_this.props.index, newValue));
+	                } }),
+	            _react2.default.createElement(_TextField2.default, {
+	                label: 'Charge',
+	                value: this.props.chargeName,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch((0, _actions.changeChargeName)(_this.props.index, newValue));
+	                } }),
+	            _react2.default.createElement(_Select2.default, {
+	                label: 'Outcome',
+	                options: ['dismissed', 'adjudicated', 'withold'],
+	                defaultValue: '-Select an outcome-',
+	                value: this.props.outcome,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch((0, _actions.changeOutcome)(_this.props.index, newValue));
+	                } }),
+	            _react2.default.createElement(_CurrencyField2.default, {
+	                label: 'Court Cost',
+	                value: this.props.courtCost,
+	                handleFieldChange: function handleFieldChange(newValue) {
+	                    _Store2.default.dispatch((0, _actions.changeCourtCost)(_this.props.index, newValue));
+	                } }),
+	            function () {
+	                if (_this.props.outcome) {
+	                    return _react2.default.createElement(_Select2.default, {
+	                        label: 'Copy',
+	                        options: ['standard', 'custom'],
+	                        defaultValue: '-Select a message-',
+	                        value: _this.props.messageType,
+	                        handleFieldChange: function handleFieldChange(newValue) {
+	                            _Store2.default.dispatch((0, _actions.changeMessageType)(_this.props.index, newValue));
+	                        } });
+	                }
+	            }(),
+	            function () {
+	                if (_this.props.outcome && _this.props.messageType == 'custom') {
+	                    return _react2.default.createElement(_TextArea2.default, {
+	                        label: 'Custom Message',
+	                        value: _this.props.customMessage,
+	                        handleFieldChange: function handleFieldChange(newValue) {
+	                            _Store2.default.dispatch((0, _actions.changeCustomMessage)(_this.props.index, newValue));
+	                        } });
+	                }
+	            }()
+	        );
+	    }
 	});
 	
 	//===================================================
@@ -22203,7 +23332,168 @@
 	//===================================================
 
 /***/ },
-/* 180 */
+/* 199 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.deleteSentence = exports.changeSentence = exports.addSentence = exports.changeCourtCost = exports.changeCustomMessage = exports.changeMessageType = exports.changeOutcome = exports.changeChargeName = exports.changeCitationNumber = exports.deleteTicket = exports.addTicket = exports.changeLawyer = exports.changeEmail = exports.changeLastName = exports.changeFirstName = undefined;
+	
+	var _utilities = __webpack_require__(200);
+	
+	/*====================================
+	  ====== Top Level Form Actions ======
+	  ====================================*/
+	
+	var changeFirstName = exports.changeFirstName = function changeFirstName(firstName) {
+	    return {
+	        type: 'CHANGE_FIRST_NAME',
+	        firstName: firstName
+	    };
+	};
+	
+	var changeLastName = exports.changeLastName = function changeLastName(lastName) {
+	    return {
+	        type: 'CHANGE_LAST_NAME',
+	        lastName: lastName
+	    };
+	};
+	
+	var changeEmail = exports.changeEmail = function changeEmail(email) {
+	    return {
+	        type: 'CHANGE_EMAIL',
+	        email: email
+	    };
+	};
+	
+	var changeLawyer = exports.changeLawyer = function changeLawyer(lawyer) {
+	    return {
+	        type: 'CHANGE_LAWYER',
+	        lawyer: lawyer
+	    };
+	};
+	
+	/*============================
+	 ====== Ticket actions ======
+	 ============================*/
+	
+	var addTicket = exports.addTicket = function addTicket() {
+	    return {
+	        type: 'ADD_TICKET'
+	    };
+	};
+	
+	var deleteTicket = exports.deleteTicket = function deleteTicket(ticketId) {
+	    return {
+	        type: 'DELETE_TICKET',
+	        ticketId: ticketId
+	    };
+	};
+	
+	var changeCitationNumber = exports.changeCitationNumber = function changeCitationNumber(ticketIndex, citationNumber) {
+	    return {
+	        type: 'CHANGE_CITATION_NUMBER',
+	        payload: {
+	            ticketIndex: ticketIndex,
+	            citationNumber: citationNumber
+	        }
+	    };
+	};
+	
+	var changeChargeName = exports.changeChargeName = function changeChargeName(ticketIndex, chargeName) {
+	    return {
+	        type: 'CHANGE_CHARGE_NAME',
+	        payload: {
+	            ticketIndex: ticketIndex,
+	            chargeName: chargeName
+	        }
+	    };
+	};
+	
+	var changeOutcome = exports.changeOutcome = function changeOutcome(ticketIndex, outcome) {
+	    return {
+	        type: 'CHANGE_OUTCOME',
+	        payload: {
+	            ticketIndex: ticketIndex,
+	            outcome: outcome
+	        }
+	    };
+	};
+	
+	var changeMessageType = exports.changeMessageType = function changeMessageType(ticketIndex, messageType) {
+	    return {
+	        type: 'CHANGE_MESSAGE_TYPE',
+	        payload: {
+	            ticketIndex: ticketIndex,
+	            messageType: messageType
+	        }
+	    };
+	};
+	
+	var changeCustomMessage = exports.changeCustomMessage = function changeCustomMessage(ticketIndex, customMessage) {
+	    return {
+	        type: 'CHANGE_CUSTOM_MESSAGE',
+	        payload: {
+	            ticketIndex: ticketIndex,
+	            customMessage: customMessage
+	        }
+	    };
+	};
+	
+	var changeCourtCost = exports.changeCourtCost = function changeCourtCost(ticketIndex, courtCost) {
+	    return {
+	        type: 'CHANGE_COURT_COST',
+	        payload: {
+	            ticketIndex: ticketIndex,
+	            courtCost: courtCost
+	        }
+	    };
+	};
+	
+	/*==============================
+	  ====== Sentence Actions ======
+	  ==============================*/
+	
+	var addSentence = exports.addSentence = function addSentence(ticketId) {
+	    return {
+	        type: 'ADD_SENTENCE',
+	        sentenceId: (0, _utilities.generateRandomId)(),
+	        ticketId: ticketId
+	    };
+	};
+	
+	var changeSentence = exports.changeSentence = function changeSentence(sentenceId) {
+	    return {
+	        type: 'CHANGE_SENTENCE',
+	        sentenceId: sentenceId
+	    };
+	};
+	
+	var deleteSentence = exports.deleteSentence = function deleteSentence(sentence) {
+	    return {
+	        type: 'DELETE_SENTENCE',
+	        sentence: sentence
+	    };
+	};
+
+/***/ },
+/* 200 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var generateRandomId = exports.generateRandomId = function generateRandomId() {
+	    return Math.random().toString(36).substring(7);
+	};
+
+/***/ },
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22221,7 +23511,7 @@
 	exports.default = _react2.default.createClass({
 		displayName: "TextArea",
 		handleFieldChange: function handleFieldChange(e) {
-			this.props.handleFieldChange(this.props.index, e);
+			this.props.handleFieldChange(e.target.value);
 		},
 	
 	
@@ -22247,341 +23537,7 @@
 	     */
 
 /***/ },
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createClass({
-		displayName: "Radio",
-	
-	
-		render: function render() {
-			var _this = this;
-	
-			return _react2.default.createElement(
-				"div",
-				{ className: "field" },
-				_react2.default.createElement(
-					"label",
-					{ className: "field--label" },
-					this.props.label
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "field--radio" },
-					this.props.options.map(function (item, index) {
-						return _react2.default.createElement(
-							"div",
-							{
-								className: "field--radio--option" + (_this.props.value == item ? ' active' : ''),
-								key: index,
-								onClick: function onClick() {
-									_this.props.handleRadioSelect(_this.props.name, item);
-								}
-							},
-							item
-						);
-					})
-				)
-			);
-		}
-	}); /*
-	     * Field Component
-	     */
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _TextField = __webpack_require__(176);
-	
-	var _TextField2 = _interopRequireDefault(_TextField);
-	
-	var _AddButton = __webpack_require__(183);
-	
-	var _AddButton2 = _interopRequireDefault(_AddButton);
-	
-	var _CostCard = __webpack_require__(184);
-	
-	var _CostCard2 = _interopRequireDefault(_CostCard);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/*
-	 * Cost Form Component
-	 */
-	exports.default = _react2.default.createClass({
-		displayName: 'CostForm',
-		handleCostFieldChange: function handleCostFieldChange(costIndex, costName, costValue) {
-			this.props.handleCostFieldChange(this.props.type, costIndex, costName, costValue);
-		},
-		handleClick: function handleClick() {
-			this.props.handleAddCost(this.props.type);
-		},
-	
-	
-		render: function render() {
-			var _this = this;
-	
-			var type = this.props.type;
-			var label = this.props.label;
-			return _react2.default.createElement(
-				'div',
-				{ className: 'cost-form' },
-				_react2.default.createElement(
-					'h3',
-					{ className: 'cost-form--label' },
-					label
-				),
-				this.props.costs.map(function (cost, index) {
-					return _react2.default.createElement(_CostCard2.default, { key: index,
-						index: index,
-						type: type,
-						cost: cost,
-						handleCostFieldChange: _this.handleCostFieldChange });
-				}),
-				_react2.default.createElement(_AddButton2.default, { label:  true ? label.slice(0, -1) : label,
-					handleClick: this.handleClick })
-			);
-		}
-	});
-	
-	//===================================================
-	//================ Dependencies =====================
-	//===================================================
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createClass({
-		displayName: 'AddButton',
-	
-		render: function render() {
-			return _react2.default.createElement(
-				'button',
-				{ onClick: this.props.handleClick, className: 'add-button' },
-				this.props.label
-			);
-		}
-	}); /*
-	     * Full Button Component
-	     */
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _TextField = __webpack_require__(176);
-	
-	var _TextField2 = _interopRequireDefault(_TextField);
-	
-	var _CurrencyField = __webpack_require__(185);
-	
-	var _CurrencyField2 = _interopRequireDefault(_CurrencyField);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	//===================================================
-	//================ Dependencies =====================
-	//===================================================
-	exports.default = _react2.default.createClass({
-		displayName: 'CostCard',
-		handleCostFieldChange: function handleCostFieldChange(index, e) {
-			this.props.handleCostFieldChange(this.props.index, e.target.name, e.target.value);
-		},
-	
-	
-		render: function render() {
-			var type = this.props.type;
-			console.log('CostCard Props:', this.props);
-			return _react2.default.createElement(
-				'div',
-				{ key: this.props.index,
-					className: 'cost-form--card' },
-				_react2.default.createElement(_TextField2.default, { label: type == "charges" ? "Charge" : "Fine / Cost",
-					name: 'costName',
-					value: this.props.cost.charges,
-					handleFieldChange: this.handleCostFieldChange }),
-				_react2.default.createElement(_CurrencyField2.default, {
-					label: 'Amount',
-					name: 'costAmount',
-					value: this.props.cost.amount,
-					handleFieldChange: this.handleCostFieldChange })
-			);
-		}
-	}); /*
-	     * Cost Form Component
-	     */
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = _react2.default.createClass({
-		displayName: "CurrencyField",
-		handleFieldChange: function handleFieldChange(e) {
-			this.props.handleFieldChange(this.props.index, e);
-		},
-	
-	
-		render: function render() {
-			return _react2.default.createElement(
-				"div",
-				{ className: "field" },
-				_react2.default.createElement(
-					"label",
-					{ className: "field--label", htmlFor: this.props.name },
-					this.props.label
-				),
-				_react2.default.createElement("input", { className: "field--currency-input",
-					name: this.props.name,
-					min: "0.01",
-					step: "0.01",
-					type: "number",
-					onChange: this.handleFieldChange,
-					value: this.props.value }),
-				_react2.default.createElement(
-					"span",
-					{ className: "field--currency-input--suffix" },
-					"$"
-				)
-			);
-		}
-	}); /*
-	     * Field Component
-	     */
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _react = __webpack_require__(166);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _SentenceTextArea = __webpack_require__(187);
-	
-	var _SentenceTextArea2 = _interopRequireDefault(_SentenceTextArea);
-	
-	var _AddButton = __webpack_require__(183);
-	
-	var _AddButton2 = _interopRequireDefault(_AddButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	//===================================================
-	//================ Dependencies =====================
-	//===================================================
-	exports.default = _react2.default.createClass({
-	    displayName: 'SentenceForm',
-	    handleCostFieldChange: function handleCostFieldChange(sentenceIndex, sentenceName, sentenceValue) {
-	        this.props.handleCostFieldChange(this.props.type, costIndex, costName, costValue);
-	    },
-	    handleSentenceFieldChange: function handleSentenceFieldChange(sentenceIndex, e) {
-	        this.props.handleSentenceFieldChange(sentenceIndex, e.target.value);
-	    },
-	    handleDeleteSentence: function handleDeleteSentence(sentenceIndex) {
-	        this.props.handleDeleteSentence(sentenceIndex);
-	    },
-	    handleClick: function handleClick() {
-	        this.props.handleAddSentence();
-	    },
-	
-	
-	    render: function render() {
-	        var _this = this;
-	
-	        var label = this.props.label;
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'sentence-form' },
-	            _react2.default.createElement(
-	                'h3',
-	                { className: 'sentence-form--label' },
-	                label
-	            ),
-	            this.props.sentences.map(function (sentence, index) {
-	                return _react2.default.createElement(_SentenceTextArea2.default, {
-	                    key: index,
-	                    index: index,
-	                    label: index + 1,
-	                    name: 'sentence',
-	                    value: sentence.sentence,
-	                    handleDeleteSentence: _this.handleDeleteSentence(),
-	                    handleFieldChange: _this.handleSentenceFieldChange });
-	            }),
-	            _react2.default.createElement(_AddButton2.default, { label: 'Add Sentence',
-	                handleClick: this.handleClick })
-	        );
-	    }
-	}); /*
-	     * Cost Form Component
-	     */
-
-/***/ },
-/* 187 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -22597,12 +23553,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
-	    displayName: "SentenceTextArea",
+	    displayName: "CurrencyField",
 	    handleFieldChange: function handleFieldChange(e) {
-	        this.props.handleFieldChange(this.props.index, e);
-	    },
-	    handleDeleteSentence: function handleDeleteSentence() {
-	        this.props.handleDeleteSentence(this.props.index);
+	        this.props.handleFieldChange(e.target.value);
 	    },
 	
 	
@@ -22612,26 +23565,28 @@
 	            { className: "field" },
 	            _react2.default.createElement(
 	                "label",
-	                { className: "field--label", htmlFor: this.props.name },
+	                { className: "field--label" },
 	                this.props.label
 	            ),
-	            _react2.default.createElement("span", {
-	                className: "filed--text-area--close",
-	                onClick: this.handleDeleteSentence }),
-	            _react2.default.createElement("textArea", {
-	                className: "field--text-area",
-	                name: this.props.name,
-	                type: "text",
+	            _react2.default.createElement("input", { className: "field--currency-input",
+	                min: "0.00",
+	                step: "0.01",
+	                type: "number",
 	                onChange: this.handleFieldChange,
-	                value: this.props.value })
+	                value: this.props.value }),
+	            _react2.default.createElement(
+	                "span",
+	                { className: "field--currency-input--suffix" },
+	                "$"
+	            )
 	        );
 	    }
 	}); /*
-	     * Sentence TextArea Component
+	     * Field Component
 	     */
 
 /***/ },
-/* 188 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22658,23 +23613,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(206);
+	var _Line = __webpack_require__(221);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Header = __webpack_require__(208);
+	var _Header = __webpack_require__(223);
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Charge = __webpack_require__(209);
+	var _Charge = __webpack_require__(224);
 	
 	var _Charge2 = _interopRequireDefault(_Charge);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -22755,7 +23710,7 @@
 	});
 
 /***/ },
-/* 189 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -22765,39 +23720,39 @@
 	});
 	exports.renderEmail = exports.configStyleValidator = exports.injectReactEmailAttributes = exports.A = exports.Span = exports.Item = exports.Image = exports.Email = exports.Box = exports.PropTypes = undefined;
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _Box = __webpack_require__(193);
+	var _Box = __webpack_require__(208);
 	
 	var _Box2 = _interopRequireDefault(_Box);
 	
-	var _Email = __webpack_require__(194);
+	var _Email = __webpack_require__(209);
 	
 	var _Email2 = _interopRequireDefault(_Email);
 	
-	var _Image = __webpack_require__(197);
+	var _Image = __webpack_require__(212);
 	
 	var _Image2 = _interopRequireDefault(_Image);
 	
-	var _Item = __webpack_require__(195);
+	var _Item = __webpack_require__(210);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
-	var _Span = __webpack_require__(198);
+	var _Span = __webpack_require__(213);
 	
 	var _Span2 = _interopRequireDefault(_Span);
 	
-	var _A = __webpack_require__(199);
+	var _A = __webpack_require__(214);
 	
 	var _A2 = _interopRequireDefault(_A);
 	
-	var _injectReactEmailAttributes = __webpack_require__(200);
+	var _injectReactEmailAttributes = __webpack_require__(215);
 	
 	var _injectReactEmailAttributes2 = _interopRequireDefault(_injectReactEmailAttributes);
 	
-	var _renderEmail = __webpack_require__(201);
+	var _renderEmail = __webpack_require__(216);
 	
 	var _renderEmail2 = _interopRequireDefault(_renderEmail);
 	
@@ -22829,7 +23784,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 190 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22844,7 +23799,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _StyleValidator = __webpack_require__(191);
+	var _StyleValidator = __webpack_require__(206);
 	
 	var _StyleValidator2 = _interopRequireDefault(_StyleValidator);
 	
@@ -22873,7 +23828,7 @@
 	};
 
 /***/ },
-/* 191 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22888,7 +23843,7 @@
 	  value: true
 	});
 	
-	var _supportMatrix = __webpack_require__(192);
+	var _supportMatrix = __webpack_require__(207);
 	
 	var _supportMatrix2 = _interopRequireDefault(_supportMatrix);
 	
@@ -23005,7 +23960,7 @@
 	exports.default = StyleValidator;
 
 /***/ },
-/* 192 */
+/* 207 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -23762,7 +24717,7 @@
 	};
 
 /***/ },
-/* 193 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23776,7 +24731,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
@@ -23822,7 +24777,7 @@
 	};
 
 /***/ },
-/* 194 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23836,15 +24791,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _Box = __webpack_require__(193);
+	var _Box = __webpack_require__(208);
 	
 	var _Box2 = _interopRequireDefault(_Box);
 	
-	var _Item = __webpack_require__(195);
+	var _Item = __webpack_require__(210);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
@@ -23918,7 +24873,7 @@
 	};
 
 /***/ },
-/* 195 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23934,11 +24889,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(196);
+	var _includeDataProps = __webpack_require__(211);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -23965,7 +24920,7 @@
 	};
 
 /***/ },
-/* 196 */
+/* 211 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -23987,7 +24942,7 @@
 	};
 
 /***/ },
-/* 197 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24003,11 +24958,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(196);
+	var _includeDataProps = __webpack_require__(211);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -24031,7 +24986,7 @@
 	};
 
 /***/ },
-/* 198 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24047,11 +25002,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(196);
+	var _includeDataProps = __webpack_require__(211);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -24088,7 +25043,7 @@
 	};
 
 /***/ },
-/* 199 */
+/* 214 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24104,11 +25059,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(190);
+	var _PropTypes = __webpack_require__(205);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(196);
+	var _includeDataProps = __webpack_require__(211);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -24138,7 +25093,7 @@
 	};
 
 /***/ },
-/* 200 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24187,7 +25142,7 @@
 	}
 
 /***/ },
-/* 201 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24197,7 +25152,7 @@
 	});
 	exports.default = renderEmail;
 	
-	var _server = __webpack_require__(202);
+	var _server = __webpack_require__(217);
 	
 	var _server2 = _interopRequireDefault(_server);
 	
@@ -24209,16 +25164,16 @@
 	}
 
 /***/ },
-/* 202 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(203);
+	module.exports = __webpack_require__(218);
 
 
 /***/ },
-/* 203 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -24235,7 +25190,7 @@
 	'use strict';
 	
 	var ReactDefaultInjection = __webpack_require__(9);
-	var ReactServerRendering = __webpack_require__(204);
+	var ReactServerRendering = __webpack_require__(219);
 	var ReactVersion = __webpack_require__(160);
 	
 	ReactDefaultInjection.inject();
@@ -24249,7 +25204,7 @@
 	module.exports = ReactDOMServer;
 
 /***/ },
-/* 204 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -24272,7 +25227,7 @@
 	var ReactInstrumentation = __webpack_require__(38);
 	var ReactMarkupChecksum = __webpack_require__(158);
 	var ReactReconciler = __webpack_require__(35);
-	var ReactServerBatchingStrategy = __webpack_require__(205);
+	var ReactServerBatchingStrategy = __webpack_require__(220);
 	var ReactServerRenderingTransaction = __webpack_require__(119);
 	var ReactUpdates = __webpack_require__(32);
 	
@@ -24345,7 +25300,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 205 */
+/* 220 */
 /***/ function(module, exports) {
 
 	/**
@@ -24372,7 +25327,7 @@
 	module.exports = ReactServerBatchingStrategy;
 
 /***/ },
-/* 206 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24385,11 +25340,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -24425,7 +25380,7 @@
 	});
 
 /***/ },
-/* 207 */
+/* 222 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -24526,7 +25481,7 @@
 	};
 
 /***/ },
-/* 208 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24539,11 +25494,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -24578,7 +25533,7 @@
 	});
 
 /***/ },
-/* 209 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24591,27 +25546,27 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(206);
+	var _Line = __webpack_require__(221);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Outcome = __webpack_require__(210);
+	var _Outcome = __webpack_require__(225);
 	
 	var _Outcome2 = _interopRequireDefault(_Outcome);
 	
-	var _Spacer = __webpack_require__(211);
+	var _Spacer = __webpack_require__(226);
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
-	var _Sentences = __webpack_require__(212);
+	var _Sentences = __webpack_require__(227);
 	
 	var _Sentences2 = _interopRequireDefault(_Sentences);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -24669,7 +25624,7 @@
 	});
 
 /***/ },
-/* 210 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24682,19 +25637,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(206);
+	var _Line = __webpack_require__(221);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Spacer = __webpack_require__(211);
+	var _Spacer = __webpack_require__(226);
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -24783,7 +25738,7 @@
 	});
 
 /***/ },
-/* 211 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24796,11 +25751,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -24841,7 +25796,7 @@
 	});
 
 /***/ },
-/* 212 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24854,19 +25809,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(189);
+	var _reactHtmlEmail = __webpack_require__(204);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(206);
+	var _Line = __webpack_require__(221);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Spacer = __webpack_require__(211);
+	var _Spacer = __webpack_require__(226);
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
-	var _EmailStyles = __webpack_require__(207);
+	var _EmailStyles = __webpack_require__(222);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -24930,1852 +25885,6 @@
 	        );
 	    }
 	});
-
-/***/ },
-/* 213 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports.connect = exports.Provider = undefined;
-	
-	var _Provider = __webpack_require__(214);
-	
-	var _Provider2 = _interopRequireDefault(_Provider);
-	
-	var _connect = __webpack_require__(217);
-	
-	var _connect2 = _interopRequireDefault(_connect);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	exports.Provider = _Provider2["default"];
-	exports.connect = _connect2["default"];
-
-/***/ },
-/* 214 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	
-	exports.__esModule = true;
-	exports["default"] = undefined;
-	
-	var _react = __webpack_require__(166);
-	
-	var _storeShape = __webpack_require__(215);
-	
-	var _storeShape2 = _interopRequireDefault(_storeShape);
-	
-	var _warning = __webpack_require__(216);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var didWarnAboutReceivingStore = false;
-	function warnAboutReceivingStore() {
-	  if (didWarnAboutReceivingStore) {
-	    return;
-	  }
-	  didWarnAboutReceivingStore = true;
-	
-	  (0, _warning2["default"])('<Provider> does not support changing `store` on the fly. ' + 'It is most likely that you see this error because you updated to ' + 'Redux 2.x and React Redux 2.x which no longer hot reload reducers ' + 'automatically. See https://github.com/reactjs/react-redux/releases/' + 'tag/v2.0.0 for the migration instructions.');
-	}
-	
-	var Provider = function (_Component) {
-	  _inherits(Provider, _Component);
-	
-	  Provider.prototype.getChildContext = function getChildContext() {
-	    return { store: this.store };
-	  };
-	
-	  function Provider(props, context) {
-	    _classCallCheck(this, Provider);
-	
-	    var _this = _possibleConstructorReturn(this, _Component.call(this, props, context));
-	
-	    _this.store = props.store;
-	    return _this;
-	  }
-	
-	  Provider.prototype.render = function render() {
-	    var children = this.props.children;
-	
-	    return _react.Children.only(children);
-	  };
-	
-	  return Provider;
-	}(_react.Component);
-	
-	exports["default"] = Provider;
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  Provider.prototype.componentWillReceiveProps = function (nextProps) {
-	    var store = this.store;
-	    var nextStore = nextProps.store;
-	
-	    if (store !== nextStore) {
-	      warnAboutReceivingStore();
-	    }
-	  };
-	}
-	
-	Provider.propTypes = {
-	  store: _storeShape2["default"].isRequired,
-	  children: _react.PropTypes.element.isRequired
-	};
-	Provider.childContextTypes = {
-	  store: _storeShape2["default"].isRequired
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 215 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	var _react = __webpack_require__(166);
-	
-	exports["default"] = _react.PropTypes.shape({
-	  subscribe: _react.PropTypes.func.isRequired,
-	  dispatch: _react.PropTypes.func.isRequired,
-	  getState: _react.PropTypes.func.isRequired
-	});
-
-/***/ },
-/* 216 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports["default"] = warning;
-	/**
-	 * Prints a warning in the console if it exists.
-	 *
-	 * @param {String} message The warning message.
-	 * @returns {void}
-	 */
-	function warning(message) {
-	  /* eslint-disable no-console */
-	  if (typeof console !== 'undefined' && typeof console.error === 'function') {
-	    console.error(message);
-	  }
-	  /* eslint-enable no-console */
-	  try {
-	    // This error was thrown as a convenience so that you can use this stack
-	    // to find the callsite that caused this warning to fire.
-	    throw new Error(message);
-	    /* eslint-disable no-empty */
-	  } catch (e) {}
-	  /* eslint-enable no-empty */
-	}
-
-/***/ },
-/* 217 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	exports.__esModule = true;
-	exports["default"] = connect;
-	
-	var _react = __webpack_require__(166);
-	
-	var _storeShape = __webpack_require__(215);
-	
-	var _storeShape2 = _interopRequireDefault(_storeShape);
-	
-	var _shallowEqual = __webpack_require__(218);
-	
-	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
-	
-	var _wrapActionCreators = __webpack_require__(219);
-	
-	var _wrapActionCreators2 = _interopRequireDefault(_wrapActionCreators);
-	
-	var _warning = __webpack_require__(216);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	var _isPlainObject = __webpack_require__(222);
-	
-	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-	
-	var _hoistNonReactStatics = __webpack_require__(234);
-	
-	var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
-	
-	var _invariant = __webpack_require__(235);
-	
-	var _invariant2 = _interopRequireDefault(_invariant);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var defaultMapStateToProps = function defaultMapStateToProps(state) {
-	  return {};
-	}; // eslint-disable-line no-unused-vars
-	var defaultMapDispatchToProps = function defaultMapDispatchToProps(dispatch) {
-	  return { dispatch: dispatch };
-	};
-	var defaultMergeProps = function defaultMergeProps(stateProps, dispatchProps, parentProps) {
-	  return _extends({}, parentProps, stateProps, dispatchProps);
-	};
-	
-	function getDisplayName(WrappedComponent) {
-	  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-	}
-	
-	var errorObject = { value: null };
-	function tryCatch(fn, ctx) {
-	  try {
-	    return fn.apply(ctx);
-	  } catch (e) {
-	    errorObject.value = e;
-	    return errorObject;
-	  }
-	}
-	
-	// Helps track hot reloading.
-	var nextVersion = 0;
-	
-	function connect(mapStateToProps, mapDispatchToProps, mergeProps) {
-	  var options = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
-	
-	  var shouldSubscribe = Boolean(mapStateToProps);
-	  var mapState = mapStateToProps || defaultMapStateToProps;
-	
-	  var mapDispatch = undefined;
-	  if (typeof mapDispatchToProps === 'function') {
-	    mapDispatch = mapDispatchToProps;
-	  } else if (!mapDispatchToProps) {
-	    mapDispatch = defaultMapDispatchToProps;
-	  } else {
-	    mapDispatch = (0, _wrapActionCreators2["default"])(mapDispatchToProps);
-	  }
-	
-	  var finalMergeProps = mergeProps || defaultMergeProps;
-	  var _options$pure = options.pure;
-	  var pure = _options$pure === undefined ? true : _options$pure;
-	  var _options$withRef = options.withRef;
-	  var withRef = _options$withRef === undefined ? false : _options$withRef;
-	
-	  var checkMergedEquals = pure && finalMergeProps !== defaultMergeProps;
-	
-	  // Helps track hot reloading.
-	  var version = nextVersion++;
-	
-	  return function wrapWithConnect(WrappedComponent) {
-	    var connectDisplayName = 'Connect(' + getDisplayName(WrappedComponent) + ')';
-	
-	    function checkStateShape(props, methodName) {
-	      if (!(0, _isPlainObject2["default"])(props)) {
-	        (0, _warning2["default"])(methodName + '() in ' + connectDisplayName + ' must return a plain object. ' + ('Instead received ' + props + '.'));
-	      }
-	    }
-	
-	    function computeMergedProps(stateProps, dispatchProps, parentProps) {
-	      var mergedProps = finalMergeProps(stateProps, dispatchProps, parentProps);
-	      if (process.env.NODE_ENV !== 'production') {
-	        checkStateShape(mergedProps, 'mergeProps');
-	      }
-	      return mergedProps;
-	    }
-	
-	    var Connect = function (_Component) {
-	      _inherits(Connect, _Component);
-	
-	      Connect.prototype.shouldComponentUpdate = function shouldComponentUpdate() {
-	        return !pure || this.haveOwnPropsChanged || this.hasStoreStateChanged;
-	      };
-	
-	      function Connect(props, context) {
-	        _classCallCheck(this, Connect);
-	
-	        var _this = _possibleConstructorReturn(this, _Component.call(this, props, context));
-	
-	        _this.version = version;
-	        _this.store = props.store || context.store;
-	
-	        (0, _invariant2["default"])(_this.store, 'Could not find "store" in either the context or ' + ('props of "' + connectDisplayName + '". ') + 'Either wrap the root component in a <Provider>, ' + ('or explicitly pass "store" as a prop to "' + connectDisplayName + '".'));
-	
-	        var storeState = _this.store.getState();
-	        _this.state = { storeState: storeState };
-	        _this.clearCache();
-	        return _this;
-	      }
-	
-	      Connect.prototype.computeStateProps = function computeStateProps(store, props) {
-	        if (!this.finalMapStateToProps) {
-	          return this.configureFinalMapState(store, props);
-	        }
-	
-	        var state = store.getState();
-	        var stateProps = this.doStatePropsDependOnOwnProps ? this.finalMapStateToProps(state, props) : this.finalMapStateToProps(state);
-	
-	        if (process.env.NODE_ENV !== 'production') {
-	          checkStateShape(stateProps, 'mapStateToProps');
-	        }
-	        return stateProps;
-	      };
-	
-	      Connect.prototype.configureFinalMapState = function configureFinalMapState(store, props) {
-	        var mappedState = mapState(store.getState(), props);
-	        var isFactory = typeof mappedState === 'function';
-	
-	        this.finalMapStateToProps = isFactory ? mappedState : mapState;
-	        this.doStatePropsDependOnOwnProps = this.finalMapStateToProps.length !== 1;
-	
-	        if (isFactory) {
-	          return this.computeStateProps(store, props);
-	        }
-	
-	        if (process.env.NODE_ENV !== 'production') {
-	          checkStateShape(mappedState, 'mapStateToProps');
-	        }
-	        return mappedState;
-	      };
-	
-	      Connect.prototype.computeDispatchProps = function computeDispatchProps(store, props) {
-	        if (!this.finalMapDispatchToProps) {
-	          return this.configureFinalMapDispatch(store, props);
-	        }
-	
-	        var dispatch = store.dispatch;
-	
-	        var dispatchProps = this.doDispatchPropsDependOnOwnProps ? this.finalMapDispatchToProps(dispatch, props) : this.finalMapDispatchToProps(dispatch);
-	
-	        if (process.env.NODE_ENV !== 'production') {
-	          checkStateShape(dispatchProps, 'mapDispatchToProps');
-	        }
-	        return dispatchProps;
-	      };
-	
-	      Connect.prototype.configureFinalMapDispatch = function configureFinalMapDispatch(store, props) {
-	        var mappedDispatch = mapDispatch(store.dispatch, props);
-	        var isFactory = typeof mappedDispatch === 'function';
-	
-	        this.finalMapDispatchToProps = isFactory ? mappedDispatch : mapDispatch;
-	        this.doDispatchPropsDependOnOwnProps = this.finalMapDispatchToProps.length !== 1;
-	
-	        if (isFactory) {
-	          return this.computeDispatchProps(store, props);
-	        }
-	
-	        if (process.env.NODE_ENV !== 'production') {
-	          checkStateShape(mappedDispatch, 'mapDispatchToProps');
-	        }
-	        return mappedDispatch;
-	      };
-	
-	      Connect.prototype.updateStatePropsIfNeeded = function updateStatePropsIfNeeded() {
-	        var nextStateProps = this.computeStateProps(this.store, this.props);
-	        if (this.stateProps && (0, _shallowEqual2["default"])(nextStateProps, this.stateProps)) {
-	          return false;
-	        }
-	
-	        this.stateProps = nextStateProps;
-	        return true;
-	      };
-	
-	      Connect.prototype.updateDispatchPropsIfNeeded = function updateDispatchPropsIfNeeded() {
-	        var nextDispatchProps = this.computeDispatchProps(this.store, this.props);
-	        if (this.dispatchProps && (0, _shallowEqual2["default"])(nextDispatchProps, this.dispatchProps)) {
-	          return false;
-	        }
-	
-	        this.dispatchProps = nextDispatchProps;
-	        return true;
-	      };
-	
-	      Connect.prototype.updateMergedPropsIfNeeded = function updateMergedPropsIfNeeded() {
-	        var nextMergedProps = computeMergedProps(this.stateProps, this.dispatchProps, this.props);
-	        if (this.mergedProps && checkMergedEquals && (0, _shallowEqual2["default"])(nextMergedProps, this.mergedProps)) {
-	          return false;
-	        }
-	
-	        this.mergedProps = nextMergedProps;
-	        return true;
-	      };
-	
-	      Connect.prototype.isSubscribed = function isSubscribed() {
-	        return typeof this.unsubscribe === 'function';
-	      };
-	
-	      Connect.prototype.trySubscribe = function trySubscribe() {
-	        if (shouldSubscribe && !this.unsubscribe) {
-	          this.unsubscribe = this.store.subscribe(this.handleChange.bind(this));
-	          this.handleChange();
-	        }
-	      };
-	
-	      Connect.prototype.tryUnsubscribe = function tryUnsubscribe() {
-	        if (this.unsubscribe) {
-	          this.unsubscribe();
-	          this.unsubscribe = null;
-	        }
-	      };
-	
-	      Connect.prototype.componentDidMount = function componentDidMount() {
-	        this.trySubscribe();
-	      };
-	
-	      Connect.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-	        if (!pure || !(0, _shallowEqual2["default"])(nextProps, this.props)) {
-	          this.haveOwnPropsChanged = true;
-	        }
-	      };
-	
-	      Connect.prototype.componentWillUnmount = function componentWillUnmount() {
-	        this.tryUnsubscribe();
-	        this.clearCache();
-	      };
-	
-	      Connect.prototype.clearCache = function clearCache() {
-	        this.dispatchProps = null;
-	        this.stateProps = null;
-	        this.mergedProps = null;
-	        this.haveOwnPropsChanged = true;
-	        this.hasStoreStateChanged = true;
-	        this.haveStatePropsBeenPrecalculated = false;
-	        this.statePropsPrecalculationError = null;
-	        this.renderedElement = null;
-	        this.finalMapDispatchToProps = null;
-	        this.finalMapStateToProps = null;
-	      };
-	
-	      Connect.prototype.handleChange = function handleChange() {
-	        if (!this.unsubscribe) {
-	          return;
-	        }
-	
-	        var storeState = this.store.getState();
-	        var prevStoreState = this.state.storeState;
-	        if (pure && prevStoreState === storeState) {
-	          return;
-	        }
-	
-	        if (pure && !this.doStatePropsDependOnOwnProps) {
-	          var haveStatePropsChanged = tryCatch(this.updateStatePropsIfNeeded, this);
-	          if (!haveStatePropsChanged) {
-	            return;
-	          }
-	          if (haveStatePropsChanged === errorObject) {
-	            this.statePropsPrecalculationError = errorObject.value;
-	          }
-	          this.haveStatePropsBeenPrecalculated = true;
-	        }
-	
-	        this.hasStoreStateChanged = true;
-	        this.setState({ storeState: storeState });
-	      };
-	
-	      Connect.prototype.getWrappedInstance = function getWrappedInstance() {
-	        (0, _invariant2["default"])(withRef, 'To access the wrapped instance, you need to specify ' + '{ withRef: true } as the fourth argument of the connect() call.');
-	
-	        return this.refs.wrappedInstance;
-	      };
-	
-	      Connect.prototype.render = function render() {
-	        var haveOwnPropsChanged = this.haveOwnPropsChanged;
-	        var hasStoreStateChanged = this.hasStoreStateChanged;
-	        var haveStatePropsBeenPrecalculated = this.haveStatePropsBeenPrecalculated;
-	        var statePropsPrecalculationError = this.statePropsPrecalculationError;
-	        var renderedElement = this.renderedElement;
-	
-	        this.haveOwnPropsChanged = false;
-	        this.hasStoreStateChanged = false;
-	        this.haveStatePropsBeenPrecalculated = false;
-	        this.statePropsPrecalculationError = null;
-	
-	        if (statePropsPrecalculationError) {
-	          throw statePropsPrecalculationError;
-	        }
-	
-	        var shouldUpdateStateProps = true;
-	        var shouldUpdateDispatchProps = true;
-	        if (pure && renderedElement) {
-	          shouldUpdateStateProps = hasStoreStateChanged || haveOwnPropsChanged && this.doStatePropsDependOnOwnProps;
-	          shouldUpdateDispatchProps = haveOwnPropsChanged && this.doDispatchPropsDependOnOwnProps;
-	        }
-	
-	        var haveStatePropsChanged = false;
-	        var haveDispatchPropsChanged = false;
-	        if (haveStatePropsBeenPrecalculated) {
-	          haveStatePropsChanged = true;
-	        } else if (shouldUpdateStateProps) {
-	          haveStatePropsChanged = this.updateStatePropsIfNeeded();
-	        }
-	        if (shouldUpdateDispatchProps) {
-	          haveDispatchPropsChanged = this.updateDispatchPropsIfNeeded();
-	        }
-	
-	        var haveMergedPropsChanged = true;
-	        if (haveStatePropsChanged || haveDispatchPropsChanged || haveOwnPropsChanged) {
-	          haveMergedPropsChanged = this.updateMergedPropsIfNeeded();
-	        } else {
-	          haveMergedPropsChanged = false;
-	        }
-	
-	        if (!haveMergedPropsChanged && renderedElement) {
-	          return renderedElement;
-	        }
-	
-	        if (withRef) {
-	          this.renderedElement = (0, _react.createElement)(WrappedComponent, _extends({}, this.mergedProps, {
-	            ref: 'wrappedInstance'
-	          }));
-	        } else {
-	          this.renderedElement = (0, _react.createElement)(WrappedComponent, this.mergedProps);
-	        }
-	
-	        return this.renderedElement;
-	      };
-	
-	      return Connect;
-	    }(_react.Component);
-	
-	    Connect.displayName = connectDisplayName;
-	    Connect.WrappedComponent = WrappedComponent;
-	    Connect.contextTypes = {
-	      store: _storeShape2["default"]
-	    };
-	    Connect.propTypes = {
-	      store: _storeShape2["default"]
-	    };
-	
-	    if (process.env.NODE_ENV !== 'production') {
-	      Connect.prototype.componentWillUpdate = function componentWillUpdate() {
-	        if (this.version === version) {
-	          return;
-	        }
-	
-	        // We are hot reloading!
-	        this.version = version;
-	        this.trySubscribe();
-	        this.clearCache();
-	      };
-	    }
-	
-	    return (0, _hoistNonReactStatics2["default"])(Connect, WrappedComponent);
-	  };
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 218 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	exports["default"] = shallowEqual;
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	
-	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-	
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-	
-	  // Test for A's keys different from B.
-	  var hasOwn = Object.prototype.hasOwnProperty;
-	  for (var i = 0; i < keysA.length; i++) {
-	    if (!hasOwn.call(objB, keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-	      return false;
-	    }
-	  }
-	
-	  return true;
-	}
-
-/***/ },
-/* 219 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports["default"] = wrapActionCreators;
-	
-	var _redux = __webpack_require__(220);
-	
-	function wrapActionCreators(actionCreators) {
-	  return function (dispatch) {
-	    return (0, _redux.bindActionCreators)(actionCreators, dispatch);
-	  };
-	}
-
-/***/ },
-/* 220 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	
-	exports.__esModule = true;
-	exports.compose = exports.applyMiddleware = exports.bindActionCreators = exports.combineReducers = exports.createStore = undefined;
-	
-	var _createStore = __webpack_require__(221);
-	
-	var _createStore2 = _interopRequireDefault(_createStore);
-	
-	var _combineReducers = __webpack_require__(229);
-	
-	var _combineReducers2 = _interopRequireDefault(_combineReducers);
-	
-	var _bindActionCreators = __webpack_require__(231);
-	
-	var _bindActionCreators2 = _interopRequireDefault(_bindActionCreators);
-	
-	var _applyMiddleware = __webpack_require__(232);
-	
-	var _applyMiddleware2 = _interopRequireDefault(_applyMiddleware);
-	
-	var _compose = __webpack_require__(233);
-	
-	var _compose2 = _interopRequireDefault(_compose);
-	
-	var _warning = __webpack_require__(230);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	/*
-	* This is a dummy function to check if the function name has been altered by minification.
-	* If the function has been minified and NODE_ENV !== 'production', warn the user.
-	*/
-	function isCrushed() {}
-	
-	if (process.env.NODE_ENV !== 'production' && typeof isCrushed.name === 'string' && isCrushed.name !== 'isCrushed') {
-	  (0, _warning2['default'])('You are currently using minified code outside of NODE_ENV === \'production\'. ' + 'This means that you are running a slower development build of Redux. ' + 'You can use loose-envify (https://github.com/zertosh/loose-envify) for browserify ' + 'or DefinePlugin for webpack (http://stackoverflow.com/questions/30030031) ' + 'to ensure you have the correct code for your production build.');
-	}
-	
-	exports.createStore = _createStore2['default'];
-	exports.combineReducers = _combineReducers2['default'];
-	exports.bindActionCreators = _bindActionCreators2['default'];
-	exports.applyMiddleware = _applyMiddleware2['default'];
-	exports.compose = _compose2['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 221 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports.ActionTypes = undefined;
-	exports['default'] = createStore;
-	
-	var _isPlainObject = __webpack_require__(222);
-	
-	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-	
-	var _symbolObservable = __webpack_require__(226);
-	
-	var _symbolObservable2 = _interopRequireDefault(_symbolObservable);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	/**
-	 * These are private action types reserved by Redux.
-	 * For any unknown actions, you must return the current state.
-	 * If the current state is undefined, you must return the initial state.
-	 * Do not reference these action types directly in your code.
-	 */
-	var ActionTypes = exports.ActionTypes = {
-	  INIT: '@@redux/INIT'
-	};
-	
-	/**
-	 * Creates a Redux store that holds the state tree.
-	 * The only way to change the data in the store is to call `dispatch()` on it.
-	 *
-	 * There should only be a single store in your app. To specify how different
-	 * parts of the state tree respond to actions, you may combine several reducers
-	 * into a single reducer function by using `combineReducers`.
-	 *
-	 * @param {Function} reducer A function that returns the next state tree, given
-	 * the current state tree and the action to handle.
-	 *
-	 * @param {any} [preloadedState] The initial state. You may optionally specify it
-	 * to hydrate the state from the server in universal apps, or to restore a
-	 * previously serialized user session.
-	 * If you use `combineReducers` to produce the root reducer function, this must be
-	 * an object with the same shape as `combineReducers` keys.
-	 *
-	 * @param {Function} enhancer The store enhancer. You may optionally specify it
-	 * to enhance the store with third-party capabilities such as middleware,
-	 * time travel, persistence, etc. The only store enhancer that ships with Redux
-	 * is `applyMiddleware()`.
-	 *
-	 * @returns {Store} A Redux store that lets you read the state, dispatch actions
-	 * and subscribe to changes.
-	 */
-	function createStore(reducer, preloadedState, enhancer) {
-	  var _ref2;
-	
-	  if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
-	    enhancer = preloadedState;
-	    preloadedState = undefined;
-	  }
-	
-	  if (typeof enhancer !== 'undefined') {
-	    if (typeof enhancer !== 'function') {
-	      throw new Error('Expected the enhancer to be a function.');
-	    }
-	
-	    return enhancer(createStore)(reducer, preloadedState);
-	  }
-	
-	  if (typeof reducer !== 'function') {
-	    throw new Error('Expected the reducer to be a function.');
-	  }
-	
-	  var currentReducer = reducer;
-	  var currentState = preloadedState;
-	  var currentListeners = [];
-	  var nextListeners = currentListeners;
-	  var isDispatching = false;
-	
-	  function ensureCanMutateNextListeners() {
-	    if (nextListeners === currentListeners) {
-	      nextListeners = currentListeners.slice();
-	    }
-	  }
-	
-	  /**
-	   * Reads the state tree managed by the store.
-	   *
-	   * @returns {any} The current state tree of your application.
-	   */
-	  function getState() {
-	    return currentState;
-	  }
-	
-	  /**
-	   * Adds a change listener. It will be called any time an action is dispatched,
-	   * and some part of the state tree may potentially have changed. You may then
-	   * call `getState()` to read the current state tree inside the callback.
-	   *
-	   * You may call `dispatch()` from a change listener, with the following
-	   * caveats:
-	   *
-	   * 1. The subscriptions are snapshotted just before every `dispatch()` call.
-	   * If you subscribe or unsubscribe while the listeners are being invoked, this
-	   * will not have any effect on the `dispatch()` that is currently in progress.
-	   * However, the next `dispatch()` call, whether nested or not, will use a more
-	   * recent snapshot of the subscription list.
-	   *
-	   * 2. The listener should not expect to see all state changes, as the state
-	   * might have been updated multiple times during a nested `dispatch()` before
-	   * the listener is called. It is, however, guaranteed that all subscribers
-	   * registered before the `dispatch()` started will be called with the latest
-	   * state by the time it exits.
-	   *
-	   * @param {Function} listener A callback to be invoked on every dispatch.
-	   * @returns {Function} A function to remove this change listener.
-	   */
-	  function subscribe(listener) {
-	    if (typeof listener !== 'function') {
-	      throw new Error('Expected listener to be a function.');
-	    }
-	
-	    var isSubscribed = true;
-	
-	    ensureCanMutateNextListeners();
-	    nextListeners.push(listener);
-	
-	    return function unsubscribe() {
-	      if (!isSubscribed) {
-	        return;
-	      }
-	
-	      isSubscribed = false;
-	
-	      ensureCanMutateNextListeners();
-	      var index = nextListeners.indexOf(listener);
-	      nextListeners.splice(index, 1);
-	    };
-	  }
-	
-	  /**
-	   * Dispatches an action. It is the only way to trigger a state change.
-	   *
-	   * The `reducer` function, used to create the store, will be called with the
-	   * current state tree and the given `action`. Its return value will
-	   * be considered the **next** state of the tree, and the change listeners
-	   * will be notified.
-	   *
-	   * The base implementation only supports plain object actions. If you want to
-	   * dispatch a Promise, an Observable, a thunk, or something else, you need to
-	   * wrap your store creating function into the corresponding middleware. For
-	   * example, see the documentation for the `redux-thunk` package. Even the
-	   * middleware will eventually dispatch plain object actions using this method.
-	   *
-	   * @param {Object} action A plain object representing “what changed”. It is
-	   * a good idea to keep actions serializable so you can record and replay user
-	   * sessions, or use the time travelling `redux-devtools`. An action must have
-	   * a `type` property which may not be `undefined`. It is a good idea to use
-	   * string constants for action types.
-	   *
-	   * @returns {Object} For convenience, the same action object you dispatched.
-	   *
-	   * Note that, if you use a custom middleware, it may wrap `dispatch()` to
-	   * return something else (for example, a Promise you can await).
-	   */
-	  function dispatch(action) {
-	    if (!(0, _isPlainObject2['default'])(action)) {
-	      throw new Error('Actions must be plain objects. ' + 'Use custom middleware for async actions.');
-	    }
-	
-	    if (typeof action.type === 'undefined') {
-	      throw new Error('Actions may not have an undefined "type" property. ' + 'Have you misspelled a constant?');
-	    }
-	
-	    if (isDispatching) {
-	      throw new Error('Reducers may not dispatch actions.');
-	    }
-	
-	    try {
-	      isDispatching = true;
-	      currentState = currentReducer(currentState, action);
-	    } finally {
-	      isDispatching = false;
-	    }
-	
-	    var listeners = currentListeners = nextListeners;
-	    for (var i = 0; i < listeners.length; i++) {
-	      listeners[i]();
-	    }
-	
-	    return action;
-	  }
-	
-	  /**
-	   * Replaces the reducer currently used by the store to calculate the state.
-	   *
-	   * You might need this if your app implements code splitting and you want to
-	   * load some of the reducers dynamically. You might also need this if you
-	   * implement a hot reloading mechanism for Redux.
-	   *
-	   * @param {Function} nextReducer The reducer for the store to use instead.
-	   * @returns {void}
-	   */
-	  function replaceReducer(nextReducer) {
-	    if (typeof nextReducer !== 'function') {
-	      throw new Error('Expected the nextReducer to be a function.');
-	    }
-	
-	    currentReducer = nextReducer;
-	    dispatch({ type: ActionTypes.INIT });
-	  }
-	
-	  /**
-	   * Interoperability point for observable/reactive libraries.
-	   * @returns {observable} A minimal observable of state changes.
-	   * For more information, see the observable proposal:
-	   * https://github.com/zenparsing/es-observable
-	   */
-	  function observable() {
-	    var _ref;
-	
-	    var outerSubscribe = subscribe;
-	    return _ref = {
-	      /**
-	       * The minimal observable subscription method.
-	       * @param {Object} observer Any object that can be used as an observer.
-	       * The observer object should have a `next` method.
-	       * @returns {subscription} An object with an `unsubscribe` method that can
-	       * be used to unsubscribe the observable from the store, and prevent further
-	       * emission of values from the observable.
-	       */
-	      subscribe: function subscribe(observer) {
-	        if (typeof observer !== 'object') {
-	          throw new TypeError('Expected the observer to be an object.');
-	        }
-	
-	        function observeState() {
-	          if (observer.next) {
-	            observer.next(getState());
-	          }
-	        }
-	
-	        observeState();
-	        var unsubscribe = outerSubscribe(observeState);
-	        return { unsubscribe: unsubscribe };
-	      }
-	    }, _ref[_symbolObservable2['default']] = function () {
-	      return this;
-	    }, _ref;
-	  }
-	
-	  // When a store is created, an "INIT" action is dispatched so that every
-	  // reducer returns their initial state. This effectively populates
-	  // the initial state tree.
-	  dispatch({ type: ActionTypes.INIT });
-	
-	  return _ref2 = {
-	    dispatch: dispatch,
-	    subscribe: subscribe,
-	    getState: getState,
-	    replaceReducer: replaceReducer
-	  }, _ref2[_symbolObservable2['default']] = observable, _ref2;
-	}
-
-/***/ },
-/* 222 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getPrototype = __webpack_require__(223),
-	    isObjectLike = __webpack_require__(225);
-	
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-	
-	/** Used for built-in method references. */
-	var funcProto = Function.prototype,
-	    objectProto = Object.prototype;
-	
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = funcProto.toString;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Used to infer the `Object` constructor. */
-	var objectCtorString = funcToString.call(Object);
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.8.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  if (!isObjectLike(value) || objectToString.call(value) != objectTag) {
-	    return false;
-	  }
-	  var proto = getPrototype(value);
-	  if (proto === null) {
-	    return true;
-	  }
-	  var Ctor = hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-	  return (typeof Ctor == 'function' &&
-	    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
-	}
-	
-	module.exports = isPlainObject;
-
-
-/***/ },
-/* 223 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var overArg = __webpack_require__(224);
-	
-	/** Built-in value references. */
-	var getPrototype = overArg(Object.getPrototypeOf, Object);
-	
-	module.exports = getPrototype;
-
-
-/***/ },
-/* 224 */
-/***/ function(module, exports) {
-
-	/**
-	 * Creates a unary function that invokes `func` with its argument transformed.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {Function} transform The argument transform.
-	 * @returns {Function} Returns the new function.
-	 */
-	function overArg(func, transform) {
-	  return function(arg) {
-	    return func(transform(arg));
-	  };
-	}
-	
-	module.exports = overArg;
-
-
-/***/ },
-/* 225 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return value != null && typeof value == 'object';
-	}
-	
-	module.exports = isObjectLike;
-
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(227);
-
-
-/***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _ponyfill = __webpack_require__(228);
-	
-	var _ponyfill2 = _interopRequireDefault(_ponyfill);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var root = undefined; /* global window */
-	
-	if (typeof global !== 'undefined') {
-		root = global;
-	} else if (typeof window !== 'undefined') {
-		root = window;
-	}
-	
-	var result = (0, _ponyfill2['default'])(root);
-	exports['default'] = result;
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 228 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports['default'] = symbolObservablePonyfill;
-	function symbolObservablePonyfill(root) {
-		var result;
-		var _Symbol = root.Symbol;
-	
-		if (typeof _Symbol === 'function') {
-			if (_Symbol.observable) {
-				result = _Symbol.observable;
-			} else {
-				result = _Symbol('observable');
-				_Symbol.observable = result;
-			}
-		} else {
-			result = '@@observable';
-		}
-	
-		return result;
-	};
-
-/***/ },
-/* 229 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
-	
-	exports.__esModule = true;
-	exports['default'] = combineReducers;
-	
-	var _createStore = __webpack_require__(221);
-	
-	var _isPlainObject = __webpack_require__(222);
-	
-	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-	
-	var _warning = __webpack_require__(230);
-	
-	var _warning2 = _interopRequireDefault(_warning);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function getUndefinedStateErrorMessage(key, action) {
-	  var actionType = action && action.type;
-	  var actionName = actionType && '"' + actionType.toString() + '"' || 'an action';
-	
-	  return 'Given action ' + actionName + ', reducer "' + key + '" returned undefined. ' + 'To ignore an action, you must explicitly return the previous state.';
-	}
-	
-	function getUnexpectedStateShapeWarningMessage(inputState, reducers, action, unexpectedKeyCache) {
-	  var reducerKeys = Object.keys(reducers);
-	  var argumentName = action && action.type === _createStore.ActionTypes.INIT ? 'preloadedState argument passed to createStore' : 'previous state received by the reducer';
-	
-	  if (reducerKeys.length === 0) {
-	    return 'Store does not have a valid reducer. Make sure the argument passed ' + 'to combineReducers is an object whose values are reducers.';
-	  }
-	
-	  if (!(0, _isPlainObject2['default'])(inputState)) {
-	    return 'The ' + argumentName + ' has unexpected type of "' + {}.toString.call(inputState).match(/\s([a-z|A-Z]+)/)[1] + '". Expected argument to be an object with the following ' + ('keys: "' + reducerKeys.join('", "') + '"');
-	  }
-	
-	  var unexpectedKeys = Object.keys(inputState).filter(function (key) {
-	    return !reducers.hasOwnProperty(key) && !unexpectedKeyCache[key];
-	  });
-	
-	  unexpectedKeys.forEach(function (key) {
-	    unexpectedKeyCache[key] = true;
-	  });
-	
-	  if (unexpectedKeys.length > 0) {
-	    return 'Unexpected ' + (unexpectedKeys.length > 1 ? 'keys' : 'key') + ' ' + ('"' + unexpectedKeys.join('", "') + '" found in ' + argumentName + '. ') + 'Expected to find one of the known reducer keys instead: ' + ('"' + reducerKeys.join('", "') + '". Unexpected keys will be ignored.');
-	  }
-	}
-	
-	function assertReducerSanity(reducers) {
-	  Object.keys(reducers).forEach(function (key) {
-	    var reducer = reducers[key];
-	    var initialState = reducer(undefined, { type: _createStore.ActionTypes.INIT });
-	
-	    if (typeof initialState === 'undefined') {
-	      throw new Error('Reducer "' + key + '" returned undefined during initialization. ' + 'If the state passed to the reducer is undefined, you must ' + 'explicitly return the initial state. The initial state may ' + 'not be undefined.');
-	    }
-	
-	    var type = '@@redux/PROBE_UNKNOWN_ACTION_' + Math.random().toString(36).substring(7).split('').join('.');
-	    if (typeof reducer(undefined, { type: type }) === 'undefined') {
-	      throw new Error('Reducer "' + key + '" returned undefined when probed with a random type. ' + ('Don\'t try to handle ' + _createStore.ActionTypes.INIT + ' or other actions in "redux/*" ') + 'namespace. They are considered private. Instead, you must return the ' + 'current state for any unknown actions, unless it is undefined, ' + 'in which case you must return the initial state, regardless of the ' + 'action type. The initial state may not be undefined.');
-	    }
-	  });
-	}
-	
-	/**
-	 * Turns an object whose values are different reducer functions, into a single
-	 * reducer function. It will call every child reducer, and gather their results
-	 * into a single state object, whose keys correspond to the keys of the passed
-	 * reducer functions.
-	 *
-	 * @param {Object} reducers An object whose values correspond to different
-	 * reducer functions that need to be combined into one. One handy way to obtain
-	 * it is to use ES6 `import * as reducers` syntax. The reducers may never return
-	 * undefined for any action. Instead, they should return their initial state
-	 * if the state passed to them was undefined, and the current state for any
-	 * unrecognized action.
-	 *
-	 * @returns {Function} A reducer function that invokes every reducer inside the
-	 * passed object, and builds a state object with the same shape.
-	 */
-	function combineReducers(reducers) {
-	  var reducerKeys = Object.keys(reducers);
-	  var finalReducers = {};
-	  for (var i = 0; i < reducerKeys.length; i++) {
-	    var key = reducerKeys[i];
-	
-	    if (process.env.NODE_ENV !== 'production') {
-	      if (typeof reducers[key] === 'undefined') {
-	        (0, _warning2['default'])('No reducer provided for key "' + key + '"');
-	      }
-	    }
-	
-	    if (typeof reducers[key] === 'function') {
-	      finalReducers[key] = reducers[key];
-	    }
-	  }
-	  var finalReducerKeys = Object.keys(finalReducers);
-	
-	  if (process.env.NODE_ENV !== 'production') {
-	    var unexpectedKeyCache = {};
-	  }
-	
-	  var sanityError;
-	  try {
-	    assertReducerSanity(finalReducers);
-	  } catch (e) {
-	    sanityError = e;
-	  }
-	
-	  return function combination() {
-	    var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-	    var action = arguments[1];
-	
-	    if (sanityError) {
-	      throw sanityError;
-	    }
-	
-	    if (process.env.NODE_ENV !== 'production') {
-	      var warningMessage = getUnexpectedStateShapeWarningMessage(state, finalReducers, action, unexpectedKeyCache);
-	      if (warningMessage) {
-	        (0, _warning2['default'])(warningMessage);
-	      }
-	    }
-	
-	    var hasChanged = false;
-	    var nextState = {};
-	    for (var i = 0; i < finalReducerKeys.length; i++) {
-	      var key = finalReducerKeys[i];
-	      var reducer = finalReducers[key];
-	      var previousStateForKey = state[key];
-	      var nextStateForKey = reducer(previousStateForKey, action);
-	      if (typeof nextStateForKey === 'undefined') {
-	        var errorMessage = getUndefinedStateErrorMessage(key, action);
-	        throw new Error(errorMessage);
-	      }
-	      nextState[key] = nextStateForKey;
-	      hasChanged = hasChanged || nextStateForKey !== previousStateForKey;
-	    }
-	    return hasChanged ? nextState : state;
-	  };
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 230 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports['default'] = warning;
-	/**
-	 * Prints a warning in the console if it exists.
-	 *
-	 * @param {String} message The warning message.
-	 * @returns {void}
-	 */
-	function warning(message) {
-	  /* eslint-disable no-console */
-	  if (typeof console !== 'undefined' && typeof console.error === 'function') {
-	    console.error(message);
-	  }
-	  /* eslint-enable no-console */
-	  try {
-	    // This error was thrown as a convenience so that if you enable
-	    // "break on all exceptions" in your console,
-	    // it would pause the execution at this line.
-	    throw new Error(message);
-	    /* eslint-disable no-empty */
-	  } catch (e) {}
-	  /* eslint-enable no-empty */
-	}
-
-/***/ },
-/* 231 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports['default'] = bindActionCreators;
-	function bindActionCreator(actionCreator, dispatch) {
-	  return function () {
-	    return dispatch(actionCreator.apply(undefined, arguments));
-	  };
-	}
-	
-	/**
-	 * Turns an object whose values are action creators, into an object with the
-	 * same keys, but with every function wrapped into a `dispatch` call so they
-	 * may be invoked directly. This is just a convenience method, as you can call
-	 * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
-	 *
-	 * For convenience, you can also pass a single function as the first argument,
-	 * and get a function in return.
-	 *
-	 * @param {Function|Object} actionCreators An object whose values are action
-	 * creator functions. One handy way to obtain it is to use ES6 `import * as`
-	 * syntax. You may also pass a single function.
-	 *
-	 * @param {Function} dispatch The `dispatch` function available on your Redux
-	 * store.
-	 *
-	 * @returns {Function|Object} The object mimicking the original object, but with
-	 * every action creator wrapped into the `dispatch` call. If you passed a
-	 * function as `actionCreators`, the return value will also be a single
-	 * function.
-	 */
-	function bindActionCreators(actionCreators, dispatch) {
-	  if (typeof actionCreators === 'function') {
-	    return bindActionCreator(actionCreators, dispatch);
-	  }
-	
-	  if (typeof actionCreators !== 'object' || actionCreators === null) {
-	    throw new Error('bindActionCreators expected an object or a function, instead received ' + (actionCreators === null ? 'null' : typeof actionCreators) + '. ' + 'Did you write "import ActionCreators from" instead of "import * as ActionCreators from"?');
-	  }
-	
-	  var keys = Object.keys(actionCreators);
-	  var boundActionCreators = {};
-	  for (var i = 0; i < keys.length; i++) {
-	    var key = keys[i];
-	    var actionCreator = actionCreators[key];
-	    if (typeof actionCreator === 'function') {
-	      boundActionCreators[key] = bindActionCreator(actionCreator, dispatch);
-	    }
-	  }
-	  return boundActionCreators;
-	}
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	exports['default'] = applyMiddleware;
-	
-	var _compose = __webpack_require__(233);
-	
-	var _compose2 = _interopRequireDefault(_compose);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	/**
-	 * Creates a store enhancer that applies middleware to the dispatch method
-	 * of the Redux store. This is handy for a variety of tasks, such as expressing
-	 * asynchronous actions in a concise manner, or logging every action payload.
-	 *
-	 * See `redux-thunk` package as an example of the Redux middleware.
-	 *
-	 * Because middleware is potentially asynchronous, this should be the first
-	 * store enhancer in the composition chain.
-	 *
-	 * Note that each middleware will be given the `dispatch` and `getState` functions
-	 * as named arguments.
-	 *
-	 * @param {...Function} middlewares The middleware chain to be applied.
-	 * @returns {Function} A store enhancer applying the middleware.
-	 */
-	function applyMiddleware() {
-	  for (var _len = arguments.length, middlewares = Array(_len), _key = 0; _key < _len; _key++) {
-	    middlewares[_key] = arguments[_key];
-	  }
-	
-	  return function (createStore) {
-	    return function (reducer, preloadedState, enhancer) {
-	      var store = createStore(reducer, preloadedState, enhancer);
-	      var _dispatch = store.dispatch;
-	      var chain = [];
-	
-	      var middlewareAPI = {
-	        getState: store.getState,
-	        dispatch: function dispatch(action) {
-	          return _dispatch(action);
-	        }
-	      };
-	      chain = middlewares.map(function (middleware) {
-	        return middleware(middlewareAPI);
-	      });
-	      _dispatch = _compose2['default'].apply(undefined, chain)(store.dispatch);
-	
-	      return _extends({}, store, {
-	        dispatch: _dispatch
-	      });
-	    };
-	  };
-	}
-
-/***/ },
-/* 233 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	exports.__esModule = true;
-	exports["default"] = compose;
-	/**
-	 * Composes single-argument functions from right to left. The rightmost
-	 * function can take multiple arguments as it provides the signature for
-	 * the resulting composite function.
-	 *
-	 * @param {...Function} funcs The functions to compose.
-	 * @returns {Function} A function obtained by composing the argument functions
-	 * from right to left. For example, compose(f, g, h) is identical to doing
-	 * (...args) => f(g(h(...args))).
-	 */
-	
-	function compose() {
-	  for (var _len = arguments.length, funcs = Array(_len), _key = 0; _key < _len; _key++) {
-	    funcs[_key] = arguments[_key];
-	  }
-	
-	  if (funcs.length === 0) {
-	    return function (arg) {
-	      return arg;
-	    };
-	  }
-	
-	  if (funcs.length === 1) {
-	    return funcs[0];
-	  }
-	
-	  var last = funcs[funcs.length - 1];
-	  var rest = funcs.slice(0, -1);
-	  return function () {
-	    return rest.reduceRight(function (composed, f) {
-	      return f(composed);
-	    }, last.apply(undefined, arguments));
-	  };
-	}
-
-/***/ },
-/* 234 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copyright 2015, Yahoo! Inc.
-	 * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
-	 */
-	'use strict';
-	
-	var REACT_STATICS = {
-	    childContextTypes: true,
-	    contextTypes: true,
-	    defaultProps: true,
-	    displayName: true,
-	    getDefaultProps: true,
-	    mixins: true,
-	    propTypes: true,
-	    type: true
-	};
-	
-	var KNOWN_STATICS = {
-	    name: true,
-	    length: true,
-	    prototype: true,
-	    caller: true,
-	    arguments: true,
-	    arity: true
-	};
-	
-	var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
-	
-	module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
-	    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
-	        var keys = Object.getOwnPropertyNames(sourceComponent);
-	
-	        /* istanbul ignore else */
-	        if (isGetOwnPropertySymbolsAvailable) {
-	            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
-	        }
-	
-	        for (var i = 0; i < keys.length; ++i) {
-	            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
-	                try {
-	                    targetComponent[keys[i]] = sourceComponent[keys[i]];
-	                } catch (error) {
-	
-	                }
-	            }
-	        }
-	    }
-	
-	    return targetComponent;
-	};
-
-
-/***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2013-2015, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 */
-	
-	'use strict';
-	
-	/**
-	 * Use invariant() to assert state which your program assumes to be true.
-	 *
-	 * Provide sprintf-style format (only %s is supported) and arguments
-	 * to provide information about what broke and what you were
-	 * expecting.
-	 *
-	 * The invariant message will be stripped in production, but the invariant
-	 * will remain to ensure logic does not differ in production.
-	 */
-	
-	var invariant = function(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
-	    if (format === undefined) {
-	      throw new Error('invariant requires an error message argument');
-	    }
-	  }
-	
-	  if (!condition) {
-	    var error;
-	    if (format === undefined) {
-	      error = new Error(
-	        'Minified exception occurred; use the non-minified dev environment ' +
-	        'for the full error message and additional helpful warnings.'
-	      );
-	    } else {
-	      var args = [a, b, c, d, e, f];
-	      var argIndex = 0;
-	      error = new Error(
-	        format.replace(/%s/g, function() { return args[argIndex++]; })
-	      );
-	      error.name = 'Invariant Violation';
-	    }
-	
-	    error.framesToPop = 1; // we don't care about invariant's own frame
-	    throw error;
-	  }
-	};
-	
-	module.exports = invariant;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	var _redux = __webpack_require__(220);
-	
-	var _form = __webpack_require__(237);
-	
-	var topLevelReducers = _interopRequireWildcard(_form);
-	
-	var _sentences = __webpack_require__(238);
-	
-	var _sentences2 = _interopRequireDefault(_sentences);
-	
-	var _tickets = __webpack_require__(239);
-	
-	var _tickets2 = _interopRequireDefault(_tickets);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	/*===========================
-	 ====== Default State ======
-	 ===========================*/
-	
-	var initialState = {
-	    firstName: "Brandon",
-	    lastName: "Chang",
-	    email: "brandondc741@gmail.com",
-	    lawyer: "Luis Herrera",
-	    dispoType: 'civil',
-	    tickets: {
-	        '9462BS2': {
-	            citationNumber: "A69MQ0E",
-	            chargeName: "Speeding",
-	            chargeDate: new Date(),
-	            outcome: "dismissed",
-	            copy: "standard",
-	            customCopy: null,
-	            courtCost: false,
-	            sentences: false,
-	            date: null
-	        },
-	        '3MO2F93': {
-	            citationNumber: "A52DAXJ",
-	            chargeName: "Reckless Driving",
-	            chargeDate: new Date(),
-	            outcome: "withold",
-	            copy: "standard",
-	            customCopy: null,
-	            courtCost: 30,
-	            sentences: {
-	                '23TTPZ9': true,
-	                'I3NOE35': true
-	            }
-	        }
-	    },
-	    sentences: {
-	        '23TTPZ9': {
-	            isFine: true,
-	            fineAmount: 200,
-	            message: false
-	        },
-	        'I3NOE35': {
-	            isFine: false,
-	            fineAmount: false,
-	            message: 'Client will have to attend 20 hours of driver school'
-	        }
-	    },
-	    outcomeMessage: {
-	        dismissed: "Congratulations! Your charges were dropped. That means no fines, no school, and no points on your record.",
-	        withold: "We were able to keep a conviction and points off of your record. Below are the conditions imposed by the court.",
-	        adjudicated: "We are sorry, you were found guilty by the state. You will have to serve the sentence as stated below."
-	    },
-	    outcomeCopy: {
-	        dismissed: "Thank you for trusting us to handle your case. Luis Herrera and the Tix Team were able to get your case dismissed! No Fines, No Points, No Traffic Class – Totally dismissed!",
-	        withold: "These sentences must be completed by the date specified. Failure complete the sentences may result in a larger legal penalty.",
-	        adjudicated: "These sentences must be completed by the date specified. Failure complete the sentences may result in a larger legal penalty."
-	    }
-	};
-	
-	/*==========================
-	 ====== Root Reducer ======
-	 ==========================*/
-	
-	var reducers = Object.assign(topLevelReducers, _sentences2.default, _tickets2.default);
-	
-	var emailClientApp = (0, _redux.combineReducers)(reducers);
-	
-	exports.default = emailClientApp;
-
-/***/ },
-/* 237 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.firstName = firstName;
-	exports.lastName = lastName;
-	exports.email = email;
-	exports.lawyer = lawyer;
-	// From Reducer
-	// =========================
-	
-	function firstName() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Brandon";
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case 'CHANGE_FIRST_NAME':
-	            return Object.assign({}, state, {
-	                firstName: action.firstName
-	            });
-	        default:
-	            return state;
-	    }
-	}
-	
-	function lastName() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Chang";
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case 'CHANGE_LAST_NAME':
-	            return Object.assign({}, state, {
-	                lastName: action.lastName
-	            });
-	        default:
-	            return state;
-	    }
-	}
-	
-	function email() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "brandondc741@gmail.com";
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case 'CHANGE_EMAIL':
-	            return Object.assign({}, state, {
-	                email: action.email
-	            });
-	        default:
-	            return state;
-	    }
-	}
-	
-	function lawyer() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "Luis Herrera";
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case 'CHANGE_LAWYER':
-	            return Object.assign({}, state, {
-	                lawyer: action.lawyer
-	            });
-	        default:
-	            return state;
-	    }
-	}
-
-/***/ },
-/* 238 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = sentences;
-	// Sentence Reducer
-	// =========================
-	
-	function sentences() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-	        '23TTPZ9': {
-	            isFine: true,
-	            fineAmount: 200,
-	            message: false
-	        },
-	        'I3NOE35': {
-	            isFine: false,
-	            fineAmount: false,
-	            message: 'Client will have to attend 20 hours of driver school'
-	        }
-	    };
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case 'ADD_SENTENCE':
-	            return state;
-	        // TODO: build proper reducer
-	        default:
-	            return state;
-	    }
-	}
-
-/***/ },
-/* 239 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.default = tickets;
-	// Ticket Reducer
-	// =========================
-	
-	function tickets() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
-	        '9462BS2': {
-	            citationNumber: "A69MQ0E",
-	            chargeName: "Speeding",
-	            chargeDate: new Date(),
-	            outcome: "dismissed",
-	            copy: "standard",
-	            customCopy: null,
-	            courtCost: false,
-	            sentences: false,
-	            date: null
-	        },
-	        '3MO2F93': {
-	            citationNumber: "A52DAXJ",
-	            chargeName: "Reckless Driving",
-	            chargeDate: new Date(),
-	            outcome: "withold",
-	            copy: "standard",
-	            customCopy: null,
-	            courtCost: 30,
-	            sentences: {
-	                '23TTPZ9': true,
-	                'I3NOE35': true
-	            }
-	        }
-	    };
-	    var action = arguments[1];
-	
-	    switch (action.type) {
-	        case 'CHANGE_FIRST_NAME':
-	            return Object.assign({}, state, {
-	                firstName: action.firstName
-	            });
-	        case 'CHANGE_LAST_NAME':
-	            return Object.assign({}, state, {
-	                lastName: action.lastName
-	            });
-	        case 'CHANGE_EMAIL':
-	            return Object.assign({}, state, {
-	                email: action.email
-	            });
-	        case 'CHANGE_LAWYER':
-	            return Object.assign({}, state, {
-	                lawyer: action.lawyer
-	            });
-	        default:
-	            return state;
-	    }
-	}
 
 /***/ }
 /******/ ]);

@@ -1,146 +1,123 @@
- /*
-  * Ticket Form Component
-  */
+/*
+ * Ticket Form Component
+ */
 import React from 'react';
+import store from '../Store';
+import {
+    changeCitationNumber,
+    changeChargeName,
+    changeOutcome,
+    changeMessageType,
+    changeCustomMessage,
+    changeCourtCost,
+} from '../actions';
 
 //===================================================
 //================ Dependencies =====================
 //===================================================
-import TextField from '../presentation/TextField.js';
-import TextArea from '../presentation/TextArea.js';
-import FullButton from '../presentation/FullButton.js';
-import Radio from '../presentation/Radio.js';
-import Select from '../presentation/Select.js';
-import CostForm from './CostForm.js';
-import SentenceForm from './SentenceForm.js';
+import TextField from '../presentation/TextField';
+import TextArea from '../presentation/TextArea';
+import FullButton from '../presentation/FullButton';
+import Select from '../presentation/Select';
+import CurrencyField from '../presentation/CurrencyField';
 
 export default React.createClass({
-	getInitialState() {
-		return {
-			active: false
-		};
-	},
+    getInitialState() {
+        return {
+            active: false
+        };
+    },
 
-	handleTicketFieldChange(index, e){
-		this.props.handleTicketFieldChange(this.props.index, e.target.name, e.target.value);
-	},
+    render: function () {
+        //TODO: Remove ticket functionality
+        return (
+            <div className="ticket-form">
+                <FullButton
+                    label={
+                        this.props.chargeName ?
+                            this.props.chargeName : 'Disposition ' + (this.props.index + 1)
+                    }/>
 
-	handleCostFieldChange(costType, costIndex, costName, costValue){
-		this.props.handleCostFieldChange(this.props.index, costType, costIndex, costName, costValue);
-	},
+                <TextField
+                    label='Citation Number'
+                    value={this.props.citationNumber}
+                    handleFieldChange={(newValue) => {
+                        store.dispatch(changeCitationNumber(
+                            this.props.index,
+                            newValue
+                        ))
+                    }}/>
+                <TextField
+                    label="Charge"
+                    value={this.props.chargeName}
+                    handleFieldChange={(newValue) => {
+                        store.dispatch(changeChargeName(
+                            this.props.index,
+                            newValue
+                        ))
+                    }}/>
 
-	handleRadioSelect(field, value){
-		this.props.handleTicketFieldChange(this.props.index, field, value);
-	},
+                <Select
+                    label="Outcome"
+                    options={['dismissed', 'adjudicated', 'withold']}
+                    defaultValue="-Select an outcome-"
+                    value={this.props.outcome}
+                    handleFieldChange={(newValue) => {
+                        store.dispatch(changeOutcome(
+                            this.props.index,
+                            newValue
+                        ))
+                    }}/>
 
-	handleTypeUpdate(){
-		this.props.handleTypeUpdate();
-	},
+                <CurrencyField
+                    label="Court Cost"
+                    value={this.props.courtCost}
+                    handleFieldChange={(newValue) => {
+                        store.dispatch(changeCourtCost(
+                            this.props.index,
+                            newValue
+                        ))
+                    }}/>
 
-	handleAddCost(costType){
-		this.props.handleAddCost(this.props.index, costType);
-	},
+                {(() => {
+                    if (this.props.outcome) {
+                        return <Select
+                            label="Copy"
+                            options={ ['standard', 'custom'] }
+                            defaultValue="-Select a message-"
+                            value={this.props.messageType}
+                            handleFieldChange={(newValue) => {
+                                store.dispatch(changeMessageType(
+                                    this.props.index,
+                                    newValue
+                                ))
+                            }}/>
+                    }
+                })()}
 
-	handleAddSentence(){
-		this.props.handleAddSentence(this.props.index);
-	},
+                {(() => {
+                    if (this.props.outcome && this.props.messageType == 'custom') {
+                        return <TextArea
+                            label="Custom Message"
+                            value={this.props.customMessage}
+                            handleFieldChange={(newValue) => {
+                                store.dispatch(changeCustomMessage(
+                                    this.props.index,
+                                    newValue
+                                ))
+                            }}/>
+                    }
+                })()}
 
-	handleSentenceFieldChange(sentenceIndex, value){
-		this.props.handleSentenceFieldChange(this.props.index, sentenceIndex, value);
-	},
-
-	handleDeleteSentence(sentenceIndex){
-		this.props.handleSentenceFieldChange(this.props.index, sentenceIndex);
-	},
-
-    render: function(){
-		let type = this.props.ticket.type;
-		let ticket = this.props.ticket;
-		let outcome = ticket.outcome;
-		let copy = ticket.copy;
-		let customCopy = ticket.customCopy;
-		let costs = ticket.costs;
-		let chargeName = ticket.chargeName;
-		//TODO: Remove ticket functionality
-		return (
-			<div className = "ticket-form">
-				<FullButton label = {chargeName ? chargeName: 'Disposition ' + (this.props.index + 1)} 
-							handleClick = {this.handleAddTicket} />
-
-				<Radio		label = "Type"
-							name = "type"
-							options = {['civil', 'criminal']}
-							value = {this.props.ticket.type}
-							handleRadioSelect = {this.handleRadioSelect} />
-
-				{(() => {if(type){
-					return <TextField 	
-								label = {type=="civil"?'Citation Number':'Case Number'}
-								name = {type=="civil"?'citationNumber':'caseNumber'}
-								value = {this.props.ticket.citationNumber}
-								handleFieldChange = {this.handleTicketFieldChange} />
-			   	}})()}
-
-				{(() => {if(type){
-					return <TextField 	
-								label = "Charge"
-								name = "chargeName"
-								value = {chargeName}
-								handleFieldChange = {this.handleTicketFieldChange} />
-			   	}})()}
-
-				{(() => {if(type){
-					return	<Select 	
-								label = "Outcome"
-								name = "outcome"
-								options = {
-									type=="civil" ?
-										['dismissed', 'adjudicated', 'withold']:
-										['dismissed', 'adjudicated guilty', 'withold of adjudication']
-								}
-								defaultValue = "-Select an outcome-"
-								value = {outcome}
-								handleFieldChange = {this.handleTicketFieldChange} />
-			   	}})()}
-
-				{(() => {if(outcome){
-					return	<Select 	
-								label = "Copy"
-								name = "copy"
-								options = { ['standard', 'custom'] }
-								defaultValue = "-Select a message-"
-								value = {copy}
-								handleFieldChange = {this.handleTicketFieldChange} />
-			   	}})()}
-
-				{(() => {if(outcome&&copy=='custom'){
-					return	<TextArea 	
-								label = "Custom Message"
-								name = "customCopy"
-								value = {customCopy}
-								handleFieldChange = {this.handleTicketFieldChange} />
-			   	}})()}
-
-				{(() => {if(type){
-					return <CostForm
-								label = "Court Costs"
-								type = "costs" 
-								costs = {costs}
-								handleAddCost = {this.handleAddCost}
-								handleCostFieldChange = {this.handleCostFieldChange} />
-			   	}})()}
-
-				{(() => {if(type){
-					 //TODO: Create new Sentences Field
-					return <SentenceForm
-								label = "Sentences"
-								type = "sentences" 
-								sentences = {this.props.ticket.sentences}
-								handleAddSentence = {this.handleAddSentence}
-								handleCostFieldChange = {this.handleCostFieldChange}
-								handleSentenceFieldChange = {this.handleSentenceFieldChange} />
-			   	}})()}
-			</div>
-		);
-	}
+                {/*TODO: Create new Sentences Field*/}
+                {/*<SentenceForm*/}
+                {/*label="Sentences"*/}
+                {/*type="sentences"*/}
+                {/*sentences={this.props.sentences}*/}
+                {/*handleAddSentence={this.handleAddSentence}*/}
+                {/*handleCostFieldChange={this.handleCostFieldChange}*/}
+                {/*handleSentenceFieldChange={this.handleSentenceFieldChange}/>*/}
+            </div>
+        );
+    }
 });
