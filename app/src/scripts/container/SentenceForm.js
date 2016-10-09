@@ -2,6 +2,7 @@
  * Cost Form Component
  */
 import React from 'react';
+import store from '../Store';
 
 //===================================================
 //================ Dependencies =====================
@@ -11,39 +12,36 @@ import AddButton from '../presentation/AddButton.js';
 
 export default React.createClass({
 
-    handleCostFieldChange(sentenceIndex, sentenceName, sentenceValue){
-        this.props.handleCostFieldChange(this.props.type, costIndex, costName, costValue);
-    },
-
-    handleSentenceFieldChange(sentenceIndex, e){
-        this.props.handleSentenceFieldChange(sentenceIndex, e.target.value)
-    },
-
-   handleDeleteSentence(sentenceIndex){
-        this.props.handleDeleteSentence(sentenceIndex)
-    },
-
-    handleClick(){
-        this.props.handleAddSentence();
-    },
-
     render: function () {
         let label = this.props.label;
         return (
             <div className="sentence-form">
                 <h3 className="sentence-form--label">{label}</h3>
-                {this.props.sentences.map((sentence, index) => {
+                {Object.keys(this.props.sentences).map((sentenceKey, index) => {
+                    let sentence = this.props.sentences[sentenceKey];
                     return <SentenceTextArea
-                        key={index}
-                        index={index}
+                        key={sentenceKey}
+                        id={sentenceKey}
                         label={index + 1}
                         name="sentence"
                         value={sentence.sentence}
-                        handleDeleteSentence={this.handleDeleteSentence()}
-                        handleFieldChange={this.handleSentenceFieldChange}/>
+                        handleFieldChange={(newValue) => {
+                            store.dispatch({
+                                type: 'CHANGE_SENTENCE'
+                            })
+                        }}
+                    />
                 })}
                 <AddButton label="Add Sentence"
-                           handleClick={this.handleClick}/>
+                           handleClick={() => {
+                               store.dispatch({
+                                   type: "ADD_SENTENCE",
+                                   payload: {
+                                       ticketIndex: this.props.ticketIndex
+                                       //TODO: Figure out Normalized Add Sentence Reducer
+                                   }
+                               })
+                           }}/>
             </div>
         );
     }

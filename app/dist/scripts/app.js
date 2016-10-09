@@ -21581,7 +21581,7 @@
 	
 	var _Form2 = _interopRequireDefault(_Form);
 	
-	var _Email = __webpack_require__(203);
+	var _Email = __webpack_require__(206);
 	
 	var _Email2 = _interopRequireDefault(_Email);
 	
@@ -22956,11 +22956,23 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.default = sentences;
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	exports.default = sentencesById;
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	// Sentence Reducer
 	// =========================
 	
-	function sentences() {
+	var defaultSentence = {
+	    isFine: false,
+	    fineAmount: 0,
+	    message: false
+	};
+	
+	function sentencesById() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
 	        '23TTPZ9': {
 	            isFine: true,
@@ -22977,8 +22989,8 @@
 	
 	    switch (action.type) {
 	        case 'ADD_SENTENCE':
-	            return state;
-	        // TODO: build proper reducer
+	            // TODO: build proper reducer
+	            return _extends({}, state, _defineProperty({}, action.payload.sentenceId, _extends({}, defaultSentence)));
 	        default:
 	            return state;
 	    }
@@ -23253,11 +23265,15 @@
 	
 	var _CurrencyField2 = _interopRequireDefault(_CurrencyField);
 	
+	var _SentenceForm = __webpack_require__(203);
+	
+	var _SentenceForm2 = _interopRequireDefault(_SentenceForm);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/*
-	 * Ticket Form Component
-	 */
+	//===================================================
+	//================ Dependencies =====================
+	//===================================================
 	exports.default = _react2.default.createClass({
 	    displayName: 'TicketForm',
 	    getInitialState: function getInitialState() {
@@ -23270,6 +23286,7 @@
 	    render: function render() {
 	        var _this = this;
 	
+	        //TODO: Remove ticket functionality
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'ticket-form' },
@@ -23322,14 +23339,16 @@
 	                            _Store2.default.dispatch((0, _actions.changeCustomMessage)(_this.props.index, newValue));
 	                        } });
 	                }
-	            }()
+	            }(),
+	            _react2.default.createElement(_SentenceForm2.default, {
+	                label: 'Sentences',
+	                type: 'sentences',
+	                sentences: this.props.sentences })
 	        );
 	    }
-	});
-	
-	//===================================================
-	//================ Dependencies =====================
-	//===================================================
+	}); /*
+	     * Ticket Form Component
+	     */
 
 /***/ },
 /* 199 */
@@ -23460,22 +23479,28 @@
 	var addSentence = exports.addSentence = function addSentence(ticketId) {
 	    return {
 	        type: 'ADD_SENTENCE',
-	        sentenceId: (0, _utilities.generateRandomId)(),
-	        ticketId: ticketId
+	        payload: {
+	            sentenceId: (0, _utilities.generateRandomId)(),
+	            ticketId: ticketId
+	        }
 	    };
 	};
 	
 	var changeSentence = exports.changeSentence = function changeSentence(sentenceId) {
 	    return {
 	        type: 'CHANGE_SENTENCE',
-	        sentenceId: sentenceId
+	        payload: {
+	            sentenceId: sentenceId
+	        }
 	    };
 	};
 	
 	var deleteSentence = exports.deleteSentence = function deleteSentence(sentence) {
 	    return {
 	        type: 'DELETE_SENTENCE',
-	        sentence: sentence
+	        payload: {
+	            sentence: sentence
+	        }
 	    };
 	};
 
@@ -23489,6 +23514,7 @@
 	    value: true
 	});
 	var generateRandomId = exports.generateRandomId = function generateRandomId() {
+	    //TODO: Avoid ID Collision
 	    return Math.random().toString(36).substring(7);
 	};
 
@@ -23595,6 +23621,165 @@
 	    value: true
 	});
 	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Store = __webpack_require__(176);
+	
+	var _Store2 = _interopRequireDefault(_Store);
+	
+	var _SentenceTextArea = __webpack_require__(204);
+	
+	var _SentenceTextArea2 = _interopRequireDefault(_SentenceTextArea);
+	
+	var _AddButton = __webpack_require__(205);
+	
+	var _AddButton2 = _interopRequireDefault(_AddButton);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//===================================================
+	//================ Dependencies =====================
+	//===================================================
+	/*
+	 * Cost Form Component
+	 */
+	exports.default = _react2.default.createClass({
+	    displayName: 'SentenceForm',
+	
+	
+	    render: function render() {
+	        var _this = this;
+	
+	        var label = this.props.label;
+	        return _react2.default.createElement(
+	            'div',
+	            { className: 'sentence-form' },
+	            _react2.default.createElement(
+	                'h3',
+	                { className: 'sentence-form--label' },
+	                label
+	            ),
+	            Object.keys(this.props.sentences).map(function (sentenceKey, index) {
+	                var sentence = _this.props.sentences[sentenceKey];
+	                return _react2.default.createElement(_SentenceTextArea2.default, {
+	                    key: sentenceKey,
+	                    id: sentenceKey,
+	                    label: index + 1,
+	                    name: 'sentence',
+	                    value: sentence.sentence,
+	                    handleFieldChange: function handleFieldChange(newValue) {
+	                        _Store2.default.dispatch({
+	                            type: 'CHANGE_SENTENCE'
+	                        });
+	                    }
+	                });
+	            }),
+	            _react2.default.createElement(_AddButton2.default, { label: 'Add Sentence',
+	                handleClick: function handleClick() {
+	                    _Store2.default.dispatch({
+	                        type: "ADD_SENTENCE",
+	                        payload: {
+	                            ticketIndex: _this.props.ticketIndex
+	                            //TODO: Figure out Normalized Add Sentence Reducer
+	                        }
+	                    });
+	                } })
+	        );
+	    }
+	});
+
+/***/ },
+/* 204 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+	    displayName: "SentenceTextArea",
+	    handleFieldChange: function handleFieldChange(e) {
+	        this.props.handleFieldChange(e.target.value);
+	    },
+	    handleDeleteSentence: function handleDeleteSentence() {
+	        this.props.handleDeleteSentence();
+	    },
+	
+	
+	    render: function render() {
+	        return _react2.default.createElement(
+	            "div",
+	            { className: "field" },
+	            _react2.default.createElement(
+	                "label",
+	                { className: "field--label", htmlFor: this.props.name },
+	                this.props.label
+	            ),
+	            _react2.default.createElement("span", {
+	                className: "filed--text-area--close",
+	                onClick: this.handleDeleteSentence }),
+	            _react2.default.createElement("textArea", {
+	                className: "field--text-area",
+	                name: this.props.name,
+	                type: "text",
+	                onChange: this.handleFieldChange,
+	                value: this.props.value })
+	        );
+	    }
+	}); /*
+	     * Sentence TextArea Component
+	     */
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(166);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = _react2.default.createClass({
+		displayName: 'AddButton',
+	
+		render: function render() {
+			return _react2.default.createElement(
+				'button',
+				{ onClick: this.props.handleClick, className: 'add-button' },
+				this.props.label
+			);
+		}
+	}); /*
+	     * Full Button Component
+	     */
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /*
 	                                                                                                                                                                                                                                                                   * Mail Component
 	                                                                                                                                                                                                                                                                   */
@@ -23613,23 +23798,23 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(221);
+	var _Line = __webpack_require__(224);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Header = __webpack_require__(223);
+	var _Header = __webpack_require__(226);
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _Charge = __webpack_require__(224);
+	var _Charge = __webpack_require__(227);
 	
 	var _Charge2 = _interopRequireDefault(_Charge);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -23710,7 +23895,7 @@
 	});
 
 /***/ },
-/* 204 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -23720,39 +23905,39 @@
 	});
 	exports.renderEmail = exports.configStyleValidator = exports.injectReactEmailAttributes = exports.A = exports.Span = exports.Item = exports.Image = exports.Email = exports.Box = exports.PropTypes = undefined;
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _Box = __webpack_require__(208);
+	var _Box = __webpack_require__(211);
 	
 	var _Box2 = _interopRequireDefault(_Box);
 	
-	var _Email = __webpack_require__(209);
+	var _Email = __webpack_require__(212);
 	
 	var _Email2 = _interopRequireDefault(_Email);
 	
-	var _Image = __webpack_require__(212);
+	var _Image = __webpack_require__(215);
 	
 	var _Image2 = _interopRequireDefault(_Image);
 	
-	var _Item = __webpack_require__(210);
+	var _Item = __webpack_require__(213);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
-	var _Span = __webpack_require__(213);
+	var _Span = __webpack_require__(216);
 	
 	var _Span2 = _interopRequireDefault(_Span);
 	
-	var _A = __webpack_require__(214);
+	var _A = __webpack_require__(217);
 	
 	var _A2 = _interopRequireDefault(_A);
 	
-	var _injectReactEmailAttributes = __webpack_require__(215);
+	var _injectReactEmailAttributes = __webpack_require__(218);
 	
 	var _injectReactEmailAttributes2 = _interopRequireDefault(_injectReactEmailAttributes);
 	
-	var _renderEmail = __webpack_require__(216);
+	var _renderEmail = __webpack_require__(219);
 	
 	var _renderEmail2 = _interopRequireDefault(_renderEmail);
 	
@@ -23784,7 +23969,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 205 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23799,7 +23984,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _StyleValidator = __webpack_require__(206);
+	var _StyleValidator = __webpack_require__(209);
 	
 	var _StyleValidator2 = _interopRequireDefault(_StyleValidator);
 	
@@ -23828,7 +24013,7 @@
 	};
 
 /***/ },
-/* 206 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23843,7 +24028,7 @@
 	  value: true
 	});
 	
-	var _supportMatrix = __webpack_require__(207);
+	var _supportMatrix = __webpack_require__(210);
 	
 	var _supportMatrix2 = _interopRequireDefault(_supportMatrix);
 	
@@ -23960,7 +24145,7 @@
 	exports.default = StyleValidator;
 
 /***/ },
-/* 207 */
+/* 210 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -24717,7 +24902,7 @@
 	};
 
 /***/ },
-/* 208 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24731,7 +24916,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
@@ -24777,7 +24962,7 @@
 	};
 
 /***/ },
-/* 209 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24791,15 +24976,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _Box = __webpack_require__(208);
+	var _Box = __webpack_require__(211);
 	
 	var _Box2 = _interopRequireDefault(_Box);
 	
-	var _Item = __webpack_require__(210);
+	var _Item = __webpack_require__(213);
 	
 	var _Item2 = _interopRequireDefault(_Item);
 	
@@ -24873,7 +25058,7 @@
 	};
 
 /***/ },
-/* 210 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24889,11 +25074,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(211);
+	var _includeDataProps = __webpack_require__(214);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -24920,7 +25105,7 @@
 	};
 
 /***/ },
-/* 211 */
+/* 214 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -24942,7 +25127,7 @@
 	};
 
 /***/ },
-/* 212 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24958,11 +25143,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(211);
+	var _includeDataProps = __webpack_require__(214);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -24986,7 +25171,7 @@
 	};
 
 /***/ },
-/* 213 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25002,11 +25187,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(211);
+	var _includeDataProps = __webpack_require__(214);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -25043,7 +25228,7 @@
 	};
 
 /***/ },
-/* 214 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25059,11 +25244,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropTypes = __webpack_require__(205);
+	var _PropTypes = __webpack_require__(208);
 	
 	var _PropTypes2 = _interopRequireDefault(_PropTypes);
 	
-	var _includeDataProps = __webpack_require__(211);
+	var _includeDataProps = __webpack_require__(214);
 	
 	var _includeDataProps2 = _interopRequireDefault(_includeDataProps);
 	
@@ -25093,7 +25278,7 @@
 	};
 
 /***/ },
-/* 215 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25142,7 +25327,7 @@
 	}
 
 /***/ },
-/* 216 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25152,7 +25337,7 @@
 	});
 	exports.default = renderEmail;
 	
-	var _server = __webpack_require__(217);
+	var _server = __webpack_require__(220);
 	
 	var _server2 = _interopRequireDefault(_server);
 	
@@ -25164,16 +25349,16 @@
 	}
 
 /***/ },
-/* 217 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(218);
+	module.exports = __webpack_require__(221);
 
 
 /***/ },
-/* 218 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25190,7 +25375,7 @@
 	'use strict';
 	
 	var ReactDefaultInjection = __webpack_require__(9);
-	var ReactServerRendering = __webpack_require__(219);
+	var ReactServerRendering = __webpack_require__(222);
 	var ReactVersion = __webpack_require__(160);
 	
 	ReactDefaultInjection.inject();
@@ -25204,7 +25389,7 @@
 	module.exports = ReactDOMServer;
 
 /***/ },
-/* 219 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25227,7 +25412,7 @@
 	var ReactInstrumentation = __webpack_require__(38);
 	var ReactMarkupChecksum = __webpack_require__(158);
 	var ReactReconciler = __webpack_require__(35);
-	var ReactServerBatchingStrategy = __webpack_require__(220);
+	var ReactServerBatchingStrategy = __webpack_require__(223);
 	var ReactServerRenderingTransaction = __webpack_require__(119);
 	var ReactUpdates = __webpack_require__(32);
 	
@@ -25300,7 +25485,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 220 */
+/* 223 */
 /***/ function(module, exports) {
 
 	/**
@@ -25327,7 +25512,7 @@
 	module.exports = ReactServerBatchingStrategy;
 
 /***/ },
-/* 221 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25340,11 +25525,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -25380,7 +25565,7 @@
 	});
 
 /***/ },
-/* 222 */
+/* 225 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25481,7 +25666,7 @@
 	};
 
 /***/ },
-/* 223 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25494,11 +25679,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -25533,7 +25718,7 @@
 	});
 
 /***/ },
-/* 224 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25546,27 +25731,27 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(221);
+	var _Line = __webpack_require__(224);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Outcome = __webpack_require__(225);
+	var _Outcome = __webpack_require__(228);
 	
 	var _Outcome2 = _interopRequireDefault(_Outcome);
 	
-	var _Spacer = __webpack_require__(226);
+	var _Spacer = __webpack_require__(229);
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
-	var _Sentences = __webpack_require__(227);
+	var _Sentences = __webpack_require__(230);
 	
 	var _Sentences2 = _interopRequireDefault(_Sentences);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -25624,7 +25809,7 @@
 	});
 
 /***/ },
-/* 225 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25637,19 +25822,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(221);
+	var _Line = __webpack_require__(224);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Spacer = __webpack_require__(226);
+	var _Spacer = __webpack_require__(229);
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -25738,7 +25923,7 @@
 	});
 
 /***/ },
-/* 226 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25751,11 +25936,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	
@@ -25796,7 +25981,7 @@
 	});
 
 /***/ },
-/* 227 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -25809,19 +25994,19 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHtmlEmail = __webpack_require__(204);
+	var _reactHtmlEmail = __webpack_require__(207);
 	
 	var _reactHtmlEmail2 = _interopRequireDefault(_reactHtmlEmail);
 	
-	var _Line = __webpack_require__(221);
+	var _Line = __webpack_require__(224);
 	
 	var _Line2 = _interopRequireDefault(_Line);
 	
-	var _Spacer = __webpack_require__(226);
+	var _Spacer = __webpack_require__(229);
 	
 	var _Spacer2 = _interopRequireDefault(_Spacer);
 	
-	var _EmailStyles = __webpack_require__(222);
+	var _EmailStyles = __webpack_require__(225);
 	
 	var _EmailStyles2 = _interopRequireDefault(_EmailStyles);
 	

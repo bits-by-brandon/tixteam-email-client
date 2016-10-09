@@ -113,24 +113,30 @@ export const changeCourtCost = (ticketIndex, courtCost) => {
   ====== Sentence Actions ======
   ==============================*/
 
-export const addSentence = (ticketId) => {
+export const addSentence = (ticketIndex) => {
     return {
         type: 'ADD_SENTENCE',
-        sentenceId: generateRandomId(),
-        ticketId
+        payload: {
+            sentenceId: generateRandomId(),
+            ticketIndex
+        }
     }
 }
 
 export const changeSentence = (sentenceId) => {
     return {
         type: 'CHANGE_SENTENCE',
-        sentenceId
+        payload: {
+            sentenceId
+        }
     }
 }
 
 export const deleteSentence = (sentence) => {
     return {
         type: 'DELETE_SENTENCE',
-        sentence
+        payload: {
+            sentence
+        }
     }
 }

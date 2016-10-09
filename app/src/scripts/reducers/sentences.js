@@ -1,7 +1,13 @@
 // Sentence Reducer
 // =========================
 
-export default function sentences(state = {
+const defaultSentence = {
+    isFine: false,
+    fineAmount: 0,
+    message: false
+}
+
+export default function sentencesById(state = {
     '23TTPZ9': {
         isFine: true,
         fineAmount: 200,
@@ -15,8 +21,11 @@ export default function sentences(state = {
 }, action) {
     switch (action.type) {
         case 'ADD_SENTENCE':
-            return state
             // TODO: build proper reducer
+            return {
+                ...state,
+                [action.payload.sentenceId]: {...defaultSentence}
+            }
         default:
             return state
     }

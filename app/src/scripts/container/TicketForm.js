@@ -20,6 +20,7 @@ import TextArea from '../presentation/TextArea';
 import FullButton from '../presentation/FullButton';
 import Select from '../presentation/Select';
 import CurrencyField from '../presentation/CurrencyField';
+import SentenceForm from './SentenceForm';
 
 export default React.createClass({
     getInitialState() {
@@ -109,14 +110,10 @@ export default React.createClass({
                     }
                 })()}
 
-                {/*TODO: Create new Sentences Field*/}
-                {/*<SentenceForm*/}
-                {/*label="Sentences"*/}
-                {/*type="sentences"*/}
-                {/*sentences={this.props.sentences}*/}
-                {/*handleAddSentence={this.handleAddSentence}*/}
-                {/*handleCostFieldChange={this.handleCostFieldChange}*/}
-                {/*handleSentenceFieldChange={this.handleSentenceFieldChange}/>*/}
+                <SentenceForm
+                    label="Sentences"
+                    type="sentences"
+                    sentences={this.props.sentences}/>
             </div>
         );
     }
