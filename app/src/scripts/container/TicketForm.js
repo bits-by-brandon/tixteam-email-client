@@ -113,6 +113,7 @@ export default React.createClass({
                 <SentenceForm
                     label="Sentences"
                     type="sentences"
+                    ticketIndex={this.props.index}
                     sentences={this.props.sentences}/>
             </div>
         );

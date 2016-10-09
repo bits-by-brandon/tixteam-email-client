@@ -123,20 +123,30 @@ export const addSentence = (ticketIndex) => {
     }
 }
 
-export const changeSentence = (sentenceId) => {
+export const changeSentenceType = (sentenceId, type) => {
     return {
-        type: 'CHANGE_SENTENCE',
+        type: 'CHANGE_SENTENCE_TYPE',
         payload: {
-            sentenceId
+            sentenceId,
+            isFine: type === 'Fine'
+        }
+    }
+}
+export const changeSentenceMessage = (sentenceId, message) => {
+    return {
+        type: 'CHANGE_SENTENCE_TYPE',
+        payload: {
+            sentenceId,
+            message
         }
     }
 }
 
-export const deleteSentence = (sentence) => {
+export const deleteSentence = (sentenceId) => {
     return {
         type: 'DELETE_SENTENCE',
         payload: {
-            sentence
+            sentenceId
         }
     }
 }

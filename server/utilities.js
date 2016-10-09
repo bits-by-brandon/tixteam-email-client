@@ -1,8 +1,8 @@
 // ================================
-// ===== Uitilies ================
+// ===== Utilities ================
 // ================================
 module.exports = {
-    generateId: function (){
-        return Math.random().toString(36).substr(4, 7);
+    generateId: function () {
+        return Math.round((Math.pow(36, 8 + 1) - Math.random() * Math.pow(36, 8))).toString(36).slice(1);
     }
 }

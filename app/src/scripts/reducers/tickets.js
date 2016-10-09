@@ -82,6 +82,17 @@ export default function tickets(state = [
                 courtCost: action.payload.courtCost
             }
             return newTickets
+        case 'ADD_SENTENCE':
+            var newTickets = state,
+                ticketIndex = action.payload.ticketIndex;
+            newTickets[ticketIndex] = {
+                ...state[ticketIndex],
+                sentences: {
+                    ...state[ticketIndex].sentences,
+                    [action.payload.sentenceId]: true
+                }
+            }
+            return state
         default:
             return state
     }

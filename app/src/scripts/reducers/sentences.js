@@ -21,7 +21,6 @@ export default function sentencesById(state = {
 }, action) {
     switch (action.type) {
         case 'ADD_SENTENCE':
-            // TODO: build proper reducer
             return {
                 ...state,
                 [action.payload.sentenceId]: {...defaultSentence}

@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
 import * as topLevelReducers from './form';
-import sentences from './sentences';
+import sentencesById from './sentences';
 import tickets from './tickets';
 
 /*===========================
@@ -40,13 +40,13 @@ const initialState = {
             },
         }
     },
-    sentences: {
-        '23TTPZ9': {
+    sentencesById: {
+        '7gr9gupt': {
             isFine: true,
             fineAmount: 200,
             message: false
         },
-        'I3NOE35': {
+        'tdhamil3': {
             isFine: false,
             fineAmount: false,
             message: 'Client will have to attend 20 hours of driver school'
@@ -68,7 +68,7 @@ const initialState = {
  ====== Root Reducer ======
  ==========================*/
 
-const reducers = {...topLevelReducers, sentences, tickets}
+const reducers = {...topLevelReducers, sentencesById, tickets}
 
 const rootReducer = combineReducers(reducers);
 
