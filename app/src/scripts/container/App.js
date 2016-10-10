@@ -8,7 +8,6 @@ import React from 'react';
 //===================================================
 import Form from './Form';
 import Email from './Email';
-import store from '../Store';
 
 export default React.createClass({
     getInitialState() {

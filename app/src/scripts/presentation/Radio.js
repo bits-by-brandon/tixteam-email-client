@@ -4,12 +4,22 @@
 import React from 'react';
 
 export default React.createClass({
+    handleRadioSelect(item){
+        this.props.handleRadioSelect(item);
+    },
+
     render: function () {
         return (
             <div className="field">
-                <label className="field--label">
-                    {this.props.label}
-                </label>
+                {(()=> {
+                    if (this.props.label) {
+                        return (
+                            <label className="field--label">
+                                {this.props.label}
+                            </label>
+                        )
+                    }
+                })()}
 
                 <div className="field--radio">
                     {this.props.options.map((item, index) => {
@@ -17,7 +27,7 @@ export default React.createClass({
                             <div
                                 className={"field--radio--option" + (this.props.value == item ? ' active' : '')}
                                 key={index}
-                                onClick={this.props.handleRadioSelect(item)}>
+                                onClick={()=>{this.handleRadioSelect(item)}}>
                                 {item}
                             </div>
                         )

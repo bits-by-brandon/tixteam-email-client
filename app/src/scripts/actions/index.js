@@ -128,13 +128,23 @@ export const changeSentenceType = (sentenceId, type) => {
         type: 'CHANGE_SENTENCE_TYPE',
         payload: {
             sentenceId,
-            isFine: type === 'Fine'
+            isFine: (type === 'Fine')
+        }
+    }
+}
+
+export const changeSentenceFine = (sentenceId, fineAmount) => {
+    return {
+        type: 'CHANGE_SENTENCE_FINE',
+        payload: {
+            sentenceId,
+            fineAmount
         }
     }
 }
 export const changeSentenceMessage = (sentenceId, message) => {
     return {
-        type: 'CHANGE_SENTENCE_TYPE',
+        type: 'CHANGE_SENTENCE_MESSAGE',
         payload: {
             sentenceId,
             message

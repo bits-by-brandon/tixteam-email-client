@@ -30,7 +30,6 @@ export default React.createClass({
     },
 
     render: function () {
-        //TODO: Remove ticket functionality
         return (
             <div className="ticket-form">
                 <FullButton

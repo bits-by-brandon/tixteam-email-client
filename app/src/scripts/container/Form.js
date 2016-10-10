@@ -17,42 +17,26 @@ export default React.createClass({
         return store.getState()
     },
 
-    //=================================
-    //======== Ticket Handlers ========
-    //=================================
-    handleTicketFieldChange(index, field, value){
-        this.props.handleTicketFieldChange(index, field, value);
-    },
-
-    //===================================
-    //======== Sentence Handlers ========
-    //===================================
-    handleAddSentence(ticketIndex){
-        this.props.handleAddSentence(ticketIndex);
-    },
-
-    handleSentenceFieldChange(ticketIndex, sentenceIndex, value){
-        this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
-    },
-
-    handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue){
-        this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
-    },
-
-    handleAddCost(ticketIndex, costType){
-        this.props.handleAddCost(ticketIndex, costType);
-    },
-
-    handleTypeUpdate(){
-        this.props.handleTypeUpdate();
-    },
-
     componentDidMount(){
         console.log(store.getState());
         store.subscribe(() => {
             console.log(store.getState())
             this.setState(store.getState());
         })
+    },
+
+    getTicketSentences(ticketIndex) {
+        let ticketSentences = this.state.tickets[ticketIndex].sentences
+        return Object.keys(this.state.sentencesById)
+            .filter((sentenceId) => {
+                return ticketSentences[sentenceId]
+            })
+            .reduce((o, c) => {
+                return {
+                    ...o,
+                    [c]: this.state.sentencesById[c]
+                }
+            }, {})
     },
 
     render: function () {
@@ -101,7 +85,14 @@ export default React.createClass({
                             })
                         }}/>
 
-                { tickets.map((ticket, i) => <TicketForm key={i} index={i} {...ticket} /> )}
+                {
+                    tickets.map((ticket, i) => <TicketForm
+                        key={i}
+                        index={i}
+                        {...ticket}
+                        sentences={this.getTicketSentences(i)}/>)
+                }
+
 
                 <FullButton label="New Ticket"
                             handleClick={() => {

@@ -3,41 +3,40 @@
  */
 import React from 'react';
 import store from '../Store';
-import {addSentence, changeSentenceType} from '../actions';
+import {
+    addSentence,
+    changeSentenceType,
+    changeSentenceMessage,
+    changeSentenceFine
+} from '../actions';
 
 //===================================================
 //================ Dependencies =====================
 //===================================================
 import SentenceCard from '../presentation/SentenceCard';
-import AddButton from '../presentation/AddButton.js';
+import AddButton from '../presentation/AddButton';
 
 export default React.createClass({
-    getInitialState(){
-        return {
-            //TODO: Set state to take new object with relevant sentences only
-            ...store.getState()
-        }
-    },
-
     render: function () {
-        let label = this.props.label;
         return (
             <div className="sentence-form">
-                <h3 className="sentence-form--label">{label}</h3>
-                {Object.keys(this.props.sentences).map((sentenceKey, index) => {
-                    let sentence = this.state.sentencesById[sentenceKey];
-                    console.log(sentence);
+                <h3 className="sentence-form--label">{this.props.label}</h3>
+                {Object.keys(this.props.sentences).map((sentenceId, index) => {
+                    let sentence = this.props.sentences[sentenceId];
                     return <SentenceCard
-                        key={sentenceKey}
-                        label={index + 1}
-                        name="sentence"
+                        key={index}
+                        label={"Sentence " + (index + 1)}
+                        {...sentence}
                         handleSentenceTypeChange={(newValue) => {
-                            changeSentenceType({ sentenceKey, newValue })
+                            store.dispatch(changeSentenceType(sentence.id, newValue))
+                        }}
+                        handleSentenceFineChange={(newValue) => {
+                            store.dispatch(changeSentenceFine(sentence.id, newValue))
                         }}
                         handleSentenceMessageChange={(newValue) => {
-                            changeSentenceType({ sentenceKey, newValue })
+                            store.dispatch(changeSentenceMessage(sentence.id, newValue))
                         }}
-                        value={sentence}/>
+                    />
                 })}
                 <AddButton
                     label="Add Sentence"

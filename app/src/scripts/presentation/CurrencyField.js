@@ -26,5 +26,11 @@ export default React.createClass({
                 <span className="field--currency-input--suffix">$</span>
             </div>
         );
+    },
+
+    PropTypes: {
+        label: React.PropTypes.string,
+        value: React.PropTypes.string.isRequired,
+        handleFieldChange: React.PropTypes.func.isRequired
     }
 });

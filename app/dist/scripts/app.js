@@ -21585,10 +21585,6 @@
 	
 	var _Email2 = _interopRequireDefault(_Email);
 	
-	var _Store = __webpack_require__(176);
-	
-	var _Store2 = _interopRequireDefault(_Store);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /*
@@ -21798,38 +21794,12 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	exports.default = _react2.default.createClass({
 	    displayName: 'Form',
 	    getInitialState: function getInitialState() {
 	        return _Store2.default.getState();
-	    },
-	
-	
-	    //=================================
-	    //======== Ticket Handlers ========
-	    //=================================
-	    handleTicketFieldChange: function handleTicketFieldChange(index, field, value) {
-	        this.props.handleTicketFieldChange(index, field, value);
-	    },
-	
-	
-	    //===================================
-	    //======== Sentence Handlers ========
-	    //===================================
-	    handleAddSentence: function handleAddSentence(ticketIndex) {
-	        this.props.handleAddSentence(ticketIndex);
-	    },
-	    handleSentenceFieldChange: function handleSentenceFieldChange(ticketIndex, sentenceIndex, value) {
-	        this.props.handleSentenceFieldChange(ticketIndex, sentenceIndex, value);
-	    },
-	    handleCostFieldChange: function handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue) {
-	        this.props.handleCostFieldChange(ticketIndex, costType, costIndex, costName, costValue);
-	    },
-	    handleAddCost: function handleAddCost(ticketIndex, costType) {
-	        this.props.handleAddCost(ticketIndex, costType);
-	    },
-	    handleTypeUpdate: function handleTypeUpdate() {
-	        this.props.handleTypeUpdate();
 	    },
 	    componentDidMount: function componentDidMount() {
 	        var _this = this;
@@ -21840,9 +21810,21 @@
 	            _this.setState(_Store2.default.getState());
 	        });
 	    },
+	    getTicketSentences: function getTicketSentences(ticketIndex) {
+	        var _this2 = this;
+	
+	        var ticketSentences = this.state.tickets[ticketIndex].sentences;
+	        return Object.keys(this.state.sentencesById).filter(function (sentenceId) {
+	            return ticketSentences[sentenceId];
+	        }).reduce(function (o, c) {
+	            return _extends({}, o, _defineProperty({}, c, _this2.state.sentencesById[c]));
+	        }, {});
+	    },
 	
 	
 	    render: function render() {
+	        var _this3 = this;
+	
 	        var tickets = this.state.tickets;
 	        return _react2.default.createElement(
 	            'div',
@@ -21886,7 +21868,11 @@
 	                    });
 	                } }),
 	            tickets.map(function (ticket, i) {
-	                return _react2.default.createElement(_TicketForm2.default, _extends({ key: i, index: i }, ticket));
+	                return _react2.default.createElement(_TicketForm2.default, _extends({
+	                    key: i,
+	                    index: i
+	                }, ticket, {
+	                    sentences: _this3.getTicketSentences(i) }));
 	            }),
 	            _react2.default.createElement(_FullButton2.default, { label: 'New Ticket',
 	                handleClick: function handleClick() {
@@ -22969,19 +22955,22 @@
 	var defaultSentence = {
 	    isFine: false,
 	    fineAmount: 0,
-	    message: false
+	    message: ''
 	};
 	
+	//noinspection SpellCheckingInspection
 	function sentencesById() {
 	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
 	        '23TTPZ9': {
+	            id: '23TTPZ9',
 	            isFine: true,
-	            fineAmount: 200,
-	            message: false
+	            fineAmount: 200.00,
+	            message: ''
 	        },
 	        'I3NOE35': {
+	            id: 'I3NOE35',
 	            isFine: false,
-	            fineAmount: false,
+	            fineAmount: 0.00,
 	            message: 'Client will have to attend 20 hours of driver school'
 	        }
 	    };
@@ -22989,7 +22978,21 @@
 	
 	    switch (action.type) {
 	        case 'ADD_SENTENCE':
-	            return _extends({}, state, _defineProperty({}, action.payload.sentenceId, _extends({}, defaultSentence)));
+	            return _extends({}, state, _defineProperty({}, action.payload.sentenceId, _extends({
+	                id: action.payload.sentenceId
+	            }, defaultSentence)));
+	        case 'CHANGE_SENTENCE_TYPE':
+	            return _extends({}, state, _defineProperty({}, action.payload.sentenceId, _extends({}, state[action.payload.sentenceId], {
+	                isFine: action.payload.isFine
+	            })));
+	        case 'CHANGE_SENTENCE_FINE':
+	            return _extends({}, state, _defineProperty({}, action.payload.sentenceId, _extends({}, state[action.payload.sentenceId], {
+	                fineAmount: parseFloat(action.payload.fineAmount)
+	            })));
+	        case 'CHANGE_SENTENCE_MESSAGE':
+	            return _extends({}, state, _defineProperty({}, action.payload.sentenceId, _extends({}, state[action.payload.sentenceId], {
+	                message: action.payload.message
+	            })));
 	        default:
 	            return state;
 	    }
@@ -23295,7 +23298,6 @@
 	    render: function render() {
 	        var _this = this;
 	
-	        //TODO: Remove ticket functionality
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'ticket-form' },
@@ -23369,7 +23371,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.deleteSentence = exports.changeSentenceMessage = exports.changeSentenceType = exports.addSentence = exports.changeCourtCost = exports.changeCustomMessage = exports.changeMessageType = exports.changeOutcome = exports.changeChargeName = exports.changeCitationNumber = exports.deleteTicket = exports.addTicket = exports.changeLawyer = exports.changeEmail = exports.changeLastName = exports.changeFirstName = undefined;
+	exports.deleteSentence = exports.changeSentenceMessage = exports.changeSentenceFine = exports.changeSentenceType = exports.addSentence = exports.changeCourtCost = exports.changeCustomMessage = exports.changeMessageType = exports.changeOutcome = exports.changeChargeName = exports.changeCitationNumber = exports.deleteTicket = exports.addTicket = exports.changeLawyer = exports.changeEmail = exports.changeLastName = exports.changeFirstName = undefined;
 	
 	var _utilities = __webpack_require__(200);
 	
@@ -23505,9 +23507,19 @@
 	        }
 	    };
 	};
+	
+	var changeSentenceFine = exports.changeSentenceFine = function changeSentenceFine(sentenceId, fineAmount) {
+	    return {
+	        type: 'CHANGE_SENTENCE_FINE',
+	        payload: {
+	            sentenceId: sentenceId,
+	            fineAmount: fineAmount
+	        }
+	    };
+	};
 	var changeSentenceMessage = exports.changeSentenceMessage = function changeSentenceMessage(sentenceId, message) {
 	    return {
-	        type: 'CHANGE_SENTENCE_TYPE',
+	        type: 'CHANGE_SENTENCE_MESSAGE',
 	        payload: {
 	            sentenceId: sentenceId,
 	            message: message
@@ -23567,16 +23579,21 @@
 				{ className: "field" },
 				_react2.default.createElement(
 					"label",
-					{ className: "field--label", htmlFor: this.props.name },
+					{ className: "field--label" },
 					this.props.label
 				),
 				_react2.default.createElement("textArea", {
 					className: "field--text-area",
-					name: this.props.name,
 					type: "text",
 					onChange: this.handleFieldChange,
 					value: this.props.value })
 			);
+		},
+	
+		propTypes: {
+			label: _react2.default.PropTypes.string,
+			value: _react2.default.PropTypes.string,
+			handleFieldChange: _react2.default.PropTypes.func.isRequired
 		}
 	}); /*
 	     * TextArea Component
@@ -23626,6 +23643,12 @@
 	                "$"
 	            )
 	        );
+	    },
+	
+	    PropTypes: {
+	        label: _react2.default.PropTypes.string,
+	        value: _react2.default.PropTypes.string.isRequired,
+	        handleFieldChange: _react2.default.PropTypes.func.isRequired
 	    }
 	}); /*
 	     * Field Component
@@ -23673,37 +23696,34 @@
 	
 	exports.default = _react2.default.createClass({
 	    displayName: 'SentenceForm',
-	    getInitialState: function getInitialState() {
-	        return _extends({}, _Store2.default.getState());
-	    },
-	
 	
 	    render: function render() {
 	        var _this = this;
 	
-	        var label = this.props.label;
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'sentence-form' },
 	            _react2.default.createElement(
 	                'h3',
 	                { className: 'sentence-form--label' },
-	                label
+	                this.props.label
 	            ),
-	            Object.keys(this.props.sentences).map(function (sentenceKey, index) {
-	                var sentence = _this.state.sentencesById[sentenceKey];
-	                console.log(sentence);
-	                return _react2.default.createElement(_SentenceCard2.default, {
-	                    key: sentenceKey,
-	                    label: index + 1,
-	                    name: 'sentence',
+	            Object.keys(this.props.sentences).map(function (sentenceId, index) {
+	                var sentence = _this.props.sentences[sentenceId];
+	                return _react2.default.createElement(_SentenceCard2.default, _extends({
+	                    key: index,
+	                    label: "Sentence " + (index + 1)
+	                }, sentence, {
 	                    handleSentenceTypeChange: function handleSentenceTypeChange(newValue) {
-	                        (0, _actions.changeSentenceType)({ sentenceKey: sentenceKey, newValue: newValue });
+	                        _Store2.default.dispatch((0, _actions.changeSentenceType)(sentence.id, newValue));
+	                    },
+	                    handleSentenceFineChange: function handleSentenceFineChange(newValue) {
+	                        _Store2.default.dispatch((0, _actions.changeSentenceFine)(sentence.id, newValue));
 	                    },
 	                    handleSentenceMessageChange: function handleSentenceMessageChange(newValue) {
-	                        (0, _actions.changeSentenceType)({ sentenceKey: sentenceKey, newValue: newValue });
-	                    },
-	                    value: sentence });
+	                        _Store2.default.dispatch((0, _actions.changeSentenceMessage)(sentence.id, newValue));
+	                    }
+	                }));
 	            }),
 	            _react2.default.createElement(_AddButton2.default, {
 	                label: 'Add Sentence',
@@ -23732,6 +23752,14 @@
 	
 	var _Radio2 = _interopRequireDefault(_Radio);
 	
+	var _CurrencyField = __webpack_require__(202);
+	
+	var _CurrencyField2 = _interopRequireDefault(_CurrencyField);
+	
+	var _TextArea = __webpack_require__(201);
+	
+	var _TextArea2 = _interopRequireDefault(_TextArea);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/*
@@ -23739,37 +23767,45 @@
 	 */
 	exports.default = _react2.default.createClass({
 	    displayName: 'SentenceCard',
-	    handleFieldChange: function handleFieldChange(e) {
-	        this.props.handleFieldChange(e.target.value);
-	    },
-	    handleDeleteSentence: function handleDeleteSentence() {
-	        this.props.handleDeleteSentence();
-	    },
 	
 	
 	    render: function render() {
+	        var _this = this;
+	
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'sentence-form--card' },
-	            _react2.default.createElement(
-	                'label',
-	                { className: 'field--label', htmlFor: this.props.name },
-	                this.props.label
-	            ),
+	            function () {
+	                if (_this.props.label) {
+	                    return _react2.default.createElement(
+	                        'label',
+	                        { className: 'field--label' },
+	                        _this.props.label
+	                    );
+	                }
+	            }(),
 	            _react2.default.createElement(_Radio2.default, {
-	                label: 'Sentence Type',
 	                options: ['Fine', 'Other'],
-	                value: this.props.type,
+	                value: this.props.isFine ? 'Fine' : 'Other',
 	                handleRadioSelect: this.props.handleSentenceTypeChange
 	            }),
+	            function () {
+	                if (_this.props.isFine) {
+	                    return _react2.default.createElement(_CurrencyField2.default, {
+	                        label: 'Amount Owed',
+	                        value: _this.props.fineAmount,
+	                        handleFieldChange: _this.props.handleSentenceFineChange });
+	                } else {
+	                    return _react2.default.createElement(_TextArea2.default, {
+	                        label: 'Conditions',
+	                        handleFieldChange: _this.props.handleSentenceMessageChange,
+	                        value: _this.props.message
+	                    });
+	                }
+	            }(),
 	            _react2.default.createElement('span', {
 	                className: 'filed--text-area--close',
-	                onClick: this.handleDeleteSentence }),
-	            _react2.default.createElement('textArea', {
-	                className: 'field--text-area',
-	                name: this.props.name,
-	                type: 'text',
-	                value: this.props.value })
+	                onClick: this.props.handleDeleteSentence })
 	        );
 	    }
 	});
@@ -23792,6 +23828,10 @@
 	
 	exports.default = _react2.default.createClass({
 	    displayName: "Radio",
+	    handleRadioSelect: function handleRadioSelect(item) {
+	        this.props.handleRadioSelect(item);
+	    },
+	
 	
 	    render: function render() {
 	        var _this = this;
@@ -23799,11 +23839,15 @@
 	        return _react2.default.createElement(
 	            "div",
 	            { className: "field" },
-	            _react2.default.createElement(
-	                "label",
-	                { className: "field--label" },
-	                this.props.label
-	            ),
+	            function () {
+	                if (_this.props.label) {
+	                    return _react2.default.createElement(
+	                        "label",
+	                        { className: "field--label" },
+	                        _this.props.label
+	                    );
+	                }
+	            }(),
 	            _react2.default.createElement(
 	                "div",
 	                { className: "field--radio" },
@@ -23813,7 +23857,9 @@
 	                        {
 	                            className: "field--radio--option" + (_this.props.value == item ? ' active' : ''),
 	                            key: index,
-	                            onClick: _this.props.handleRadioSelect(item) },
+	                            onClick: function onClick() {
+	                                _this.handleRadioSelect(item);
+	                            } },
 	                        item
 	                    );
 	                })
