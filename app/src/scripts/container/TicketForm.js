@@ -21,6 +21,7 @@ import FullButton from '../presentation/FullButton';
 import Select from '../presentation/Select';
 import CurrencyField from '../presentation/CurrencyField';
 import SentenceForm from './SentenceForm';
+import DateSelector from '../presentation/DateSelector';
 
 export default React.createClass({
     getInitialState() {

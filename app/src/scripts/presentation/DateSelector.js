@@ -11,13 +11,15 @@ export default React.createClass({
 			startDate: moment()
 		};
 	},
-	handleFieldChange(e){
-		this.props.handleFieldChange(this.props.index, e)
+	handleFieldChange(date){
+		this.props.handleFieldChange(date)
 	},
 
     render: function() {
 		return (
-		    <DatePicker />
+		    <DatePicker
+				selected={this.state.startDate}
+				onChange={this.handleFieldChange}/>
 		);
 	}
 });
